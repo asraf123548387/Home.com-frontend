@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { setToken} from './authSlice';
+import { useDispatch} from 'react-redux';
+import { login, setToken} from './slice/authSlice';
 import axios from 'axios';
+import UserService from './service/UserService';
 
 
 
 function Login() {
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.token);
+ 
   const [error1, setError1] = useState(null); 
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: '',
   });
   const navigate=useNavigate();
@@ -23,14 +24,13 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/login', formData);
+      const response = await UserService.userLogin(formData)
 
       if (response.status >= 200 && response.status < 300) {
         const token = response.data;
         localStorage.setItem('token', token);
-        dispatch(setToken(token));
-        console.log(token)
-        navigate('/home');
+     
+        navigate('/');
       } else {
         // Display an error message for invalid credentials
         setError1('Invalid username or password');
@@ -48,15 +48,15 @@ function Login() {
         <form onSubmit={handleSubmit}>
          <div style={{ color: 'red' }}>{error1}</div> 
           <div className="mb-3">
-            <label htmlFor="username" className="form-label">
+            <label htmlFor="email" className="form-label">
               Username:
             </label>
             <input
-              type="text"
-              name="username"  
+              type="email"
+              name="email"  
               className="form-control"
-              placeholder="Enter username"
-              value={formData.username}
+              placeholder="Enter useremail"
+              value={formData.email}
               onChange={handleChange}
             />
           </div>

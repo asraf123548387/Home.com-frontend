@@ -1,13 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 function AddUser() {
-    
+    const navigate=useNavigate();
     const [user, setUser] = useState({
         userName: "",
-        email: "",
+        email: "",  
         mobile: "",
         password: "",
     });
@@ -22,7 +23,7 @@ function AddUser() {
         const token = localStorage.getItem('token');
         const headers = {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`, // Replace with your actual access token
+            'Authorization': `Bearer ${token}`,
           };
 
         axios.post('http://localhost:8080/adminSaveAddUser', user, { headers })
@@ -36,11 +37,12 @@ function AddUser() {
                     mobile: "",
                     password: "",
                 })
-        
+              navigate('/admin')
             }).catch((error) => {
                 console.log(error);
             });
     }
+
   return (
     <div className='d-flex justify-content-center align-items-center vh-100' style={{ background: '#3498db' }}>
         <div className='bg-white p-3 rounded w-50 shadow'>
@@ -69,7 +71,7 @@ function AddUser() {
 </div>
           </form>
         </div>
-      </div>
+      </div>  
       
   )
 }

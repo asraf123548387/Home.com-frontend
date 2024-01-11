@@ -8,6 +8,9 @@ class UserService{
     saveAddUser(user){
         return axios.post(API_URL+"/adminSaveAddUser",user)
     }
+    userLogin(formData){
+        return axios.post(API_URL+"/login",formData)
+    }
 
    
 }
