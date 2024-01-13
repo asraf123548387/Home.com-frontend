@@ -71,7 +71,7 @@ function RegisterForm() {
   return (
     <div className='d-flex justify-content-center align-items-center vh-100' style={{ background: '#3498db' }}>
       <div className='bg-white p-3 rounded w-50 shadow'>
-        <h2 className="text-center mb-3">Register User</h2>
+        <h2 className="text-center mb-3">Create Account</h2>
         {msg && <p className="text-center text-success font-weight-bold">{msg}</p>}
         <form onSubmit={(e) => RegisterUser(e)}>
           <div className='mb-3'>

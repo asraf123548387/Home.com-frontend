@@ -25,7 +25,7 @@ function Navbar({showSignInLink}) {
                     {/* Add code for authenticated user content */}
                 </div>
             ) : (
-               <Link to="/login" className="hover:text-red-300 text-red-500 mr-4 md:mr-20">Sign In</Link> 
+               <Link to="/login" className="hover:text-red-300 text-red-500  no-underline mr-4 md:mr-20">Sign In</Link> 
             )}
         </nav>
     </div>

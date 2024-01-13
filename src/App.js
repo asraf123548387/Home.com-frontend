@@ -10,6 +10,7 @@ import Home from "./component/userside/Home";
 import AdminDashboard from "./component/adminside/adminDashboard";
 import UserList from "./component/adminside/userList";
 import HotelList from "./component/adminside/HotelList";
+import Otppage from './component/userside/Otppage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
     <Route path='/userList' element={<UserList/>}></Route>
     <Route path='/hotellist' element={<HotelList/>}></Route>
     <Route path='/login' element={<Login/>}/>
+    <Route path='/otp' element={<Otppage/>}/>
    </Routes>
    
    </BrowserRouter>

@@ -72,7 +72,9 @@ function Login() {
               value={formData.password}
               onChange={handleChange}
             />
+            <Link>Forgot Password</Link>
           </div>
+          
           <button type="submit" className="btn btn-primary btn-block">
             Log In
           </button>
