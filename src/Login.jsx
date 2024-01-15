@@ -1,22 +1,20 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch} from 'react-redux';
-import { login, setToken} from './slice/authSlice';
-import axios from 'axios';
+
+import { useAuth } from './contextapi/authContext';
 import UserService from './service/UserService';
 
 
 
 function Login() {
-  const dispatch = useDispatch();
- 
   const [error1, setError1] = useState(null); 
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+  const { login } = useAuth();
   const navigate=useNavigate();
-
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -29,7 +27,11 @@ function Login() {
       if (response.status >= 200 && response.status < 300) {
         const token = response.data;
         localStorage.setItem('token', token);
-     
+        
+      
+        
+        login();
+       
         navigate('/');
       } else {
         // Display an error message for invalid credentials
@@ -42,7 +44,7 @@ function Login() {
   };
    
     return (
-      <div className="d-flex justify-content-center align-items-center vh-100" style={{ background: '#3498db' }}>
+      <div className="d-flex justify-content-center align-items-center vh-100" >
       <div className="bg-white p-5 rounded w-50 shadow">
         <h2 className="text-center mb-4">Login</h2>
         <form onSubmit={handleSubmit}>
@@ -72,7 +74,7 @@ function Login() {
               value={formData.password}
               onChange={handleChange}
             />
-            <Link>Forgot Password</Link>
+            <Link to='/otpEmail'>Forgot Password</Link>
           </div>
           
           <button type="submit" className="btn btn-primary btn-block">

@@ -1,47 +1,65 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import userlogo from '../../images/user.png'
-import { useState,useEffect } from 'react';
+import userlogo from '../../images/user.png';
+
 function UserList() {
-    const [isBlocked, setIsBlocked] = useState(false);//user is bl;ocked or not
-    const[users,setUsers]=useState([])
-    const [searchQuery, setSearchQuery] = useState('');
-    const handleButtonClick = () => {
-        const confirmed = window.confirm(`Are you sure you want to ${isBlocked ? 'unblock' : 'block'} this user?`);
-    
-        if (confirmed) {
-       
+  const [isBlocked, setIsBlocked] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const blockUrl = 'http://localhost:8080/admin/block';
+  const unblockUrl = 'http://localhost:8080/admin/unblock';
+
+  const handleButtonClick = async (userId) => {
+    const confirmed = window.confirm(`Are you sure you want to ${isBlocked ? 'unblock' : 'block'} this user?`);
+
+    if (confirmed) {
+      try {
+        const url = isBlocked ? unblockUrl : blockUrl;
+        const response = await axios.post(url, { userId }, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.status >= 200 && response.status < 300) {
           setIsBlocked(!isBlocked);
+        } else {
+          console.error('Failed to block/unblock user:', response.statusText);
         }
-      };
- 
-      useEffect(() => {
-        const token = localStorage.getItem('token');
-    
-        const fetchAllUsers = async () => {
-          try {
-            const response = await axios.get('http://localhost:8080/admin/users', {
-              headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json',
-              },
-              params: {
-                search: searchQuery, // Pass the search query as a parameter
-              },
-            });
-    
-            if (response.status >= 200 && response.status < 300) {
-              setUsers(response.data);
-            } else {
-              console.error('Failed to fetch users:', response.statusText);
-            }
-          } catch (error) {
-            console.error('Error fetching users:', error.message);
-          }
-        };
-    
-        fetchAllUsers();
-      }, [isBlocked, searchQuery]);
+      } catch (error) {
+        console.error('Error blocking/unblocking user:', error.message);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    const fetchAllUsers = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/admin/users', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          params: {
+            search: searchQuery,
+          },
+        });
+
+        if (response.status >= 200 && response.status < 300) {
+          setUsers(response.data);
+        } else {
+          console.error('Failed to fetch users:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching users:', error.message);
+      }
+    };
+
+    fetchAllUsers();
+  }, [isBlocked, searchQuery]);
       
 
 
@@ -100,13 +118,13 @@ function UserList() {
                   <td className="p-3 px-5">{user.email}</td>
                   <td className="p-3 px-5">{user.mobile}</td>
                   <td className="p-3 px-5 flex justify-end">
-                    <button
-                      type="button"
-                      className={`mr-3 text-sm ${isBlocked ? 'bg-green-500 hover:bg-green-700' : 'bg-blue-500 hover:bg-blue-700'} text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline`}
-                      onClick={handleButtonClick}
-                    >
-                      {isBlocked ? 'Unblock' : 'Block'}
-                    </button>
+                  <button
+              type="button"
+              className={`mr-3 text-sm ${isBlocked ? 'bg-green-500 hover:bg-green-700' : 'bg-blue-500 hover:bg-blue-700'} text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline`}
+              onClick={() => handleButtonClick(user.id)}
+            >
+              {isBlocked ? 'Unblock' : 'Block'}
+            </button>
                   </td>
                 </tr>
               ))}

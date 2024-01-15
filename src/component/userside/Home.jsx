@@ -1,7 +1,39 @@
 import React from 'react'
+import { useState } from 'react';
 
 import Navbar from './Navbar'
 function Home() {
+    const [destination, setDestination] = useState('');
+    const [departureDate, setDepartureDate] = useState('');
+    const [numTravelers, setNumTravelers] = useState(2);
+    const [numRooms, setNumRooms] = useState(1);
+  
+    const handleDestinationChange = (event) => {
+      setDestination(event.target.value);
+    };
+  
+    const handleDepartureDateChange = (event) => {
+      setDepartureDate(event.target.value);
+    };
+  
+    const handleNumTravelersChange = (event) => {
+      setNumTravelers(parseInt(event.target.value, 10));
+    };
+  
+    // const handleNumRoomsChange = (event) => {
+    //   setNumRooms(parseInt(event.target.value, 10));
+    // };
+  
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      // Handle form submission logic here
+      console.log('Form Submitted:', {
+        destination,
+        departureDate,
+        numTravelers,
+        numRooms,
+      });
+    };
   return (
    <div>
       
@@ -10,24 +42,47 @@ function Home() {
            <div className="w-[166px] h-[41px] text-slate-800 text-4xl font-medium font-['Roboto'] leading-10 ml-4 md:ml-20 mt-1">Where to?</div>
 
 <section>
-    <div className="flex flex-col md:flex-row items-center mt-3 md:mt-0 md:ml-20">
-        <div className="w-full md:w-[330px] h-12 relative bg-white rounded-lg border border-slate-500 mb-4 md:mb-0 md:mr-4">
-            <input type='text' placeholder='Going to' className='ml-1 w-full h-full' />
-        </div>
+<form className="flex flex-col md:flex-row items-center mt-3 md:mt-0 md:ml-20" onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Going to"
+        className="w-full md:w-[330px] h-12 relative bg-white rounded-lg border border-slate-500 mb-4 md:mb-0 md:mr-4"
+        value={destination}
+        onChange={handleDestinationChange}
+      />
+      <input
+        type="date"
+        className="w-full md:w-[300px] h-12 pl-4 pr-3 pb-2 bg-white rounded-lg border border-slate-500 mb-4 md:mb-0 md:mr-4"
+        value={departureDate}
+        onChange={handleDepartureDateChange}
+      />
 
-        <div className="w-full md:w-[300px] h-12 pl-4 pr-3 pb-2 bg-white rounded-lg border border-slate-500 mb-4 md:mb-0 md:mr-4">
-            <div className="w-full h-full text-slate-800 text-base font-normal font-['Roboto'] leading-tight">9 Jan - 13 Jan</div>
+      <div className="w-full md:w-[300px] h-12 pl-4 pr-3 pb-2 bg-white rounded-lg border border-slate-500 mb-4 md:mb-0 md:mr-4">
+        <div className="w-full h-full text-slate-800 text-base font-normal font-['Roboto'] leading-tight">
+          <label htmlFor="numTravelers" className="mr-2">
+            Travellers:
+          </label>
+          <input
+            type="number"
+            id="numTravelers"
+            value={numTravelers}
+            onChange={handleNumTravelersChange}
+            min="1"
+          />
+          {/* <span className="mx-2">,</span>
+          <label htmlFor="numRooms" className="mr-2">
+            Rooms:
+          </label>
+          <input type="number" id="numRooms" value={numRooms} onChange={handleNumRoomsChange} min="1" /> */}
         </div>
+      </div>
 
-        <div className="w-full md:w-[300px] h-12 pl-4 pr-3 pb-2 bg-white rounded-lg border border-slate-500 mb-4 md:mb-0 md:mr-4">
-            <div className="w-full h-full text-slate-800 text-base font-normal font-['Roboto'] leading-tight">2 travellers, 1 room</div>
-        </div>
-
+      <button type="submit">
         <div className="w-full md:w-[150px] h-17 bg-blue-600 rounded-full mb-4 md:mb-0 flex items-center justify-center">
-    <h2 className='text-white text-2xl'>Search</h2>
-</div>
-
-    </div>
+          <h2 className="text-white text-2xl">Search</h2>
+        </div>
+      </button>
+    </form>
 </section>
 
 <section className="flex flex-col items-center mt-1 md:ml-20">

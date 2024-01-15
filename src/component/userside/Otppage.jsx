@@ -1,26 +1,47 @@
 import React, { useState, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Otppage() {
+  const navigate=useNavigate();
+  const location = useLocation();
+  const email = location.state?.email || '';
   const [verificationCode, setVerificationCode] = useState(['', '', '', '']);
   const inputRefs = useRef(Array(4).fill(null).map(() => React.createRef()));
 
   const handleChange = (index, value) => {
-    const newVerificationCode = [...verificationCode];
-    newVerificationCode[index] = value;
-
-    setVerificationCode(newVerificationCode);
-
-    // Move focus to the next input field if a character is entered
-    if (value !== '' && index < inputRefs.current.length - 1) {
-      inputRefs.current[index + 1].current.focus();
-    }
+    setVerificationCode((prevVerificationCode) => {
+      const newVerificationCode = [...prevVerificationCode];
+      newVerificationCode[index] = value;
+  
+      // Move focus to the next input field if a character is entered
+      if (value !== '' && index < inputRefs.current.length - 1) {
+        inputRefs.current[index + 1].current.focus();
+      }
+  
+      return newVerificationCode;
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your verification logic here using the verificationCode state
-    // For example, you can log the verification code to the console
-    console.log('Verification Code:', verificationCode.join(''));
+
+    try {
+      const response = await axios.post('http://localhost:8080/verifyOtp', {
+        email,
+        otp: verificationCode.join(''),
+
+      });
+
+      // Handle the response as needed
+      console.log('Verification Successful:', response.data);
+      navigate('/login')
+
+    } catch (error) {
+      // Handle errors, for example, display an error message
+      console.error('Verification Failed:', error.response?.data || 'Unexpected error');
+    }
   };
 
   return (
@@ -32,7 +53,7 @@ function Otppage() {
               <p>Email Verification</p>
             </div>
             <div className="flex flex-row text-sm font-medium text-gray-400">
-              <p>We have sent a code to your email ba**@dipainhouse.com</p>
+              <p>We have sent a code to your email {email}</p>
             </div>
           </div>
 

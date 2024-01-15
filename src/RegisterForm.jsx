@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import UserService from '../src/service/UserService';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function RegisterForm() {
+  const navigate=useNavigate();
   const [user, setUser] = useState({
     userName: "",
     email: "",
@@ -48,13 +49,14 @@ function RegisterForm() {
 
   const RegisterUser = (e) => {
     e.preventDefault();
-
+  
     if (validateForm()) {
       UserService.saveUser(user)
         .then((res) => {
           console.log("User Added Successfully");
           console.log(user);
           setMsg("User Added Successfully");
+          navigate('/otp', { state: { email: user.email } });
           setUser({
             userName: "",
             email: "",
@@ -63,13 +65,20 @@ function RegisterForm() {
           });
         })
         .catch((error) => {
-          console.log(error);
+          if (error.response && error.response.status === 400 && error.response.data) {
+            
+            setMsg(error.response.data);
+          } else {
+        
+            console.log(error);
+          }
         });
     }
   };
 
   return (
-    <div className='d-flex justify-content-center align-items-center vh-100' style={{ background: '#3498db' }}>
+    <div>
+    <div className='d-flex justify-content-center align-items-center vh-100' >
       <div className='bg-white p-3 rounded w-50 shadow'>
         <h2 className="text-center mb-3">Create Account</h2>
         {msg && <p className="text-center text-success font-weight-bold">{msg}</p>}
@@ -79,6 +88,7 @@ function RegisterForm() {
             <input type="text" name="userName" className='form-control' onChange={(e) => handleChange(e)} value={user.userName} />
             {errors.userName && <p className="text-danger">{errors.userName}</p>}
           </div>
+
           <div className='mb-3'>
             <label htmlFor='email' className='form-label'>Email:</label>
             <input type="email" name="email" className='form-control' onChange={(e) => handleChange(e)} value={user.email} />
@@ -95,11 +105,12 @@ function RegisterForm() {
             {errors.password && <p className="text-danger">{errors.password}</p>}
           </div>
           <div className="d-flex justify-content-between">
-            <button type="submit" className='btn btn-primary btn-block'>Submit</button>
+           <button type="submit" className='btn btn-primary btn-block'>Submit</button>
             <Link to="/" className='btn btn-primary btn-block'>Back to Login</Link>
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 }

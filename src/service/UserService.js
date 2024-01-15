@@ -11,7 +11,17 @@ class UserService{
     userLogin(formData){
         return axios.post(API_URL+"/login",formData)
     }
+    forgotPassword(email){
+        return axios.post(API_URL+"/forgotPassword",email)
+    }
+    resetPassword({otp,newPassword}){
+        return axios.post(API_URL+"/verifyForgotPassword",{
+            otp,
+            newPassword
+        })
+    }
+    
 
    
 }
-export default new UserService
+export default new UserService()
