@@ -3,18 +3,18 @@ import axios from 'axios';
 import userlogo from '../../images/user.png';
 
 function UserList() {
-  const [isBlocked, setIsBlocked] = useState(false);
+  const [blockedUsers, setBlockedUsers] = useState({});
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const blockUrl = 'http://localhost:8080/admin/block';
   const unblockUrl = 'http://localhost:8080/admin/unblock';
 
   const handleButtonClick = async (userId) => {
-    const confirmed = window.confirm(`Are you sure you want to ${isBlocked ? 'unblock' : 'block'} this user?`);
+    const confirmed = window.confirm(`Are you sure you want to ${blockedUsers[userId] ? 'unblock' : 'block'} this user?`);
 
     if (confirmed) {
       try {
-        const url = isBlocked ? unblockUrl : blockUrl;
+        const url = blockedUsers[userId] ? unblockUrl : blockUrl;
         const response = await axios.post(url, { userId }, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -23,7 +23,10 @@ function UserList() {
         });
 
         if (response.status >= 200 && response.status < 300) {
-          setIsBlocked(!isBlocked);
+          setBlockedUsers(prevBlockedUsers => ({
+            ...prevBlockedUsers,
+            [userId]: !prevBlockedUsers[userId], // Invert blocked status
+          }));
         } else {
           console.error('Failed to block/unblock user:', response.statusText);
         }
@@ -59,7 +62,7 @@ function UserList() {
     };
 
     fetchAllUsers();
-  }, [isBlocked, searchQuery]);
+  }, [blockedUsers, searchQuery]);
       
 
 
@@ -119,12 +122,12 @@ function UserList() {
                   <td className="p-3 px-5">{user.mobile}</td>
                   <td className="p-3 px-5 flex justify-end">
                   <button
-              type="button"
-              className={`mr-3 text-sm ${isBlocked ? 'bg-green-500 hover:bg-green-700' : 'bg-blue-500 hover:bg-blue-700'} text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline`}
-              onClick={() => handleButtonClick(user.id)}
-            >
-              {isBlocked ? 'Unblock' : 'Block'}
-            </button>
+                    type="button"
+                    className={`mr-3 text-sm ${blockedUsers[user.id] ? 'bg-green-500 hover:bg-green-700' : 'bg-blue-500 hover:bg-blue-700'} text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline`}
+                    onClick={() => handleButtonClick(user.id)}
+                  >
+                    {blockedUsers[user.id] ? 'Unblock' : 'Block'}
+                  </button>
                   </td>
                 </tr>
               ))}

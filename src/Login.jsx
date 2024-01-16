@@ -27,14 +27,29 @@ function Login() {
       if (response.status >= 200 && response.status < 300) {
         const token = response.data;
         localStorage.setItem('token', token);
-        
       
+        const decodedToken = atob(token.split('.')[1]);
+const tokenObject = JSON.parse(decodedToken);
+const roles = tokenObject.roles || [];
         
         login();
+       console.log(roles)
+       console.log(token)
+       if (roles.includes('ROLE_ADMIN')) {
        
-        navigate('/');
+        navigate('/admin');
+    
+      } else if (roles.includes('ROLE_SADMIN')) {
+       
+        navigate('/SAdmin');
+      
       } else {
-        // Display an error message for invalid credentials
+        
+        navigate('/');
+        
+      }
+      } else {
+       
         setError1('Invalid username or password');
       }
     } catch (error) {
@@ -45,7 +60,7 @@ function Login() {
    
     return (
       <div className="d-flex justify-content-center align-items-center vh-100" >
-      <div className="bg-white p-5 rounded w-50 shadow">
+      <div className="bg-white p-5 rounded  shadow">
         <h2 className="text-center mb-4">Login</h2>
         <form onSubmit={handleSubmit}>
          <div style={{ color: 'red' }}>{error1}</div> 
