@@ -78,40 +78,60 @@ function RegisterForm() {
 
   return (
     <div>
-    <div className='d-flex justify-content-center align-items-center vh-100' >
-      <div className='bg-white p-3 rounded w-50 shadow'>
-        <h2 className="text-center mb-3">Create Account</h2>
-        {msg && <p className="text-center text-success font-weight-bold">{msg}</p>}
-        <form onSubmit={(e) => RegisterUser(e)}>
-          <div className='mb-3'>
-            <label htmlFor='userName' className='form-label'>User Name:</label>
-            <input type="text" name="userName" className='form-control' onChange={(e) => handleChange(e)} value={user.userName} />
-            {errors.userName && <p className="text-danger">{errors.userName}</p>}
-          </div>
+  <div className='d-flex justify-content-center align-items-center vh-100'>
+    <div className='bg-white p-3 rounded w-50 shadow'>
+      <h2 className="text-center mb-3">Create Account</h2>
+      {msg && <p className="text-center text-success font-weight-bold">{msg}</p>}
+      <form onSubmit={(e) => RegisterUser(e)}>
+        <div className='mb-3 position-relative'>
+          <label htmlFor='userName' className='form-label'>User Name:</label>
+          <input type="text" name="userName" className='form-control' onChange={(e) => handleChange(e)} value={user.userName} />
+          {errors.userName && (
+            <div className="position-absolute top-100 start-0 translate-middle text-danger">
+              {errors.userName}
+            </div>
+          )}
+        </div>
 
-          <div className='mb-3'>
-            <label htmlFor='email' className='form-label'>Email:</label>
-            <input type="email" name="email" className='form-control' onChange={(e) => handleChange(e)} value={user.email} />
-            {errors.email && <p className="text-danger">{errors.email}</p>}
-          </div>
-          <div className='mb-3'>
-            <label htmlFor='mobile' className='form-label'>Mobile No:</label>
-            <input type="text" name="mobile" className='form-control' onChange={(e) => handleChange(e)} value={user.mobile} />
-            {errors.mobile && <p className="text-danger">{errors.mobile}</p>}
-          </div>
-          <div className='mb-3'>
-            <label htmlFor='password' className='form-label'>Password:</label>
-            <input type="password" name="password" className='form-control' onChange={(e) => handleChange(e)} value={user.password} />
-            {errors.password && <p className="text-danger">{errors.password}</p>}
-          </div>
-          <div className="d-flex justify-content-between">
-           <button type="submit" className='btn btn-primary btn-block'>Submit</button>
-            <Link to="/" className='btn btn-primary btn-block'>Back to Login</Link>
-          </div>
-        </form>
-      </div>
+        <div className='mb-3 position-relative'>
+          <label htmlFor='email' className='form-label'>Email:</label>
+          <input type="email" name="email" className='form-control' onChange={(e) => handleChange(e)} value={user.email} />
+          {errors.email && (
+            <div className="position-absolute top-100 start-0 translate-middle text-danger">
+              {errors.email}
+            </div>
+          )}
+        </div>
+
+        <div className='mb-3 position-relative'>
+          <label htmlFor='mobile' className='form-label'>Mobile No:</label>
+          <input type="text" name="mobile" className='form-control' onChange={(e) => handleChange(e)} value={user.mobile} />
+          {errors.mobile && (
+            <div className="position-absolute top-100 start-0 translate-middle text-danger">
+              {errors.mobile}
+            </div>
+          )}
+        </div>
+
+        <div className='mb-3 position-relative'>
+          <label htmlFor='password' className='form-label'>Password:</label>
+          <input type="password" name="password" className='form-control' onChange={(e) => handleChange(e)} value={user.password} />
+          {errors.password && (
+            <div className="position-absolute top-100 start-0 translate-middle text-danger">
+              {errors.password}
+            </div>
+          )}
+        </div>
+
+        <div className="d-flex justify-content-between">
+          <button type="submit" className='btn btn-primary btn-block'>Submit</button>
+          <Link to="/" className='btn btn-primary btn-block'>Back to Login</Link>
+        </div>
+      </form>
     </div>
-    </div>
+  </div>
+</div>
+
   );
 }
 

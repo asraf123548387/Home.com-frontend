@@ -7,6 +7,36 @@ function SadminDashboard() {
     const[admins,setAdmin]=useState([])
     const [searchQuery, setSearchQuery] = useState('');
     const [isAddAdminModalOpen, setIsAddAdminModalOpen] = useState(false);
+    const [blockedUsers, setBlockedUsers] = useState({});
+    const blockUrl = 'http://localhost:8080/admin/block';
+    const unblockUrl = 'http://localhost:8080/admin/unblock';
+  
+    const handleButtonClick = async (userId) => {
+      const confirmed = window.confirm(`Are you sure you want to ${blockedUsers[userId] ? 'unblock' : 'block'} this user?`);
+  
+      if (confirmed) {
+        try {
+          const url = blockedUsers[userId] ? unblockUrl : blockUrl;
+          const response = await axios.post(url, { userId }, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              'Content-Type': 'application/json',
+            },
+          });
+  
+          if (response.status >= 200 && response.status < 300) {
+            setBlockedUsers(prevBlockedUsers => ({
+              ...prevBlockedUsers,
+              [userId]: !prevBlockedUsers[userId], // Invert blocked status
+            }));
+          } else {
+            console.error('Failed to block/unblock user:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error blocking/unblocking user:', error.message);
+        }
+      }
+    };
     const openAddAdminModal = () => {
         setIsAddAdminModalOpen(true);
       };
@@ -105,14 +135,17 @@ function SadminDashboard() {
                   <td className="p-3 px-5">{admin.userName}</td>
                   <td className="p-3 px-5">{admin.email}</td>
                   <td className="p-3 px-5">{admin.mobile}</td>
+                  
                   <td className="p-3 px-5 flex justify-end">
-                  {/* <button
+                  <button
                     type="button"
-                    className={`mr-3 text-sm ${blockedUsers[user.id] ? 'bg-green-500 hover:bg-green-700' : 'bg-blue-500 hover:bg-blue-700'} text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline`}
-                    onClick={() => handleButtonClick(user.id)}
+                    
+                    className={`mr-3 text-sm ${blockedUsers[admin.id] ? 'bg-green-500 hover:bg-green-700' : 'bg-blue-500 hover:bg-blue-700'} text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline`}
+                    onClick={() => handleButtonClick(admin.id)}
                   >
-                    {blockedUsers[user.id] ? 'Unblock' : 'Block'}
-                  </button> */}
+                    
+                    {blockedUsers[admin.id] ? 'Unblock' : 'Block'}
+                  </button>
                   </td>
                 </tr>
               ))}

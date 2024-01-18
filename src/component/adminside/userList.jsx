@@ -6,9 +6,12 @@ function UserList() {
   const [blockedUsers, setBlockedUsers] = useState({});
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showSidebar, setShowSidebar] = useState(true);
   const blockUrl = 'http://localhost:8080/admin/block';
   const unblockUrl = 'http://localhost:8080/admin/unblock';
-
+  const toggleSidebar = () => {
+    setShowSidebar(!showSidebar);
+  };
   const handleButtonClick = async (userId) => {
     const confirmed = window.confirm(`Are you sure you want to ${blockedUsers[userId] ? 'unblock' : 'block'} this user?`);
 
@@ -69,58 +72,64 @@ function UserList() {
       
       
   return (
-<div className="flex h-screen">
-  <div className="w-1/4 p-6 bg-gray-800 text-white h-full">
-    <div className="relative flex-col justify-start items-start">
-      <div className="justify-center items-start gap-4 inline-flex">
-        <div className="w-10 h-10 relative flex-col justify-start items-start flex">
-          <img className="w-10 h-10 rounded-full" src={userlogo} alt="User Logo" />
-          
-        </div>
-        <div className="flex-col justify-start items-start">
-          <div className="text-white text-base font-bold leading-tight">Ashraf</div>
-          <div className="text-gray-400 text-base font-normal leading-normal">Admin</div>
-        </div>
-      </div>
-
-      <div className="flex-col justify-center items-start mt-4">
-        <div className="pl-[23px] pr-[77.04px] py-[7px] bg-gray-700 rounded-tr-[30px] rounded-br-[30px] border-l-2 border-green-500 flex items-center gap-2">
-          <div className="w-10 h-10 pl-[11px] pr-[10.69px] py-3 bg-gray-800 rounded-[40px]">
-            <img src={userlogo} alt="User Logo" />
+    
+    <div className={`flex h-screen ${showSidebar ? '' : 'overflow-x-hidden'}`}>
+    {showSidebar && (
+      <div className="w-1/4 p-6 bg-gray-800 text-white h-full">
+        <div className="relative flex-col justify-start items-start">
+          <div className="justify-center items-start gap-4 inline-flex">
+            <div className="w-12 h-12 relative flex-col justify-start items-start flex">
+              <img className="w-12 h-12 rounded-full" src={userlogo} alt="User Logo" />
+            </div>
+            <div className="flex-col justify-start items-start">
+              <div className="text-white text-lg font-bold leading-tight">Ashraf</div>
+              <div className="text-gray-400 text-base font-normal leading-normal">Admin</div>
+            </div>
           </div>
-          <div className="text-green-500 text-base font-medium leading-normal">User Manage</div>
+  
+          <div className="flex-col justify-center items-start mt-4">
+            <div className="pl-[23px] pr-[77.04px] py-[7px] bg-gray-700 rounded-tr-[30px] rounded-br-[30px] border-l-2 border-green-500 flex items-center gap-2">
+              <div className="w-12 h-12 pl-[11px] pr-[10.69px] py-3 bg-gray-800 rounded-[40px]">
+                <img src={userlogo} alt="User Logo" />
+              </div>
+              <div className="text-green-500 text-lg font-medium leading-normal">User Management</div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div className="text-gray-900 w-3/4 h-full overflow-y-auto">
-    <div className="p-4 flex">
-      <h1 className="text-3xl">Users List</h1>
-    </div>
-    <input
-            type="text"
-            placeholder="Search by username"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="ml-4 p-2 border border-gray-800 rounded"
-          />
-    <div className="px-3 py-4 flex justify-center">
-      <table className="w-full text-md bg-white shadow-md rounded mb-4">
-        <tbody>
-          <tr className="border-b">
-            <th className="text-left p-3 px-5">userName</th>
-            <th className="text-left p-3 px-5">Email</th>
-            <th className="text-left p-3 px-5">phoneNumber</th>
-            <th></th>
-          </tr>
-
-          {users.map((user) => (
-                <tr key={user.id} className="border-b hover:bg-orange-100 bg-gray-100">
-                  <td className="p-3 px-5">{user.userName}</td>
-                  <td className="p-3 px-5">{user.email}</td>
-                  <td className="p-3 px-5">{user.mobile}</td>
-                  <td className="p-3 px-5 flex justify-end">
+    )}
+  
+    <div className={`text-gray-900 w-${showSidebar ? '3/4' : 'full'} h-full overflow-y-auto transition-all duration-300 ease-in-out`}>
+      <div className="p-4 flex">
+        <button onClick={toggleSidebar} className="text-blue-500 hover:text-blue-700 focus:outline-none">
+          Close
+        </button>
+        <h1 className="text-3xl font-semibold ml-4">Users List</h1>
+      </div>
+      <input
+        type="text"
+        placeholder="Search by username"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="ml-4 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+      />
+      <div className="px-3 py-4 flex justify-center">
+        <table className="w-full text-md bg-white shadow-md rounded mb-4">
+          <thead>
+            <tr className="border-b bg-gray-200">
+              <th className="text-left p-3 px-5">Username</th>
+              <th className="text-left p-3 px-5">Email</th>
+              <th className="text-left p-3 px-5">Phone Number</th>
+              <th className="text-right p-3 px-5">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user.id} className="border-b hover:bg-orange-100 bg-gray-100">
+                <td className="p-3 px-5">{user.userName}</td>
+                <td className="p-3 px-5">{user.email}</td>
+                <td className="p-3 px-5">{user.mobile}</td>
+                <td className="p-3 px-5 flex justify-end">
                   <button
                     type="button"
                     className={`mr-3 text-sm ${blockedUsers[user.id] ? 'bg-green-500 hover:bg-green-700' : 'bg-blue-500 hover:bg-blue-700'} text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline`}
@@ -128,17 +137,17 @@ function UserList() {
                   >
                     {blockedUsers[user.id] ? 'Unblock' : 'Block'}
                   </button>
-                  </td>
-                </tr>
-              ))}
-        </tbody>
-      </table>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
-
-
-  )
+  
+    );
+    
 }
 
 export default UserList

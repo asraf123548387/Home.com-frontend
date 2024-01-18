@@ -9,7 +9,7 @@ function Navbar() {
 
   return (
 <div>
-    <div className="bg-white border-b border-black">
+    <div className=" bg-white border-b border-black   ">
         <nav className="container mx-auto p-4 flex items-center justify-between ml-4">
             <div className="flex items-center space-x-2">
                 <img src={logo} alt="Logo" className="h-8 w-8 ml-2" />

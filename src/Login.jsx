@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { useAuth } from './contextapi/authContext';
 import UserService from './service/UserService';
+import Swal from 'sweetalert2'
 
 
 
@@ -29,22 +30,40 @@ function Login() {
         localStorage.setItem('token', token);
       
         const decodedToken = atob(token.split('.')[1]);
-const tokenObject = JSON.parse(decodedToken);
-const roles = tokenObject.roles || [];
+        const tokenObject = JSON.parse(decodedToken);
+        const roles = tokenObject.roles || [];
         
         login();
        console.log(roles)
        console.log(token)
        if (roles.includes('ROLE_ADMIN')) {
-       
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "successfully logined",
+          showConfirmButton: false,
+          timer: 1500
+        });
         navigate('/admin');
     
       } else if (roles.includes('ROLE_SADMIN')) {
-       
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "successfully logined",
+          showConfirmButton: false,
+          timer: 1500
+        });
         navigate('/SAdmin');
       
       } else {
-        
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "successfully logined",
+          showConfirmButton: false,
+          timer: 1500
+        });
         navigate('/');
         
       }

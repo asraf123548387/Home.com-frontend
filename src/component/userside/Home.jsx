@@ -1,7 +1,11 @@
 import React from 'react'
 import { useState } from 'react';
-
+import california from '../../images/california.png'
+import munnar from '../../images/munnar.png'
 import Navbar from './Navbar'
+import mumbai from '../../images/mumbai.png'
+import delhi from '../../images/delhi.png'
+import { Link } from 'react-router-dom';
 function Home() {
     const [destination, setDestination] = useState('');
     const [departureDate, setDepartureDate] = useState('');
@@ -39,84 +43,127 @@ function Home() {
       
            <Navbar/>
        
-           <div className="w-[166px] h-[41px] text-slate-800 text-4xl font-medium font-['Roboto'] leading-10 ml-4 md:ml-20 mt-1">Where to?</div>
+           <div className="w-1/4 h-[41px] text-slate-800 text-4xl font-medium font-['Roboto'] leading-10 ml-4 md:ml-9 mt-1">Where to?</div>
 
-<section>
-<form className="flex flex-col md:flex-row items-center mt-3 md:mt-0 md:ml-20" onSubmit={handleSubmit}>
+<section className=" w-screen flex flex-col md:flex-row items-center mt-3 md:ml-9">
+<form className='w-full  flex' onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="Going to"
-        className="w-full md:w-[330px] h-12 relative bg-white rounded-lg border border-slate-500 mb-4 md:mb-0 md:mr-4"
+        className=" md:w-3/12 h-12 relative bg-white rounded-lg border border-slate-500 mb-4 md:mb-0 md:mr-4"
         value={destination}
         onChange={handleDestinationChange}
       />
       <input
         type="date"
-        className="w-full md:w-[300px] h-12 pl-4 pr-3 pb-2 bg-white rounded-lg border border-slate-500 mb-4 md:mb-0 md:mr-4"
+        className=" md:w-3/12 h-12 pl-4 pr-3 pb-2 bg-white rounded-lg border border-slate-500 mb-4 md:mb-0 md:mr-4"
         value={departureDate}
         onChange={handleDepartureDateChange}
       />
-
-      <div className="w-full md:w-[300px] h-12 pl-4 pr-3 pb-2 bg-white rounded-lg border border-slate-500 mb-4 md:mb-0 md:mr-4">
-        <div className="w-full h-full text-slate-800 text-base font-normal font-['Roboto'] leading-tight">
-          <label htmlFor="numTravelers" className="mr-2">
-            Travellers:
-          </label>
-          <input
-            type="number"
-            id="numTravelers"
-            value={numTravelers}
-            onChange={handleNumTravelersChange}
-            min="1"
-          />
-          {/* <span className="mx-2">,</span>
-          <label htmlFor="numRooms" className="mr-2">
-            Rooms:
-          </label>
-          <input type="number" id="numRooms" value={numRooms} onChange={handleNumRoomsChange} min="1" /> */}
-        </div>
-      </div>
+      <input
+        type="date"
+        className=" md:w-3/12 h-12 pl-4 pr-3 pb-2 bg-white rounded-lg border border-slate-500 mb-4 md:mb-0 md:mr-4"
+        value={departureDate}
+        onChange={handleDepartureDateChange}
+      />
+      
 
       <button type="submit">
-        <div className="w-full md:w-[150px] h-17 bg-blue-600 rounded-full mb-4 md:mb-0 flex items-center justify-center">
+        <div className=" md:w-[150px] h-17 bg-blue-600 rounded-full mb-4 md:mb-0 flex items-center justify-center">
           <h2 className="text-white text-2xl">Search</h2>
         </div>
       </button>
     </form>
 </section>
 
-<section className="flex flex-col items-center mt-1 md:ml-20">
-    <div className="w-full md:w-[1140px] h-36  py-3 bg-rose-600 rounded-2xl flex justify-center items-center gap-10 mr-12">
-        <div className="w-full md:w-[200px] h-16 flex flex-col justify-between mr-4">
-            <div className="text-white text-[20px] font-medium font-['Roboto'] leading-loose">Find and book your<br />perfect stay </div>
-            <div className="w-4 h-4" />
+<section >
+    <div className="md:w-11/12 h-38 py-3 bg-rose-600 rounded-2xl flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 mx-auto ">
+        <div className="w-full md:w-[100%] md:max-w-52 h-16 flex flex-col justify-between md:mr-4">
+            <p className="text-white text-xl font-medium font-['Roboto'] leading-loose text-center md:text-left">Find and book your<br />perfect stay</p> 
+           
         </div>
 
-        <div className="w-full md:w-[700px] h-[120px] justify-center items-start gap-3 inline-flex">
-            <div className="w-[270px] h-[120px] px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4 inline-flex">
-                <div className="w-12 h-12 relative flex-col justify-start items-start flex" />
-                <div className="w-[300px] h-10 pr-2 pt-px pb-0.5 justify-start items-center inline-flex">
-                    <div className="w-full h-[37px] text-white text-base font-normal font-['Roboto'] leading-tight">Earn rewards on every<br/>night you stay</div>
-                </div>
+        <div className=" md:w-[100%] md:max-w-[700px] h-[120px] justify-center items-start gap-3 md:inline-flex">
+            <div className="w-full md:w-[100%] md:max-w-72 h-32 px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4">
+              
+                <p className=" h-[37px] text-white text-base font-normal font-['Roboto'] leading-tight text-center md:text-left">Earn rewards on every<br/>night you stay</p>
             </div>
 
-            <div className="w-[270px] h-[120px] px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4 inline-flex">
-                <div className="w-12 h-12 relative flex-col justify-start items-start flex" />
-                <div className="w-[270px] h-10 pr-2 pt-px pb-0.5 justify-start items-center inline-flex">
-                    <div className="w-full h-[37px] text-white text-base font-normal font-['Roboto'] leading-tight">Save more with<br/>Member Prices</div>
-                </div>
+            <div className=" md:w-[100%]  md:max-w-72 h-32 px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4">
+               
+                <p className="w-full h-[37px] text-white text-base font-normal font-['Roboto'] leading-tight text-center md:text-left">Save more with<br/>Member Prices</p>
+            </div>
+            <div className=" md:w-[100%]  md:max-w-72 h-32 px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4">
+               
+                <p className="w-full h-[37px] text-white text-base font-normal font-['Roboto'] leading-tight text-center md:text-left">Free cancellation<br/>options if plans change</p>
             </div>
 
-            <div className="w-[270px] h-[120px] px-3 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4 inline-flex">
-                <div className="w-12 h-12 relative flex-col justify-start items-start flex" />
-                <div className="w-[270px] h-10 pr-2 pt-px pb-0.5 justify-start items-center inline-flex">
-                    <div className="w-full h-[37px] text-white text-base font-normal font-['Roboto'] leading-tight">Free cancellation<br/>options if plans change</div>
-                </div>
-            </div>
+          
         </div>
     </div>
 </section>
 
+
+ {/*here i want set some feture here  */}
+<section>
+   <div className=" text-slate-800 text-[27.67px] font-medium font-['Roboto'] leading-loose pl-20 ">Explore stays in trending destinations</div>
+<div className='flex pl-20 ml-5'>
+   <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-1" >
+         <img src={california} alt="" className='rounded-t-2xl border border-solid border-gray-500'/>
+         <p>sanfransisco</p>
+   </div>
+   <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-1" >
+          <img src={munnar} alt="" className='rounded-t-2xl border border-solid border-gray-500'/>
+          <p>Munnar</p>
+   </div>
+   <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-2" >
+           <img src={mumbai} alt="" className='rounded-t-2xl border border-solid border-gray-500'/>
+           <p>mumbai</p>
+   </div>
+   <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-2" >
+           <img src={delhi} alt=""  className='rounded-t-2xl border border-solid border-gray-500'/>
+           <p>delhi</p>
+   </div>
+</div>
+
+
+</section>
+
+
+{/* here i want anothwe section */}
+<section class>
+<div >
+    <h3 className="w-1/2 text-slate-800  font-medium font-['Roboto'] leading-loose">Get away this weekend</h3>
+  
+</div>
+
+<div className='flex'>
+      <div className='w-1/4 h-96 rounded-2xl' >
+      <img src={munnar}></img>
+      <p>hello</p>
+
+      </div>
+      <div className='w-1/4 h-96' >
+      <img src={munnar}></img>
+      <p>hello</p>
+
+      </div>
+      <div className='w-1/4 h-96' >
+      
+      <img src={munnar}></img>
+      <p>hello</p>
+      </div>
+      <div className='w-1/4 h-96' >
+        <img src={munnar}></img>
+      <p>hello</p>
+
+      </div>
+
+      
+</div>
+
+
+</section>
 
 
   </div>
