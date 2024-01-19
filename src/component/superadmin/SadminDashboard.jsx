@@ -104,13 +104,13 @@ function SadminDashboard() {
       <h1 className="text-3xl">Admins List</h1>
     </div>
     <div className="flex items-center">
-  <input
-    type="text"
-    placeholder="Search by Admin name"
-    value={searchQuery}
-    onChange={(e) => setSearchQuery(e.target.value)}
-    className="ml-4 p-2 border border-gray-800 rounded"
-  />
+         <input
+         type="text"
+          placeholder="Search by Admin name"
+           value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+         className="ml-4 p-2 border border-gray-800 rounded"
+         />
      <button
           className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           onClick={openAddAdminModal}

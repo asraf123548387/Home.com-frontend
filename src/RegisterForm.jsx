@@ -87,7 +87,7 @@ function RegisterForm() {
           <label htmlFor='userName' className='form-label'>User Name:</label>
           <input type="text" name="userName" className='form-control' onChange={(e) => handleChange(e)} value={user.userName} />
           {errors.userName && (
-            <div className="position-absolute top-100 start-0 translate-middle text-danger">
+            <div className="position-absolute top-100 start-0 translate-middle text-danger  border-neutral-500 border-1">
               {errors.userName}
             </div>
           )}
@@ -97,7 +97,7 @@ function RegisterForm() {
           <label htmlFor='email' className='form-label'>Email:</label>
           <input type="email" name="email" className='form-control' onChange={(e) => handleChange(e)} value={user.email} />
           {errors.email && (
-            <div className="position-absolute top-100 start-0 translate-middle text-danger">
+            <div className="position-absolute top-100 start-0 translate-middle text-danger  border-neutral-500 border-1">
               {errors.email}
             </div>
           )}
@@ -107,7 +107,7 @@ function RegisterForm() {
           <label htmlFor='mobile' className='form-label'>Mobile No:</label>
           <input type="text" name="mobile" className='form-control' onChange={(e) => handleChange(e)} value={user.mobile} />
           {errors.mobile && (
-            <div className="position-absolute top-100 start-0 translate-middle text-danger">
+            <div className="position-absolute top-100 start-0 translate-middle text-danger  border-neutral-500 border-1">
               {errors.mobile}
             </div>
           )}
@@ -117,7 +117,7 @@ function RegisterForm() {
           <label htmlFor='password' className='form-label'>Password:</label>
           <input type="password" name="password" className='form-control' onChange={(e) => handleChange(e)} value={user.password} />
           {errors.password && (
-            <div className="position-absolute top-100 start-0 translate-middle text-danger">
+            <div className="position-absolute top-100 start-0 translate-middle text-danger border-neutral-500 border-1">
               {errors.password}
             </div>
           )}

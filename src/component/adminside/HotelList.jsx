@@ -3,21 +3,30 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import userlogo from '../../images/hotellogin.png'
 import axios from 'axios'
+import AddHotelModal from './AddHotelModal'
 function HotelList() {
-  const[users,setUsers]=useState([])
-  
+  const[hotels,sethotel]=useState([])
+  const[addHotelModalOpen,setAddHotelModalOpen]=useState(false);
  const [searchQuery, setSearchQuery] = useState('');
   const [showSidebar, setShowSidebar] = useState(true);
   
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
- 
+
+
+  const open=()=>{
+    setAddHotelModalOpen(true);
+    console.log("hrkhjgfghasfdtygs")
+  }
+ const close=()=>{
+  setAddHotelModalOpen(false);
+ }
 
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    const fetchAllUsers = async () => {
+    const fetchAllHotel = async () => {
       try {
         const response = await axios.get('http://localhost:8080/admin/hotelList', {
           headers: {
@@ -30,7 +39,7 @@ function HotelList() {
         });
 
         if (response.status >= 200 && response.status < 300) {
-          setUsers(response.data);
+          sethotel(response.data);
         } else {
           console.error('Failed to fetch users:', response.statusText);
         }
@@ -39,7 +48,7 @@ function HotelList() {
       }
     };
 
-    fetchAllUsers();
+    fetchAllHotel();
   }, [searchQuery]);
       
   return (
@@ -77,13 +86,20 @@ function HotelList() {
         </button>
         <h1 className="text-3xl font-semibold ml-4">Hotel List</h1>
       </div>
-      <input
-        type="text"
-        placeholder="Search by username"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="ml-4 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-      />
+      <div className='flex content-center'>
+                  <input
+                  type="text"
+                  placeholder="Search by username"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="ml-4 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  />
+                  <button className='ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={open}>
+                    Add hotel
+
+                  </button>
+                  <AddHotelModal isOpen={addHotelModalOpen}  onSuccess={close}/>
+      </div>
       <div className="px-3 py-4 flex justify-center">
         <table className="w-full text-md bg-white shadow-md rounded mb-4">
           <thead>
@@ -95,11 +111,11 @@ function HotelList() {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-              <tr key={user.id} className="border-b hover:bg-orange-100 bg-gray-100">
-                <td className="p-3 px-5">{user.userName}</td>
-                <td className="p-3 px-5">{user.email}</td>
-                <td className="p-3 px-5">{user.mobile}</td>
+            {hotels.map((hotel) => (
+              <tr key={hotel.id} className="border-b hover:bg-orange-100 bg-gray-100">
+                <td className="p-3 px-5">{hotel.userName}</td>
+                <td className="p-3 px-5">{hotel.email}</td>
+                <td className="p-3 px-5">{hotel.mobile}</td>
                 <td className="p-3 px-5 flex justify-end">
                   
                 </td>
