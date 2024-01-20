@@ -106,16 +106,16 @@ function HotelList() {
             <tr className="border-b bg-gray-200">
               <th className="text-left p-3 px-5">Hotel name</th>
               <th className="text-left p-3 px-5">Location </th>
-              <th className="text-left p-3 px-5">Available Room  </th>
-              <th className="text-right p-3 px-5">Actions</th>
+              <th className="text-left p-3 px-5">images  </th>
+              <th className="text-right p-3 px-5">phone</th>
             </tr>
           </thead>
           <tbody>
             {hotels.map((hotel) => (
               <tr key={hotel.id} className="border-b hover:bg-orange-100 bg-gray-100">
-                <td className="p-3 px-5">{hotel.userName}</td>
-                <td className="p-3 px-5">{hotel.email}</td>
-                <td className="p-3 px-5">{hotel.mobile}</td>
+                <td className="p-3 px-5">{hotel.hotelName}</td>
+                <td className="p-3 px-5">{hotel.location}</td>
+                <td className="p-3 px-5">{hotel.images}</td>
                 <td className="p-3 px-5 flex justify-end">
                   
                 </td>

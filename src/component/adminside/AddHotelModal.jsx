@@ -9,8 +9,9 @@ const AddHotelModal=({isOpen,onSuccess})=> {
         phone:'',
         address:'',
         description:'',
-        images:''
-    })
+        images:'',
+        location:'',
+    });
 const [msg,setMsg]=useState('');
 const [errors,setErrors]=useState({});
 
@@ -50,8 +51,11 @@ const validateForm = () => {
     if (!hotel.images.trim()) {
       newErrors.images = "Images are required";
     }
+    if (!hotel.location.trim()) {
+      newErrors.images = "Location are required";
+    }
   
-    // Add additional validation rules as needed
+    // Add additional validation rules as neededhote
   
     return newErrors;
   };
@@ -60,6 +64,7 @@ const validateForm = () => {
 const RegisterUser = async (e) => {
     e.preventDefault();
     const userId = localStorage.getItem('userId');
+    console.log(userId)
     console.log(hotel)
     if (validateForm()) {
       try {
@@ -73,7 +78,7 @@ const RegisterUser = async (e) => {
             userId: userId,
           };
 
-        
+        console.log(hotelWithUserId)
         // Make a POST request to your backend API to register the admin
         const response = await axios.post('http://localhost:8080/admin/savehotel', hotelWithUserId, { headers })
           
@@ -96,6 +101,7 @@ const RegisterUser = async (e) => {
             address:'',
             description:'',
             images:'',
+            location:'',
           });
         } else {
           // Handle other status codes or error scenarios
@@ -126,8 +132,9 @@ const RegisterUser = async (e) => {
     content: {
       border: 'none',  // Remove border
       background: 'transparent',  // Set content background to transparent
-      padding: 0,
-      overflowY: 'auto'
+    
+      overflowY: 'scroll',
+      height: 'auto',
         // Remove padding
       
     },
@@ -137,47 +144,81 @@ const RegisterUser = async (e) => {
         
         <div className='d-flex justify-content-center align-items-center vh-100'>
           <div className='bg-white p-3 rounded w-50 shadow'>
-            <h2 className="text-center mb-3">Add Admin</h2>
+            <h2 className="text-center mb-3">Add Hotel</h2>
             {msg && <p className="text-center text-success font-weight-bold">{msg}</p>}
-            <form onSubmit={(e) => RegisterUser(e)}>
-              <div className='mb-3'>
-                <label htmlFor='userName' className='form-label'>Hotel Name:</label>
-                <input type="text" name="userName" className='form-control' onChange={(e) => handleChange(e)} value={hotel.hotelName} />
-                {errors.hotelName && <p className="text-danger">{errors.hotelName}</p>}
-              </div>
+              <form className="w-full max-w-lg" onSubmit={(e) => RegisterUser(e)}>
+                  <div className="flex flex-wrap -mx-3 mb-6">
+                    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="hotelName">
+                        Hotel Name:
+                      </label>
+                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" name="hotelName" type="text" placeholder="..." onChange={(e) => handleChange(e)} value={hotel.hotelName}/>
+                      {errors.hotelName && <p className="text-danger">{errors.hotelName}</p>}
+                    </div>
+                    <div className="w-full md:w-1/2 px-3">
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="location">
+                        Location
+                      </label>
+                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="location" type="text" placeholder="..." onChange={(e) => handleChange(e)} value={hotel.location}/>
+                      {errors.location && <p className="text-danger">{errors.location}</p>}
+                    </div>
+                  </div>
 
-              <div className='mb-3'>
-                <label htmlFor='email' className='form-label'>Email:</label>
-                <input type="email" name="email" className='form-control' onChange={(e) => handleChange(e)} value={hotel.email} />
-                {errors.email && <p className="text-danger">{errors.email}</p>}
-              </div>
-              <div className='mb-3'>
-                <label htmlFor='mobile' className='form-label'>Mobile No:</label>
-                <input type="text" name="mobile" className='form-control' onChange={(e) => handleChange(e)} value={hotel.phone} />
-                {errors.phone && <p className="text-danger">{errors.phone}</p>}
-              </div>
-              <div className='mb-3'>
-                <label htmlFor='password' className='form-label'>address:</label>
-                <input type="password" name="password" className='form-control' onChange={(e) => handleChange(e)} value={hotel.address} />
-                {errors.address && <p className="text-danger">{errors.address}</p>}
-              </div>
-              <div className='mb-3'>
-                <label htmlFor='password' className='form-label'>images:</label>
-                <input type="password" name="password" className='form-control' onChange={(e) => handleChange(e)} value={hotel.images} />
-                {errors.password && <p className="text-danger">{errors.password}</p>}
-              </div>
-              <div className='mb-3'>
-                <label htmlFor='password' className='form-label'>description:</label>
-                <input type="password" name="password" className='form-control' onChange={(e) => handleChange(e)} value={hotel.description} />
-                {errors.description && <p className="text-danger">{errors.description}</p>}
-              </div>
-              <div className="d-flex justify-content-between">
-                <button type="submit" className='btn btn-primary btn-block'>Add</button>
+                  <div className="flex flex-wrap -mx-3 mb-6">
+                    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="phone">
+                        Mobile Number:
+                      </label>
+                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" name="phone" type="text" placeholder="..." onChange={(e) => handleChange(e)} value={hotel.phone}/>
+                      {errors.phone && <p className="text-danger">{errors.phone}</p>}
+                    </div>
+                    <div className="w-full md:w-1/2 px-3">
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="images">
+                        images:
+                      </label>
+                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="images" type="text" placeholder="..." onChange={(e) => handleChange(e)} value={hotel.images}/>
+                      {errors.images && <p className="text-danger">{errors.images}</p>}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap -mx-3 mb-6">
+                    <div className="w-full px-3">
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
+                        email:
+                      </label>
+                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="email" type="email" placeholder="..." onChange={(e) => handleChange(e)} value={hotel.email} />
+                      {errors.email && <p className="text-danger">{errors.email}</p>}
+                    </div>
+                  </div>
+
+
+                  <div className="flex flex-wrap -mx-3 mb-6">
+                    <div className="w-full px-3">
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="address">
+                        Address:
+                      </label>
+                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="address" type="text" placeholder="..." onChange={(e) => handleChange(e)} value={hotel.address} />
+                      {errors.address && <p className="text-danger">{errors.address}</p>}
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap -mx-3 mb-6">
+                    <div className="w-full px-3">
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="description">
+                        description:
+                      </label>
+                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="description" type="text" placeholder="..." onChange={(e) => handleChange(e)} value={hotel.description} />
+                      {errors.address && <p className="text-danger">{errors.address}</p>}
+                    </div>
+                  </div>
+                  <div className="d-flex justify-content-between">
+                      <button type="submit" className='btn btn-primary btn-block'>Add</button>
                 
-              </div>
-            </form>
+                   </div>
+
+                </form>
           </div>
         </div>
+        
       </div>
     </Modal>
 
