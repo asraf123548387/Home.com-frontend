@@ -115,10 +115,10 @@ function HotelList() {
               <tr key={hotel.id} className="border-b hover:bg-orange-100 bg-gray-100">
                 <td className="p-3 px-5">{hotel.hotelName}</td>
                 <td className="p-3 px-5">{hotel.location}</td>
-                <td className="p-3 px-5">{hotel.images}</td>
-                <td className="p-3 px-5 flex justify-end">
-                  
-                </td>
+           <td className="p-3 px-5">
+            <img src={hotel.images} alt="Hotel Image" className='w-12 h-10' />
+          </td>
+          <td className="p-3 px-5">{hotel.phone}</td>
               </tr>
             ))}
           </tbody>

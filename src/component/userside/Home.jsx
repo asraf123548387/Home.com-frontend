@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
-import california from '../../images/california.png'
-import munnar from '../../images/munnar.png'
-import Navbar from './Navbar'
-import mumbai from '../../images/mumbai.png'
-import delhi from '../../images/delhi.png'
-import { Link } from 'react-router-dom';
+import california from '../../images/california.png';
+import munnar from '../../images/munnar.png';
+import Navbar from './Navbar';
+import mumbai from '../../images/mumbai.png';
+import delhi from '../../images/delhi.png';
+
+
+
 function Home() {
+
+    const[hotels,sethotels]=useState([]);
     const [destination, setDestination] = useState('');
     const [departureDate, setDepartureDate] = useState('');
     const [numTravelers, setNumTravelers] = useState(2);
@@ -38,6 +42,15 @@ function Home() {
         numRooms,
       });
     };
+
+
+
+    // under these code are main code 
+    useEffect(()=>{
+    const token =localStorage.getItem('token');
+    
+
+    })
   return (
    <div>
       
@@ -110,19 +123,23 @@ function Home() {
 <div className='flex pl-20 ml-5'>
    <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-1" >
          <img src={california} alt="" className='rounded-t-2xl border border-solid border-gray-500'/>
-         <p>sanfransisco</p>
+         <h5>Madgoan </h5>
+         <h6 className=''>GOA</h6>
    </div>
    <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-1" >
           <img src={munnar} alt="" className='rounded-t-2xl border border-solid border-gray-500'/>
-          <p>Munnar</p>
+          <h5>Munnar</h5>
+         <h6 className=''>Kerala</h6>
    </div>
    <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-2" >
            <img src={mumbai} alt="" className='rounded-t-2xl border border-solid border-gray-500'/>
-           <p>mumbai</p>
+           <h5>Mumbai</h5>
+         <h6 className=''>Maharashtra</h6>
    </div>
    <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-2" >
            <img src={delhi} alt=""  className='rounded-t-2xl border border-solid border-gray-500'/>
-           <p>delhi</p>
+           <h5>Delhi</h5>
+         <h6 className=''>NewDelhi</h6>
    </div>
 </div>
 
