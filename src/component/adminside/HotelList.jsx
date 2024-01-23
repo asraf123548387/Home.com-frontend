@@ -4,11 +4,15 @@ import { useEffect } from 'react'
 import userlogo from '../../images/hotellogin.png'
 import axios from 'axios'
 import AddHotelModal from './AddHotelModal'
+import EditHotelModal from './EditHotelModal'
 function HotelList() {
-  const[hotels,sethotel]=useState([])
-  const[addHotelModalOpen,setAddHotelModalOpen]=useState(false);
- const [searchQuery, setSearchQuery] = useState('');
-  const [showSidebar, setShowSidebar] = useState(true);
+  const[hotels,sethotel]=useState([])// this is for store hotel details.
+  const[addHotelModalOpen,setAddHotelModalOpen]=useState(false); //this is for add hotel modal data
+  const [searchQuery, setSearchQuery] = useState('');// this is mainly used to serach the hotel
+  const [showSidebar, setShowSidebar] = useState(true); //this is mainly used for show thr side bar 
+  const[editHotelModalOpen,setEditHotelModalOpen]=useState(false);
+  const[hotelToEdit,setHotelToEdit]=useState(null);
+
   
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
@@ -51,6 +55,38 @@ function HotelList() {
     fetchAllHotel();
   }, [searchQuery]);
       
+
+  const openEditHotelModal = async (hotelId) => {
+    const token = localStorage.getItem('token');
+    console.log(hotelId);
+    
+    try {
+
+      const response = await axios.get(`http://localhost:8080/admin/hotel/${hotelId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.status >= 200 && response.status < 300) {
+        setHotelToEdit(response.data);
+     
+        setEditHotelModalOpen(true);
+      } else {
+        console.error('Failed to fetch hotel details:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching hotel details:', error.message);
+    }
+  };
+
+  const closeEditHotelModal = () => {
+    setHotelToEdit(null);
+    setEditHotelModalOpen(false);
+  };
+
+  
   return (
     <div>
       <div className={`flex h-screen ${showSidebar ? '' : 'overflow-x-hidden'}`}>
@@ -94,7 +130,7 @@ function HotelList() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="ml-4 p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                   />
-                  <button className='ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={open}>
+                  <button className='ml-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={open}>
                     Add hotel
 
                   </button>
@@ -107,7 +143,7 @@ function HotelList() {
               <th className="text-left p-3 px-5">Hotel name</th>
               <th className="text-left p-3 px-5">Location </th>
               <th className="text-left p-3 px-5">images  </th>
-              <th className="text-right p-3 px-5">phone</th>
+              <th className="text-right p-3 px-5">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -118,7 +154,16 @@ function HotelList() {
            <td className="p-3 px-5">
             <img src={hotel.images} alt="Hotel Image" className='w-12 h-10' />
           </td>
-          <td className="p-3 px-5">{hotel.phone}</td>
+          <td className="p-3 px-5"><button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" onClick={()=>{openEditHotelModal(hotel.hotelId)}}>Edit</button></td>
+          <EditHotelModal
+        isOpen={editHotelModalOpen}
+        hotelData={hotelToEdit}
+        // onEdit={handleEditHotel}
+        onClose={closeEditHotelModal}
+      />
+
+
+      
               </tr>
             ))}
           </tbody>

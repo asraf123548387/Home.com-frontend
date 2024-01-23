@@ -5,17 +5,21 @@ import munnar from '../../images/munnar.png';
 import Navbar from './Navbar';
 import mumbai from '../../images/mumbai.png';
 import delhi from '../../images/delhi.png';
+import axios from 'axios';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 
 
 function Home() {
 
-    const[hotels,sethotels]=useState([]);
+   
     const [destination, setDestination] = useState('');
     const [departureDate, setDepartureDate] = useState('');
     const [numTravelers, setNumTravelers] = useState(2);
     const [numRooms, setNumRooms] = useState(1);
-  
+    const[hotel,setHotel]=useState([]);
     const handleDestinationChange = (event) => {
       setDestination(event.target.value);
     };
@@ -28,10 +32,7 @@ function Home() {
       setNumTravelers(parseInt(event.target.value, 10));
     };
   
-    // const handleNumRoomsChange = (event) => {
-    //   setNumRooms(parseInt(event.target.value, 10));
-    // };
-  
+    
     const handleSubmit = (event) => {
       event.preventDefault();
       // Handle form submission logic here
@@ -46,13 +47,55 @@ function Home() {
 
 
     // under these code are main code 
-    useEffect(()=>{
-    const token =localStorage.getItem('token');
+    useEffect(() => {
+      const fetchAllHotel = async () => {
+        try {
+          
+        
     
+          const response = await axios.get('http://localhost:8080/user/hotelList');
+    
+          if (response.status >= 200 && response.status < 300) {
+            setHotel(response.data);
+            console.log(response.data);
+          } else {
+            console.error('Failed to fetch hotels:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error fetching hotels:', error.message);
+        }
+      };
+    
+      fetchAllHotel();
+    }, []);
+   
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 4, // Adjust the number of slides to show
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+          },
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          },
+        },
+      ],
+    };
 
-    })
+    
   return (
-   <div>
+   <div className='overflow-x-hidden'>
       
            <Navbar/>
        
@@ -128,7 +171,7 @@ function Home() {
    </div>
    <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-1" >
           <img src={munnar} alt="" className='rounded-t-2xl border border-solid border-gray-500'/>
-          <h5>Munnar</h5>
+          <h5>Kochi</h5>
          <h6 className=''>Kerala</h6>
    </div>
    <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-2" >
@@ -148,37 +191,25 @@ function Home() {
 
 
 {/* here i want anothwe section */}
-<section class>
-<div >
+<section>
+<div className='ml-3' >
     <h3 className="w-1/2 text-slate-800  font-medium font-['Roboto'] leading-loose">Get away this weekend</h3>
   
 </div>
 
-<div className='flex'>
-      <div className='w-1/4 h-96 rounded-2xl' >
-      <img src={munnar}></img>
-      <p>hello</p>
-
-      </div>
-      <div className='w-1/4 h-96' >
-      <img src={munnar}></img>
-      <p>hello</p>
-
-      </div>
-      <div className='w-1/4 h-96' >
-      
-      <img src={munnar}></img>
-      <p>hello</p>
-      </div>
-      <div className='w-1/4 h-96' >
-        <img src={munnar}></img>
-      <p>hello</p>
-
-      </div>
-
-      
-</div>
-
+<Slider {...settings} className='ml-5'>
+      {hotel.map((hotelItem, index) => (
+        <div key={index} className='w-1/4 h-96  mr-4 overflow-hidden'>
+          <img
+            src={hotelItem.images}
+            alt={`Hotel ${index + 1}`}
+            style={{ objectFit: 'cover', width: '90%', height: '50%' }} className='rounded-tl-2xl rounded-tr-2xl'
+          />
+          <p>{hotelItem.hotelName}</p>
+          <p>{hotelItem.location}</p>
+        </div>
+      ))}
+    </Slider>
 
 </section>
 

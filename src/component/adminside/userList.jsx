@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import userlogo from '../../images/user.png';
+import Swal from 'sweetalert2';
 
 function UserList() {
   const [blockedUsers, setBlockedUsers] = useState({});
@@ -13,30 +14,44 @@ function UserList() {
     setShowSidebar(!showSidebar);
   };
   const handleButtonClick = async (userId) => {
-    const confirmed = window.confirm(`Are you sure you want to ${blockedUsers[userId] ? 'unblock' : 'block'} this user?`);
-
-    if (confirmed) {
-      try {
-        const url = blockedUsers[userId] ? unblockUrl : blockUrl;
-        const response = await axios.post(url, { userId }, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (response.status >= 200 && response.status < 300) {
-          setBlockedUsers(prevBlockedUsers => ({
-            ...prevBlockedUsers,
-            [userId]: !prevBlockedUsers[userId], // Invert blocked status
-          }));
-        } else {
-          console.error('Failed to block/unblock user:', response.statusText);
+    Swal.fire({
+      title: `Are you sure you want to ${blockedUsers[userId] ? 'unblock' : 'block'} this user?`,
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      icon: 'question',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        // User clicked "Yes"
+        try {
+          const url = blockedUsers[userId] ? unblockUrl : blockUrl;
+          const response = await axios.post(url, { userId }, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              'Content-Type': 'application/json',
+            },
+          });
+  
+          if (response.status >= 200 && response.status < 300) {
+            setBlockedUsers(prevBlockedUsers => ({
+              ...prevBlockedUsers,
+              [userId]: !prevBlockedUsers[userId], // Invert blocked status
+            }));
+            Swal.fire("User blocked/unblocked successfully!", "", "success");
+          } else {
+            console.error('Failed to block/unblock user:', response.statusText);
+            Swal.fire("Error", "Failed to block/unblock user", "error");
+          }
+        } catch (error) {
+          console.error('Error blocking/unblocking user:', error.message);
+          Swal.fire("Error", "Error blocking/unblocking user", "error");
         }
-      } catch (error) {
-        console.error('Error blocking/unblocking user:', error.message);
+      } else {
+        // User clicked "No" or closed the dialog
+        Swal.fire("Action canceled", "", "info");
+        // Optionally, add logic for what should happen if the user cancels
       }
-    }
+    });
   };
 
   useEffect(() => {
@@ -147,8 +162,7 @@ function UserList() {
     </span>
     <span
       class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white dark:group-hover:text-gray-200"
-      ></span
-    >
+      ></span>
   </div>
 </div>
 
