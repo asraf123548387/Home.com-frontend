@@ -114,6 +114,7 @@ function HotelList() {
         </div>
       </div>
     )}
+    
   
     <div className={`text-gray-900 w-${showSidebar ? '3/4' : 'full'} h-full overflow-y-auto transition-all duration-300 ease-in-out`}>
       <div className="p-4 flex">
@@ -158,7 +159,7 @@ function HotelList() {
           <EditHotelModal
         isOpen={editHotelModalOpen}
         hotelData={hotelToEdit}
-        // onEdit={handleEditHotel}
+  
         onClose={closeEditHotelModal}
       />
 

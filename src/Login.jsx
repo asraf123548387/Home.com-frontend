@@ -59,13 +59,7 @@ function Login() {
         navigate('/SAdmin');
       
       } else {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "successfully logined",
-          showConfirmButton: false,
-          timer: 1500
-        });
+     
         navigate('/');
         
       }

@@ -1,189 +1,33 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react';
-import california from '../../images/california.png';
-import munnar from '../../images/munnar.png';
-import Navbar from './Navbar';
-import mumbai from '../../images/mumbai.png';
-import delhi from '../../images/delhi.png';
+import React from 'react'
+import Navbar from './Navbar'
 import logo from '../../images/logo.png'
-import axios from 'axios';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import '../css/Home.css'
-import { Link } from 'react-router-dom';
+function UserHotelList() {
 
 
-
-function Home() {
-
-    const[hotel,setHotel]=useState([]);
-   
-    useEffect(() => {
-      const fetchAllHotel = async () => {
-        try {
-          
-        
-    
-          const response = await axios.get('http://localhost:8080/user/hotelList');
-    
-          if (response.status >= 200 && response.status < 300) {
-            setHotel(response.data);
-            console.log(response.data);
-          } else {
-            console.error('Failed to fetch hotels:', response.statusText);
-          }
-        } catch (error) {
-          console.error('Error fetching hotels:', error.message);
-        }
-      };
-    
-      fetchAllHotel();
-    }, []);
-   
-    const settings = {
-     
-      infinite: true,
-      speed: 500,
-      slidesToShow: 4, // Adjust the number of slides to show
-      slidesToScroll: 1,
-      autoplay: true,        // Enable automatic sliding
-      autoplaySpeed: 3000,
-      responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 1,
-          },
-        },
-        {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-          },
-        },
-      ],
-    };
-
-    
   return (
-   <div className='overflow-x-hidden'>
-      
-           <Navbar/>
-       
-           <div className="w-1/4 h-[41px] text-slate-800 text-4xl font-medium font-['Roboto'] leading-10 ml-5 md:ml-9 mt-1">Where to?</div>
+    <div>
+      <Navbar/>
+<section>
+    <div>
+         
+ 
+     <div class="flex items-center justify-center h-screen">
+      <div class="w-3/6 h-60 relative rounded-2xl border border-black-200">
+      <div class="w-1/3 h-64 border border-black-200 flex items-center justify-center">
+        <img src={logo} alt="Logo" class="max-h-60 max-w-full"></img>
+      </div>
+     </div>
+</div>
 
-
-
-
-<section className='mx-5 mt-2'>
-<form className="w-full h-16 p-1 bg-yellow-500 rounded-lg shadow justify-center items-start gap-1 inline-flex ">
-    <input className="grow shrink basis-0 self-stretch px-2 py-2 bg-white rounded justify-center items-center inline-flex" placeholder='Enter your destination'/>
-       
-    
-    <input className="grow shrink basis-0 self-stretch px-2 py-2 bg-white rounded justify-center items-center inline-flex" type='date'/>
-      
-    
-    
-    <input className="grow shrink basis-0 self-stretch px-2 py-2 bg-white rounded justify-center items-center inline-flex"/>
-    
-    <button className="pt-3 px-4 pb-3 bg-blue-700 text-white rounded  md:mt-0">
-    Search
-  </button>
-</form>
-</section>
-
-
-
-<section className='mt-4'>
-    <div className="md:w-11/12 h-38 py-3 bg-rose-600 rounded-2xl flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 mx-auto ">
-        <div className="w-full md:w-[100%] md:max-w-52 h-16 flex flex-col justify-between md:mr-4">
-            <p className="text-white text-xl font-medium font-['Roboto'] leading-loose text-center md:text-left">Find and book your<br />perfect stay</p> 
-           
-        </div>
-
-        <div className=" md:w-[100%] md:max-w-[700px] h-[120px] justify-center items-start gap-3 md:inline-flex">
-            <div className=" grow shrink basis-0 self-stretch w-full md:w-[100%] md:max-w-72 h-32 px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4">
-              
-                <p className="  h-9 text-white text-base font-normal font-['Roboto'] leading-tight text-center md:text-left">Earn rewards on every<br/>night you stay</p>
-            </div>
-
-            <div className=" grow shrink basis-0 self-stretch md:w-[100%]  md:max-w-72 h-32 px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4">
-               
-                <p className="w-full h-9 text-white text-base font-normal font-['Roboto'] leading-tight text-center md:text-left">Save more with<br/>Member Prices</p>
-            </div>
-            <div className="  grow shrink basis-0 self-stretch md:w-[100%]  md:max-w-72 h-32 px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4">
-               
-                <p className="w-full h-9 text-white text-base font-normal font-['Roboto'] leading-tight text-center md:text-left">Free cancellation<br/>options if plans change</p>
-            </div>
-
-          
-        </div>
     </div>
 </section>
 
 
- {/*here i want set some feture here  */}
-<section>
-   <div className=" text-slate-800 text-[27.67px] font-medium font-['Roboto'] leading-loose pl-20 ">Explore stays in trending destinations</div>
-<div className='flex pl-20 ml-5'>
-   <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-1" >
-         <img src={california} alt="" className='rounded-t-2xl border border-solid border-gray-500'/>
-         <h5>Madgoan </h5>
-         <h6 className=''>GOA</h6>
-   </div>
-   <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-1" >
-          <img src={munnar} alt="" className='rounded-t-2xl border border-solid border-gray-500'/>
-          <h5>Kochi</h5>
-         <h6 className=''>Kerala</h6>
-   </div>
-   <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-2" >
-           <img src={mumbai} alt="" className='rounded-t-2xl border border-solid border-gray-500'/>
-           <h5>Mumbai</h5>
-         <h6 className=''>Maharashtra</h6>
-   </div>
-   <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-2" >
-           <img src={delhi} alt=""  className='rounded-t-2xl border border-solid border-gray-500'/>
-           <h5>Delhi</h5>
-         <h6 className=''>NewDelhi</h6>
-   </div>
-</div>
-
-
-</section>
-
-
-{/* here i want anothwe section */}
-<section>
-<div className='ml-3' >
-    <h3 className="w-1/2 text-slate-800  font-medium font-['Roboto'] leading-loose">Get away this weekend</h3>
-  
-</div>
-
-<Slider {...settings} className='ml-5 custom-slider'>
-      {hotel.map((hotelItem, index) => (
-       <Link to={'/userHotelList'} key={index} className='w-1/4 h-96  mr-4 overflow-hidden no-underline bg-white rounded-lg shadow-md hover:shadow-2xl transition duration-500 ease-in-out'> 
-          <img
-            src={hotelItem.images}
-            alt={`Hotel ${index + 1}`}
-            style={{ objectFit: 'cover', width: '90%', height: '50%' }} className='rounded-tl-2xl rounded-tr-2xl mx-2'
-            
-          />
-          <p className='text-black ml-2 mt-1 font-serif font-semibold'>{hotelItem.hotelName}</p>
-          <p className='text-black ml-2 font-serif'>{hotelItem.location}</p>
-          <p className='text-right  text-blue-600 mr-4'>₹ {hotelItem.price}</p>
-
-        </Link>
-      ))}
-    </Slider>
-
-</section>
 
 
 
-<footer class=" dark:bg-gray-900">
+
+      <footer class=" dark:bg-gray-900">
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div class="md:flex md:justify-between">
           <div class="mb-6 md:mb-0">
@@ -268,10 +112,8 @@ function Home() {
       </div>
     </div>
 </footer>
-
-  </div>
-
+    </div>
   )
 }
 
-export default Home
+export default UserHotelList

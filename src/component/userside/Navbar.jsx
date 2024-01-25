@@ -15,6 +15,7 @@ function Navbar() {
                 <img src={logo} alt="Logo" className="h-8 w-8 ml-2" />
                 <div className="text-xl font-bold hidden md:block">home<sub>.com</sub></div>
             </div>
+            INR
 
            
          

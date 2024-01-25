@@ -102,6 +102,7 @@ const RegisterUser = async (e) => {
             description:'',
             images:'',
             location:'',
+            price:'',
           });
         } else {
           // Handle other status codes or error scenarios
@@ -182,12 +183,19 @@ const RegisterUser = async (e) => {
                   </div>
 
                   <div className="flex flex-wrap -mx-3 mb-6">
-                    <div className="w-full px-3">
-                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
-                        email:
+                    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="phone">
+                        Email:
                       </label>
-                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="email" type="email" placeholder="..." onChange={(e) => handleChange(e)} value={hotel.email} />
+                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" name="email" type="email" placeholder="..." onChange={(e) => handleChange(e)} value={hotel.email}/>
                       {errors.email && <p className="text-danger">{errors.email}</p>}
+                    </div>
+                    <div className="w-full md:w-1/2 px-3">
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="images">
+                        Price:
+                      </label>
+                      <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="price" type="text" placeholder="..." onChange={(e) => handleChange(e)} value={hotel.price}/>
+                      {errors.price && <p className="text-danger">{errors.price}</p>}
                     </div>
                   </div>
 

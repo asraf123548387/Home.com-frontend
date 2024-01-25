@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -58,15 +58,15 @@ function Otppage() {
           </div>
 
           <div>
-            <form action="" method="post" className="max-w-xs mx-auto" onSubmit={handleSubmit}>
+            <form  className="max-w-xs mx-auto" onSubmit={handleSubmit}>
               <div className="flex flex-col space-y-4">
                 <div className="flex flex-row items-center justify-between">
                   {verificationCode.map((value, index) => (
-                    <div key={index} className="w-6 h-14 m-2">
+                    <div key={index} className="flex justify-center gap-2 mb-6">
                       <input
                         ref={inputRefs.current[index]}
-                        className="w-full h-full flex items-center justify-center text-center px-3 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                        type="text"
+                        className="w-12 h-12 text-center border rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="one-time-code" 
+                        
                         name={`digit-${index}`}
                         id={`digit-${index}`}
                         value={value}
@@ -74,6 +74,8 @@ function Otppage() {
                       />
                     </div>
                   ))}
+
+         
                 </div>
 
                 <div className="flex flex-col space-y-3">
@@ -86,14 +88,11 @@ function Otppage() {
 
                   <div className="flex items-center justify-center text-sm font-medium space-x-1 text-gray-500">
                     <p>Didn't receive code?</p>{' '}
-                    <a
+                    <Link
                       className="flex items-center text-blue-600"
-                      href="http://"
-                      target="_blank"
-                      rel="noopener noreferrer"
                     >
                       Resend
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

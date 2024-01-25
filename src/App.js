@@ -14,6 +14,7 @@ import Otppage from './component/userside/Otppage';
 import ForgotPasswordEmail from './component/userside/ForgotPasswordEmail';
 import ForgotPaswordverifypage from './component/userside/ForgotPaswordverifypage';
 import SadminDashboard from './component/superadmin/SadminDashboard';
+import UserHotelList from './component/userside/UserHotelList';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
     <Route path='/otpEmail' element={<ForgotPasswordEmail/>}/>
     <Route path='/otpVerify' element={<ForgotPaswordverifypage/>}/>
     <Route path='/SAdmin' element={<SadminDashboard/>}/>
+    <Route path='/userHotelList' element={<UserHotelList/>}/>
    </Routes>
    
    </BrowserRouter>
