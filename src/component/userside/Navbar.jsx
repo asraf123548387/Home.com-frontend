@@ -21,11 +21,11 @@ function Navbar() {
          
 
             {isAuthenticated ? (
-            <div>
-              {/* Display the username */}
-              <span className="mr-4 md:mr-20"> <img src={user} alt="Logo" className="h-6 w-6 ml-2" /></span>
-              {/* Add code for authenticated user content */}
-            </div>
+            <Link to={'/userProfilePage'}> <div>
+             
+             <span className="mr-4 md:mr-20"> <img src={user} alt="Logo" className="h-6 w-6 ml-2" /></span>
+              
+            </div></Link>
           ) : (
             <Link to="/login" className="hover:text-red-300 text-red-500 no-underline mr-4 md:mr-20">Sign In</Link>
           )}
