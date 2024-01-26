@@ -73,49 +73,43 @@ function Home() {
       
            <Navbar/>
        
-       <div className="w-1/4 h-[41px] text-slate-800 text-4xl font-medium font-['Roboto'] leading-10 ml-5 md:ml-9 mt-4">Where to?</div>
+           <div className="w-full md:w-1/4 h-10 text-slate-800 text-4xl font-medium font-['Roboto'] leading-10 ml-5 md:ml-9 mt-4">Where to?</div>
 
+                  <section className='flex flex-wrap'>
+                      <div className='w-full md:w-1/12'></div>
 
+                      <div className='w-full md:w-10/12'>
+                          <form className="h-16 p-1 bg-yellow-500 rounded-lg shadow flex justify-center items-start gap-1">
+                              <input className="flex-grow flex-shrink flex-basis-0 self-stretch px-2 py-2 bg-white rounded justify-center items-center w-4/12 h-14 border border-gray-300" placeholder='Enter your destination' />
 
+                              <input className="flex-grow flex-shrink flex-basis-0 self-stretch px-2 py-2 bg-white rounded justify-center items-center w-4/12 h-14 border border-gray-300" type='date' />
 
-       <section className='flex'>
-            <div className='w-1/12'>
+                              <input className="flex-grow flex-shrink flex-basis-0 self-stretch px-2 py-2 bg-white rounded justify-center items-center w-3/12 h-14 border border-gray-300" />
 
-            </div>
-                    
-            <div className='w-10/12'>
-             <form className="h-16 p-1 bg-yellow-500 rounded-lg shadow justify-center items-start gap-1">
-                <input className="grow shrink basis-0 self-stretch px-2 py-2 bg-white rounded justify-center items-center w-4/12 h-14 border border-gray-300" placeholder='Enter your destination'/>
+                              <button className="pt-3 px-2 pb-3 bg-blue-700 text-white rounded md:mt-0 w-full md:w-1/12">
+                                  Search
+                              </button>
+                          </form>
+                      </div>
+                  </section>
 
-                <input className="grow shrink basis-0 self-stretch px-2 py-2 bg-white rounded justify-center items-center w-4/12 h-14 border border-gray-300" type='date'/>
-
-                <input className="grow shrink basis-0 self-stretch px-2 py-2 bg-white rounded justify-center items-center w-3/12 h-14 border border-gray-300"/>
-
-                <button className="pt-3 px-2 pb-3 bg-blue-700 text-white rounded md:mt-0 w-1/12">
-                    Search
-                </button>
-            </form>
-           </div>
-
-
-        </section>
 
 
 <section className='mt-4'>
-    <div className="md:w-11/12 h-auto py-3 bg-rose-600 rounded-2xl flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 mx-auto ">
-        <div className="w-full md:w-[100%] md:max-w-52 h-auto md:h-38 flex flex-col justify-between md:mr-4">
+    <div className="md:w-10/12  h-auto py-3 bg-rose-600 rounded-2xl flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 mx-auto ">
+        <div className="w-full md:w-3/12 md:max-w-52 h-auto md:h-38 flex flex-col justify-between md:mr-4">
             <p className="text-white text-xl font-medium font-['Roboto'] leading-loose text-center md:text-left">Find and book your<br />perfect stay</p> 
         </div>
 
-        <div className="md:w-[100%] md:max-w-[700px] h-auto md:h-[120px] justify-center items-start gap-3 md:inline-flex">
-            <div className="w-full md:w-[100%] md:max-w-72 h-auto md:h-32 px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4">
+        <div className="md:w-full md:max-w-3xl h-auto md:h-32 justify-center items-start gap-3 md:inline-flex">
+            <div className="w-full md:w-4/12 md:max-w-72 h-auto md:h-32 px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4">
                 <p className="h-auto text-white text-base font-normal font-['Roboto'] leading-tight text-center md:text-left">Earn rewards on every<br/>night you stay</p>
             </div>
 
-            <div className="w-full md:w-[100%] md:max-w-72 h-auto md:h-32 px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4">
+            <div className="w-full md:w-4/12 md:max-w-72 h-auto md:h-32 px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4">
                 <p className="w-full h-auto text-white text-base font-normal font-['Roboto'] leading-tight text-center md:text-left">Save more with<br/>Member Prices</p>
             </div>
-            <div className="w-full md:w-[100%] md:max-w-72 h-auto md:h-32 px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4">
+            <div className="w-full md:w-4/12 md:max-w-72 h-auto md:h-32 px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4">
                 <p className="w-full h-auto text-white text-base font-normal font-['Roboto'] leading-tight text-center md:text-left">Free cancellation<br/>options if plans change</p>
             </div>
         </div>
@@ -126,31 +120,39 @@ function Home() {
 
  {/*here i want set some feture here  */}
 <section>
-   <div className=" text-slate-800 text-[27.67px] font-medium font-['Roboto'] leading-loose pl-20 ">Explore stays in trending destinations</div>
-<div className='flex pl-20 ml-5'>
-   <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-1" >
-         <img src={california} alt="" className='rounded-t-2xl border border-solid border-gray-500'/>
-         <h5>Madgoan </h5>
-         <h6 className=''>GOA</h6>
-   </div>
-   <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-1" >
-          <img src={munnar} alt="" className='rounded-t-2xl border border-solid border-gray-500'/>
-          <h5>Kochi</h5>
-         <h6 className=''>Kerala</h6>
-   </div>
-   <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-2" >
-           <img src={mumbai} alt="" className='rounded-t-2xl border border-solid border-gray-500'/>
-           <h5>Mumbai</h5>
-         <h6 className=''>Maharashtra</h6>
-   </div>
-   <div className="w-[255px] h-[224.63px] relative rounded-2xl border border-zinc-200 ml-2" >
-           <img src={delhi} alt=""  className='rounded-t-2xl border border-solid border-gray-500'/>
-           <h5>Delhi</h5>
-         <h6 className=''>NewDelhi</h6>
-   </div>
-</div>
-
-
+  <div class="text-slate-800 text-3xl font-medium font-['Roboto'] leading-loose pl-20">
+    Explore stays in trending destinations
+  </div>
+  <div class="md:flex px-20  flex-wrap">
+    <div class="w-full md:w-1/2 lg:w-1/4 p-2">
+      <div class="w-full h-64 relative rounded-2xl border border-zinc-200">
+        <img src={california} alt="" class="w-full h-48 object-cover rounded-t-2xl border border-solid border-gray-500"/>
+        <h5 class="text-center">Madgoan</h5>
+        <h6 class="text-center">GOA</h6>
+      </div>
+    </div>
+    <div class="w-full md:w-1/2 lg:w-1/4 p-2">
+      <div class="w-full h-64 relative rounded-2xl border border-zinc-200">
+        <img src={munnar} alt="" class="w-full h-48 object-cover rounded-t-2xl border border-solid border-gray-500"/>
+        <h5 class="text-center">Kochi</h5>
+        <h6 class="text-center">Kerala</h6>
+      </div>
+    </div>
+    <div class="w-full md:w-1/2 lg:w-1/4 p-2">
+      <div class="w-full h-64 relative rounded-2xl border border-zinc-200">
+        <img src={mumbai} alt="" class="w-full h-48 object-cover rounded-t-2xl border border-solid border-gray-500"/>
+        <h5 class="text-center">Mumbai</h5>
+        <h6 class="text-center">Maharashtra</h6>
+      </div>
+    </div>
+    <div class="w-full md:w-1/2 lg:w-1/4 p-2">
+      <div class="w-full h-64 relative rounded-2xl border border-zinc-200">
+        <img src={delhi} alt="" class="w-full h-48 object-cover rounded-t-2xl border border-solid border-gray-500"/>
+        <h5 class="text-center">Delhi</h5>
+        <h6 class="text-center">New Delhi</h6>
+      </div>
+    </div>
+  </div>
 </section>
 
 

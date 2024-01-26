@@ -36,7 +36,8 @@ function App() {
     <Route path='/SAdmin' element={<SadminDashboard/>}/>
     <Route path='/userHotelList/:hotelId' element={<UserHotelList/>}/>
     <Route path='/userProfilePage' element={<UserProfilePage/>}/>
-    <Route path='/hotelViewPage' element={<HotelviewPage/>}/>
+    <Route path='/hotelViewPage/:hotelId' element={<HotelviewPage />} />
+
    </Routes>
    
    </BrowserRouter>

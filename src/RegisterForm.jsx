@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import UserService from '../src/service/UserService';
 import { Link, useNavigate } from 'react-router-dom';
 
 function RegisterForm() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     userName: "",
     email: "",
@@ -21,7 +21,6 @@ function RegisterForm() {
 
   const validateForm = () => {
     const newErrors = {};
-
 
     if (!user.userName.trim()) {
       newErrors.userName = "User Name is required";
@@ -49,7 +48,7 @@ function RegisterForm() {
 
   const RegisterUser = (e) => {
     e.preventDefault();
-  
+
     if (validateForm()) {
       UserService.saveUser(user)
         .then((res) => {
@@ -66,10 +65,8 @@ function RegisterForm() {
         })
         .catch((error) => {
           if (error.response && error.response.status === 400 && error.response.data) {
-            
             setMsg(error.response.data);
           } else {
-        
             console.log(error);
           }
         });
@@ -77,61 +74,58 @@ function RegisterForm() {
   };
 
   return (
-    <div>
-  <div className='d-flex justify-content-center align-items-center vh-100'>
-    <div className='bg-white p-3 rounded w-50 shadow'>
-      <h2 className="text-center mb-3">Create Account</h2>
-      {msg && <p className="text-center text-success font-weight-bold">{msg}</p>}
-      <form onSubmit={(e) => RegisterUser(e)}>
-        <div className='mb-3 position-relative'>
-          <label htmlFor='userName' className='form-label'>User Name:</label>
-          <input type="text" name="userName" className='form-control' onChange={(e) => handleChange(e)} value={user.userName} />
-          {errors.userName && (
-            <div className="position-absolute top-100 start-0 translate-middle text-danger  border-neutral-500 border-1">
-              {errors.userName}
-            </div>
-          )}
-        </div>
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="bg-white p-3 rounded w-96 shadow-md">
+        <h2 className="text-center mb-3 text-2xl">Create Account</h2>
+        {msg && <p className="text-center text-green-600 font-semibold">{msg}</p>}
+        <form onSubmit={RegisterUser} className="space-y-4">
+          <div className="mb-3 relative">
+            <label htmlFor="userName" className="block">User Name:</label>
+            <input type="text" name="userName" className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" onChange={handleChange} value={user.userName} />
+            {errors.userName && (
+              <div className="absolute top-full left-0 mt-1 text-red-500">
+                {errors.userName}
+              </div>
+            )}
+          </div>
 
-        <div className='mb-3 position-relative'>
-          <label htmlFor='email' className='form-label'>Email:</label>
-          <input type="email" name="email" className='form-control' onChange={(e) => handleChange(e)} value={user.email} />
-          {errors.email && (
-            <div className="position-absolute top-100 start-0 translate-middle text-danger  border-neutral-500 border-1">
-              {errors.email}
-            </div>
-          )}
-        </div>
+          <div className="mb-3 relative">
+            <label htmlFor="email" className="block">Email:</label>
+            <input type="email" name="email" className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" onChange={handleChange} value={user.email} />
+            {errors.email && (
+              <div className="absolute top-full left-0 mt-1 text-red-500">
+                {errors.email}
+              </div>
+            )}
+          </div>
 
-        <div className='mb-3 position-relative'>
-          <label htmlFor='mobile' className='form-label'>Mobile No:</label>
-          <input type="text" name="mobile" className='form-control' onChange={(e) => handleChange(e)} value={user.mobile} />
-          {errors.mobile && (
-            <div className="position-absolute top-100 start-0 translate-middle text-danger  border-neutral-500 border-1">
-              {errors.mobile}
-            </div>
-          )}
-        </div>
+          <div className="mb-3 relative">
+            <label htmlFor="mobile" className="block">Mobile No:</label>
+            <input type="text" name="mobile" className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" onChange={handleChange} value={user.mobile} />
+            {errors.mobile && (
+              <div className="absolute top-full left-0 mt-1 text-red-500">
+                {errors.mobile}
+              </div>
+            )}
+          </div>
 
-        <div className='mb-3 position-relative'>
-          <label htmlFor='password' className='form-label'>Password:</label>
-          <input type="password" name="password" className='form-control' onChange={(e) => handleChange(e)} value={user.password} />
-          {errors.password && (
-            <div className="position-absolute top-100 start-0 translate-middle text-danger border-neutral-500 border-1">
-              {errors.password}
-            </div>
-          )}
-        </div>
+          <div className="mb-3 relative">
+            <label htmlFor="password" className="block">Password:</label>
+            <input type="password" name="password" className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" onChange={handleChange} value={user.password} />
+            {errors.password && (
+              <div className="absolute top-full left-0 mt-1 text-red-500">
+                {errors.password}
+              </div>
+            )}
+          </div>
 
-        <div className="d-flex justify-content-between">
-          <button type="submit" className='btn btn-primary btn-block'>Submit</button>
-          <Link to="/" className='btn btn-primary btn-block'>Back to Login</Link>
-        </div>
-      </form>
+          <div className="flex justify-between">
+            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none">Submit</button>
+            <Link to="/" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none">Back to Login</Link>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
-</div>
-
   );
 }
 

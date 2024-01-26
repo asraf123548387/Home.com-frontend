@@ -89,7 +89,7 @@ const sortedHotel = selectedHotel ? [selectedHotel, ...remainingHotels] : hotel;
          
     <div className="max-w-screen-lg flex-col  mt-4">
     {sortedHotel.map((hotelItem, index) => (
-        <Link to={`/hotelViewPage/${hotelItem.id}`} key={index} style={{ textDecoration: 'none' }}>
+        <Link to={`/hotelViewPage/${hotelItem.hotelId}`} key={index} style={{ textDecoration: 'none' }}>
             <div className={`flex w-full md:w-4/6 h-48 relative rounded-2xl border border-black-200 mb-2 ${index === 0 ? 'bg-blue-100' : 'bg-white'}`}>
                 <img src={hotelItem.images} alt={`Hotel ${hotelItem.id}`} className="h-48 rounded-tl-2xl rounded-bl-2xl w-48" />
                 <div className="flex flex-col justify-center ml-2 w-full">
@@ -101,7 +101,7 @@ const sortedHotel = selectedHotel ? [selectedHotel, ...remainingHotels] : hotel;
             </div>
         </Link>
     ))}
-</div>
+   </div>
 
 
 
@@ -111,7 +111,7 @@ const sortedHotel = selectedHotel ? [selectedHotel, ...remainingHotels] : hotel;
 
 
        
-         </section>
+ </section>
 
 
 

@@ -5,6 +5,7 @@ import userlogo from '../../images/hotellogin.png'
 import axios from 'axios'
 import AddHotelModal from './AddHotelModal'
 import EditHotelModal from './EditHotelModal'
+import HotelImageModal from './HotelImageModal'
 function HotelList() {
   const[hotels,sethotel]=useState([])// this is for store hotel details.
   const[addHotelModalOpen,setAddHotelModalOpen]=useState(false); //this is for add hotel modal data
@@ -12,7 +13,7 @@ function HotelList() {
   const [showSidebar, setShowSidebar] = useState(true); //this is mainly used for show thr side bar 
   const[editHotelModalOpen,setEditHotelModalOpen]=useState(false);
   const[hotelToEdit,setHotelToEdit]=useState(null);
-
+  const [selectedHotelId, setSelectedHotelId] = useState(null);
   
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
@@ -137,41 +138,42 @@ function HotelList() {
                   </button>
                   <AddHotelModal isOpen={addHotelModalOpen}  onSuccess={close}/>
       </div>
-      <div className="px-3 py-4 flex justify-center">
-        <table className="w-full text-md bg-white shadow-md rounded mb-4">
-          <thead>
-            <tr className="border-b bg-gray-200">
-              <th className="text-left p-3 px-5">Hotel name</th>
-              <th className="text-left p-3 px-5">Location </th>
-              <th className="text-left p-3 px-5">images  </th>
-              <th className="text-right p-3 px-5">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {hotels.map((hotel) => (
-              <tr key={hotel.id} className="border-b hover:bg-orange-100 bg-gray-100">
-                <td className="p-3 px-5">{hotel.hotelName}</td>
-                <td className="p-3 px-5">{hotel.location}</td>
-           <td className="p-3 px-5">
-            <img src={hotel.images} alt="Hotel Image" className='w-12 h-10' />
-          </td>
-          <td className="p-3 px-5"><button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" onClick={()=>{openEditHotelModal(hotel.hotelId)}}>Edit</button></td>
-          <EditHotelModal
-        isOpen={editHotelModalOpen}
-        hotelData={hotelToEdit}
-  
-        onClose={closeEditHotelModal}
-      />
 
 
       
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <div className="px-3 py-4 flex justify-center">
+      <table className="w-full text-md bg-white shadow-md rounded mb-4">
+        <thead>
+          <tr className="border-b bg-gray-200">
+            <th className="text-left p-3 px-5">Hotel name</th>
+            <th className="text-left p-3 px-5">Location</th>
+            <th className="text-left p-3 px-5">Images</th>
+            <th className="text-right p-3 px-5">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {hotels.map((hotel) => (
+            <tr key={hotel.id} className="border-b hover:bg-orange-100 bg-gray-100">
+              <td className="p-3 px-5">{hotel.hotelName}</td>
+              <td className="p-3 px-5">{hotel.location}</td>
+              <td className="p-3 px-5">
+                <img src={hotel.images} alt="Hotel Image" className='w-12 h-10' />
+              </td>
+              <td className="p-3 px-5 flex justify-end space-x-2">
+                      <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" onClick={() => openEditHotelModal(hotel.hotelId)}>Edit</button>
+                      <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={() => setSelectedHotelId(hotel.hotelId)}>Img</button>
+                    </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
     </div>
   </div>
+  <AddHotelModal isOpen={addHotelModalOpen} onSuccess={() => setAddHotelModalOpen(false)} />
+      <EditHotelModal isOpen={editHotelModalOpen} hotelData={hotelToEdit} onClose={closeEditHotelModal} />
+      {selectedHotelId && <HotelImageModal isOpen={true} onClose={() => setSelectedHotelId(null)} hotelId={selectedHotelId} />}
     </div>
   )
 }
