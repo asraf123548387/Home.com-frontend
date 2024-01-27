@@ -56,7 +56,7 @@ const sortedHotel = selectedHotel ? [selectedHotel, ...remainingHotels] : hotel;
 
             </div>
                     
-            <div className='w-10/12'>
+            <div className='w-10/12 mt-2'>
              <form className="h-16 p-1 bg-yellow-500 rounded-lg shadow justify-center items-start gap-1">
                 <input className="grow shrink basis-0 self-stretch px-2 py-2 bg-white rounded justify-center items-center w-4/12 h-14 border border-gray-300" placeholder='Enter your destination'/>
 

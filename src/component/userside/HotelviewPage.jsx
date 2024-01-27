@@ -1,12 +1,53 @@
-import React from 'react'
+import React, { useEffect,useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
 import logo from '../../images/logo.png'
 import Navbar from './Navbar';
+import { FaHeart } from 'react-icons/fa';
+
 
 function HotelviewPage() {
-  const{hotelId}=useParams();
+  const {hotelId}=useParams();
   console.log(hotelId)
+  const [images,setImages]=useState([]);
+  const [hotelDetails,setHotelDetails]=useState([]);
+
+  useEffect(()=>{
+    const token = localStorage.getItem('token'); 
+
+    const fetchImages = async () => {
+        try {
+          const response = await axios.get(`http://localhost:8080/user/hotelImages/${hotelId}`);
+
+          setImages(response.data);
+          console.log(response.data); // Assuming response.data is an array of image URLs
+        } catch (error) {
+          console.error('Error fetching images:', error);
+        }
+      };
+  
+      fetchImages();
+    }, [hotelId]);
+
+
+
+    useEffect(()=>{
+     const fetchHotelDetails = async()=>{
+        try{
+            const response =await axios.get(`http://localhost:8080/user/hotelSingle/${hotelId}`);
+            setHotelDetails(response.data);
+            console.log(response)
+
+        }catch(error){
+            console.log('error fetching hotel details:',error);
+
+        }
+     };
+     fetchHotelDetails();
+    },[hotelId]);
+
+ 
+
 
 
 
@@ -17,35 +58,75 @@ function HotelviewPage() {
 
 
   <section className='flex'>
-      <div className='w-1/12  h-72'>
+                    <div className='w-1/12 '>
 
-      </div>
-      <div className='grid grid-cols-2 w-10/12 h-72'>
+                    </div>
+                    <div className='grid grid-cols-2 w-10/12 h-80 gap-1 '>
+                    <div className='w-full h-80 mt-0.5 relative'>
+                                    {images.length >= 1 && (
+                                        <>
+                                            <img src={images[0]} alt="Image 1" className='w-full h-full rounded-2xl' />
+                                            {/* Wishlist button */}
+                                            <button className="absolute top-2 right-2 bg-white rounded-full p-2 shadow-md">
+                                                {/* Add wishlist icon or text here */}
+                                                
+                                                <FaHeart style={{ color: 'red' }}  className=''/>
 
-                <div className='w-full h-full'>
-                  {/* Content for the left half */}
-                </div>
-                <div className='w-full h-full grid grid-cols-2'>
-                      <div className='w-full h-36'>
-                        {/* Content for the top left quarter */}
-                      </div>
+                                            </button>
+                                        </>
+                                    )}
+                                </div>
 
-                      <div className='w-full h-36'>
-                        {/* Content for the top right quarter */}
-                      </div>
+                            <div className='grid grid-cols-2 w-full h-full gap-1'>
+                                {images.slice(1, 5).map((image, index) => (
+                                    <div key={index} className='w-full h-40'>
+                                        <img src={image} alt={`Image ${index + 2}`} className='w-full h-full rounded-2xl' />
+                                    </div>
+                                ))}
+                            </div>
+                   </div>
 
-                      <div className='w-full h-36'>
-                        {/* Content for the bottom left quarter */}
-                      </div>
-
-                      <div className='w-full h-36'>
-                        {/* Content for the bottom right quarter */}
-                      </div>
-                 </div>
-      </div>
 
       
-    </section>
+ </section>
+
+ <section className='w-full h-72 flex'>
+  <div className='w-1/12 '>
+
+  </div>
+  <div className='w-10/12 bg-white rounded-2xl mt-2 flex'>
+    <div className=' w-7/12 m-3'>
+      <div className='text-4xl text-gray-900 dark:text-black ' >
+          {hotelDetails.hotelName}
+          <div className="m text-[#005ef6] text-xl tracking-[2px]">
+          ★★★★★
+          </div>
+      </div >
+      <div className='text-lg text-gray-900 '>
+        {hotelDetails.address}
+      </div>
+      <div className='text-lg text-gray-900 dark:text-black'>
+        {hotelDetails.location}
+      </div>
+      <div className='text-lg text-gray-900 dark:text-black mt-3'>
+      ₹ {hotelDetails.price} <sup className='text-blue-600'>starting price</sup>
+      </div>
+    </div>
+    
+    <div className=' w-5/12'>
+        <div className='w-3/6'>
+
+        </div>
+
+    </div>
+
+  </div>
+
+
+
+
+ </section>
+
 
 
 

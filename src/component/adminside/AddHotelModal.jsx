@@ -51,10 +51,7 @@ const validateForm = () => {
     if (!hotel.images.trim()) {
       newErrors.images = "Images are required";
     }
-    if (!hotel.location.trim()) {
-      newErrors.images = "Location are required";
-    }
-  
+ 
     // Add additional validation rules as neededhote
   
     return newErrors;
