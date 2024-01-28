@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import Modal from 'react-modal';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 const AddHotelModal=({isOpen,onSuccess})=> {
     const[hotel,setHotel]=useState({
         hotelName:'',
@@ -26,6 +27,7 @@ const validateForm = () => {
   
     if (!hotel.hotelName.trim()) {
       newErrors.hotelName = "Hotel Name is required";
+      console.log("ashrfa is a good boy")
     }
   
     if (!hotel.email.trim()) {
@@ -42,6 +44,7 @@ const validateForm = () => {
   
     if (!hotel.address.trim()) {
       newErrors.address = "Address is required";
+      
     }
   
     if (!hotel.description.trim()) {
@@ -58,64 +61,61 @@ const validateForm = () => {
   };
 
 
-const RegisterUser = async (e) => {
+  const RegisterUser = async (e) => {
     e.preventDefault();
     const userId = localStorage.getItem('userId');
-    console.log(userId)
-    console.log(hotel)
-    if (validateForm()) {
-      try {
-        const token = localStorage.getItem('token');
-        const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-          };
-          const hotelWithUserId = {
-            ...hotel,
-            userId: userId,
-          };
+    const errors = validateForm(); // Validate the form and get errors
 
-        console.log(hotelWithUserId)
-        // Make a POST request to your backend API to register the admin
-        const response = await axios.post('http://localhost:8080/admin/savehotel', hotelWithUserId, { headers })
-          
-      
+    if (Object.keys(errors).length === 0) { // Check if there are no errors
+        try {
+            // Proceed with form submission
+            const token = localStorage.getItem('token');
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            };
+            const hotelWithUserId = {
+                ...hotel,
+                userId: userId,
+            };
+            const response = await axios.post('http://localhost:8080/admin/savehotel', hotelWithUserId, { headers });
 
-        // Check if the request was successful
-        if (response.status === 200) {
-          console.log("Hotel Added Successfully");
-          console.log(hotel);
-
-          setMsg("hotel  Added Successfully");
-          // Redirect to OTP page with email state
-          if (onSuccess) {
-            onSuccess();
-          }
-          setHotel({
-            hotelName:'',
-            email:'',
-            phone:'',
-            address:'',
-            description:'',
-            images:'',
-            location:'',
-            price:'',
-          });
-        } else {
-          // Handle other status codes or error scenarios
-          setMsg('Failed to register admin. Please try again.');
+            if (response.status === 200) {
+                console.log("Hotel Added Successfully");
+                setMsg("Hotel Added Successfully");
+                if (onSuccess) {
+                    onSuccess();
+                }
+                setHotel({
+                    hotelName: '',
+                    email: '',
+                    phone: '',
+                    address: '',
+                    description: '',
+                    images: '',
+                    location: '',
+                    price: '',
+                });
+            } else {
+                setMsg('Failed to add hotel. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error adding hotel:', error.message);
+            if (error.response && error.response.status === 400 && error.response.data) {
+                setMsg(error.response.data);
+            } else {
+                console.log(error);
+            }
         }
-      } catch (error) {
-        // Handle any errors that occurred during the request
-        console.error('Error registering admin:', error.message);
-        if (error.response && error.response.status === 400 && error.response.data) {
-          setMsg(error.response.data);
-        } else {
-          console.log(error);
-        }
-      }
+    } else {
+        // Handle form validation errors here
+        console.log("Form validation failed", errors);
+        Swal.fire("complete the form !");
+        // Display error messages to the user and highlight the fields with errors
     }
-  };
+};
+
+  
 
   return (
     <div>
@@ -147,6 +147,7 @@ const RegisterUser = async (e) => {
               <form className="w-full max-w-lg" onSubmit={(e) => RegisterUser(e)}>
                   <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                      {errors.hotelName}
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="hotelName">
                         Hotel Name:
                       </label>
@@ -212,7 +213,7 @@ const RegisterUser = async (e) => {
                         description:
                       </label>
                       <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="description" type="text" placeholder="..." onChange={(e) => handleChange(e)} value={hotel.description} />
-                      {errors.address && <p className="text-danger">{errors.address}</p>}
+                      {errors.description && <p className="text-danger">{errors.description}</p>}
                     </div>
                   </div>
                   <div className="d-flex justify-content-between">

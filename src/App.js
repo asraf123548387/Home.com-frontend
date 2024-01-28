@@ -17,6 +17,7 @@ import SadminDashboard from './component/superadmin/SadminDashboard';
 import UserHotelList from './component/userside/UserHotelList';
 import UserProfilePage from './component/userside/UserProfilePage';
 import HotelviewPage from './component/userside/HotelviewPage';
+import RoomManagent from './component/adminside/RoomManagent';
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
     <Route path='/userHotelList/:hotelId' element={<UserHotelList/>}/>
     <Route path='/userProfilePage' element={<UserProfilePage/>}/>
     <Route path='/hotelViewPage/:hotelId' element={<HotelviewPage />} />
+    <Route path='/roomManagement' element={<RoomManagent/>}/>
 
    </Routes>
    

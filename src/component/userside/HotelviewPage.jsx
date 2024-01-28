@@ -115,7 +115,7 @@ function HotelviewPage() {
     
     <div className=' w-5/12'>
         <div className='w-3/6'>
-
+   
         </div>
 
     </div>
