@@ -26,9 +26,11 @@ function Login() {
       const response = await UserService.userLogin(formData)
 
       if (response.status >= 200 && response.status < 300) {
-        const {token,userId} = response.data;
+        const {token,userId,userName} = response.data;
         localStorage.setItem('token', token);
         localStorage.setItem('userId',userId);
+        localStorage.setItem('userName',userName)
+        
         const decodedToken = atob(token.split('.')[1]);
         const tokenObject = JSON.parse(decodedToken);
         const roles = tokenObject.roles || [];
@@ -38,6 +40,8 @@ function Login() {
        console.log(roles);
        console.log(token);
        console.log(userId);
+       console.log(userName);
+       
        if (roles.includes('ROLE_ADMIN')) {
         Swal.fire({
           position: "center",
