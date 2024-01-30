@@ -4,6 +4,8 @@ import axios from 'axios';
 import logo from '../../images/logo.png'
 import Navbar from './Navbar';
 import { FaHeart } from 'react-icons/fa';
+import {MAP,GoogleApiWrapper} from 'google-map-react';
+
 
 
 function HotelviewPage() {
@@ -57,7 +59,7 @@ function HotelviewPage() {
       <Navbar/>
 
 
-  <section className='flex'>
+  <section className='flex mt-2'>
                     <div className='w-1/12 '>
 
                     </div>
@@ -113,12 +115,12 @@ function HotelviewPage() {
       </div>
     </div>
     
-    <div className=' w-5/12'>
-        <div className='w-3/6'>
-   
-        </div>
+    <div className='w-5/12 flex justify-center'>
+        
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3843.76031316599!2d73.7528115751251!3d15.550974685055891!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbfea04229a4413%3A0x16642ee585558351!2sEstrela%20Do%20Mar%20Beach%20Resort%20-%20A%20Beach%20Property!5e0!3m2!1sen!2sin!4v1706595870808!5m2!1sen!2sin" className='h-56 mt-3 rounded-2xl' ></iframe>
+        
+   </div>
 
-    </div>
 
   </div>
 
@@ -126,25 +128,39 @@ function HotelviewPage() {
 
 
  </section>
+ <section>
+    <div className='flex'>
+            <div className='w-1/12 '>
+
+            </div>
+            <div className='w-10/12 bg-white rounded-2xl mt-2 flex '>
+             <div className='m-4 text-base font-serif'>
+                 {hotelDetails.description}
+             </div>
+            
+
+            </div>
+     </div>
+ </section>
 
 
 
 
     
-<footer class=" dark:bg-gray-900 mt-20">
-    <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
-        <div class="md:flex md:justify-between">
-          <div class="mb-6 md:mb-0">
+<footer className=" dark:bg-gray-900 mt-20">
+    <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+        <div className="md:flex md:justify-between">
+          <div className="mb-6 md:mb-0">
               
-                  <img src={logo} class="h-8 me-3" alt="FlowBite Logo" />
+                  <img src={logo} className="h-8 me-3" alt="FlowBite Logo" />
                   <span className="self-center text-2xl font-semibold whitespace-nowrap text-white ">HOME.com</span>
          
           </div>
-          <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
               <div>
-                  <h2 class="mb-6 text-sm font-semibold text-white uppercase underline">Resources</h2>
-                  <ul class="text-gray-500 dark:text-gray-400 font-medium">
-                      <li class="mb-4">
+                  <h2 className="mb-6 text-sm font-semibold text-white uppercase underline">Resources</h2>
+                  <ul className="text-gray-500 dark:text-gray-400 font-medium">
+                      <li className="mb-4">
                           <div href="https://flowbite.com/" class="hover:underline">hotel.com</div>
                       </li>
                       <li>
@@ -153,9 +169,9 @@ function HotelviewPage() {
                   </ul>
               </div>
               <div>
-                  <h2 class="mb-6 text-sm font-semibold text-white uppercase underline">Follow us</h2>
-                  <ul class="text-gray-500 dark:text-gray-400 font-medium">
-                      <li class="mb-4">
+                  <h2 className="mb-6 text-sm font-semibold text-white uppercase underline">Follow us</h2>
+                  <ul className="text-gray-500 dark:text-gray-400 font-medium">
+                      <li className="mb-4">
                           <div href="https://github.com/themesberg/flowbite" class="hover:underline ">Github</div>
                       </li>
                       <li>
@@ -164,13 +180,13 @@ function HotelviewPage() {
                   </ul>
               </div>
               <div>
-                  <h2 class="mb-6 text-sm font-semibold text-white uppercase underline ">Legal</h2>
-                  <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                  <h2 className="mb-6 text-sm font-semibold text-white uppercase underline ">Legal</h2>
+                  <ul className="text-gray-500 dark:text-gray-400 font-medium">
                       <li class="mb-4">
-                          <div href="#" class="hover:underline">Privacy Policy</div>
+                          <div href="#" className="hover:underline">Privacy Policy</div>
                       </li>
                       <li>
-                          <div href="#" class="hover:underline">Terms &amp; Conditions</div>
+                          <div href="#" className="hover:underline">Terms &amp; Conditions</div>
                       </li>
                   </ul>
               </div>

@@ -15,7 +15,7 @@ import ForgotPasswordEmail from './component/userside/ForgotPasswordEmail';
 import ForgotPaswordverifypage from './component/userside/ForgotPaswordverifypage';
 import SadminDashboard from './component/superadmin/SadminDashboard';
 import UserHotelList from './component/userside/UserHotelList';
-import UserProfilePage from './component/userside/UserProfilePage';
+import UserProfilePage from './component/userProfile/UserProfilePage';
 import HotelviewPage from './component/userside/HotelviewPage';
 import RoomManagent from './component/adminside/RoomManagent';
 

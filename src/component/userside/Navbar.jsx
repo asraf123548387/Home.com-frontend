@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useAuth } from '../../contextapi/authContext';
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faBook, faGift, faStar, faBookmark, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faBook, faGift, faStar, faBookmark, faSignOutAlt,faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 
 function Navbar() {
@@ -32,7 +32,16 @@ function Navbar() {
                 <img src={logo} alt="Logo" className="h-8 w-8 ml-2" />
                 <div className="text-xl font-bold hidden md:block">home<sub>.com</sub></div>
             </div>
-            INR
+           <div className='flex'>
+
+                <div className=''>
+                  INR
+                </div>
+                {/* <div className='ml-3 rounded-2xl border w-4'>
+                  <FontAwesomeIcon icon={faQuestion} />
+                </div> */}
+           </div>
+            
 
            
          
