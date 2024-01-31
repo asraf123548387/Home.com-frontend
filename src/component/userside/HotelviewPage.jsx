@@ -135,12 +135,35 @@ function HotelviewPage() {
             </div>
             <div className='w-10/12 bg-white rounded-2xl mt-2 flex '>
              <div className='m-4 text-base font-serif'>
-                 {hotelDetails.description}
+                <div className=''>
+                    {hotelDetails.description}
+                </div>
+                <div className='flex justify-end'>
+                <button class="rounded-2xl bg-blue-700 text-white w-32 h-7 hover:bg-blue-600 border border-black border-solid">Reserve now</button>
+
+                </div>
+              
+                 
              </div>
             
 
             </div>
      </div>
+ </section>
+
+
+ <section className='flex'> 
+
+    <div className='w-1/12'>
+
+    </div>
+    <div className='w-10/12 bg-white rounded-2xl mt-2'>
+     <div>
+        <h2>
+            Available Room
+        </h2>
+     </div>
+    </div>
  </section>
 
 
