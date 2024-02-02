@@ -17,7 +17,7 @@ import SadminDashboard from './component/superadmin/SadminDashboard';
 import UserHotelList from './component/userside/UserHotelList';
 import UserProfilePage from './component/userProfile/UserProfilePage';
 import HotelviewPage from './component/userside/HotelviewPage';
-import RoomManagent from './component/adminside/RoomManagent';
+import RoomManagent from './component/adminsideRoom/RoomManagent';
 
 
 function App() {
