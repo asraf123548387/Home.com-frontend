@@ -4,13 +4,14 @@ import { useEffect } from 'react'
 import room from '../../images/room.png'
 import axios from 'axios'
 import AddRoomModal from './AddRoomModal'
-
+import EditRoomModal from './EditRoomModal'
 function RoomManagement() {
   const[rooms,setRooms]=useState([])// this is for store hotel details.
   const[addRoomModalOpen,setAddRoomModalOpen]=useState(false); //this is for add hotel modal data
   const [searchQuery, setSearchQuery] = useState('');// this is mainly used to serach the hotel
   const [showSidebar, setShowSidebar] = useState(true); //this is mainly used for show thr side bar 
-  
+  const[editRoomModalOpen,setRoomModalOpen]=useState(false);
+  const[roomToEdit,setRoomToEdit]=useState(null);
   
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
@@ -25,36 +26,60 @@ function RoomManagement() {
   setAddRoomModalOpen(false);
  }
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
+  useEffect(() => {
+    const token = localStorage.getItem('token');
 
-  //   const fetchAllRooms = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:8080/admin/roomList', {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           'Content-Type': 'application/json',
-  //         },
-  //         params: {
-  //           search: searchQuery,
-  //         },
-  //       });
+    const fetchAllRooms = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/admin/roomList', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          params: {
+            search: searchQuery,
+          },
+        });
 
-  //       if (response.status >= 200 && response.status < 300) {
-  //         setRooms(response.data);
-  //       } else {
-  //         console.error('Failed to fetch users:', response.statusText);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching users:', error.message);
-  //     }
-  //   };
+        if (response.status >= 200 && response.status < 300) {
+          setRooms(response.data);
+          console.log(response.data)
+        } else {
+          console.error('Failed to fetch users:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching users:', error.message);
+      }
+    };
 
-  //   fetchAllRooms();
-  // }, [searchQuery]);
+    fetchAllRooms();
+  }, [searchQuery]);
       
+const openEditRoomModal=async (roomId)=>{
+  const token =localStorage.getItem('token');
+  try {
 
-  
+    const response = await axios.get(`http://localhost:8080/admin/room/${roomId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.status >= 200 && response.status < 300) {
+      setRoomToEdit(response.data);
+   
+      setRoomModalOpen(true);
+    } else {
+      console.error('Failed to fetch hotel details:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error fetching hotel details:', error.message);
+  }
+};
+const closeEditRoomModal = () => {
+  setRoomToEdit(null);
+  setRoomModalOpen(false);
+};
   
   return (
     <div>
@@ -161,26 +186,27 @@ function RoomManagement() {
         <thead>
           <tr className="border-b bg-gray-200">
             <th className="text-left p-3 px-5">Room Number</th>
+            <th className="text-left p-3 px-5">Room price</th>
             <th className="text-left p-3 px-5">Room Type</th>
-            <th className="text-left p-3 px-5">status</th>
-            <th className="text-right p-3 px-5">Price </th>
+            <th className="text-right p-3 px-5">images </th>
             <th className="text-right p-3 px-5"> Actions</th>
           </tr>
         </thead>
         <tbody>
          
-            <tr  className="border-b hover:bg-orange-100 bg-gray-100">
-              <td className="p-3 px-5"></td>
-              <td className="p-3 px-5"></td>
-              <td className="p-3 px-5"></td>
-              <td className="p-3 px-5">
-                <img src=' ' alt="Hotel Image" className='w-12 h-10' />
-              </td>
-              <td className="p-3 px-5 flex justify-end space-x-2">
-              <button>hai</button>
-                    </td>
-            </tr>
-        
+        {rooms.map(room => (
+      <tr key={room.roomId} className="border-b hover:bg-orange-100 bg-gray-100">
+        <td className="p-3 px-5">{room.roomNumber}</td>
+        <td className="p-3 px-5">{room.pricePerNight}</td>
+        <td className="p-3 px-5">{room.roomType}</td>
+        <td className="p-3 px-5">
+          <img src={room.images} alt="Hotel Image" className="w-12 h-10" />
+        </td>
+        <td className="p-3 px-5 flex justify-end space-x-2">
+        <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" onClick={() => openEditRoomModal(room.roomId)}>Edit</button>
+        </td>
+      </tr>
+    ))}
         </tbody>
       </table>
     </div>
@@ -188,7 +214,7 @@ function RoomManagement() {
     </div>
   </div>
   <AddRoomModal isOpen={addRoomModalOpen} onSuccess={() => setAddRoomModalOpen(false)} />
-      
+  {editRoomModalOpen && <EditRoomModal isOpen={editRoomModalOpen} roomData={roomToEdit} onClose={closeEditRoomModal}/>}
       
     </div>
   )

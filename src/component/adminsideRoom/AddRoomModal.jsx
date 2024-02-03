@@ -52,6 +52,7 @@ const AddRoomModal = ({ isOpen, onSuccess }) => {
       if (response.status === 200) {
         // Handle successful form submission
         setMsg("Room added successfully");
+        
         if (onSuccess) {
           onSuccess();
         }
