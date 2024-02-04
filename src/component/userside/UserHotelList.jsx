@@ -2,17 +2,15 @@ import React from 'react'
 import Navbar from './Navbar'
 import { useParams } from 'react-router-dom'
 import { useState,useEffect } from 'react';
-import logo from '../../images/logo.png'
+import Spinner from './Spinner';
 import { Link } from 'react-router-dom';
 
 import axios from 'axios';
 import Footer from './Footer';
 function UserHotelList() {
     const{hotelId}=useParams();
-    console.log(hotelId)
-
     const[hotel,setHotel]=useState([]);
-    console.log(hotel)
+    const [isLoadingHotelDetails, setIsLoadingHotelDetails] = useState(true); // State variable for hotel details loading state
    
     useEffect(() => {
       const fetchAllHotel = async () => {
@@ -24,7 +22,7 @@ function UserHotelList() {
     
           if (response.status >= 200 && response.status < 300) {
             setHotel(response.data);
-            console.log(response.data);
+            setIsLoadingHotelDetails(false);
           } else {
             console.error('Failed to fetch hotels:', response.statusText);
           }
@@ -35,12 +33,11 @@ function UserHotelList() {
     
       fetchAllHotel();
     }, []);
-   
+    if (isLoadingHotelDetails) {
+      return <Spinner />;
+    }
  // Find the hotel with the matching hotelId
  const selectedHotel = hotel.find(hotelItem => hotelItem.hotelId === parseInt(hotelId));
-
-console.log(selectedHotel)
-
 // Filter out the selected hotel from the hotel array
 const remainingHotels = hotel.filter(hotelItem => hotelItem.id !== parseInt(hotelId));
 

@@ -5,6 +5,8 @@ import axios from 'axios';
 import Navbar from './Navbar';
 import { FaHeart } from 'react-icons/fa';
 import Footer from './Footer';
+import Spinner from './Spinner';
+
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWifi,faSquareRss,faWater,faBed,faRupeeSign } from '@fortawesome/free-solid-svg-icons';
@@ -16,7 +18,9 @@ function HotelviewPage() {
   const [images,setImages]=useState([]);
   const [hotelDetails,setHotelDetails]=useState([]);
   const [rooms,setRooms]=useState([]);
-
+  const [isLoadingImages, setIsLoadingImages] = useState(true); // State variable for images loading state
+  const [isLoadingHotelDetails, setIsLoadingHotelDetails] = useState(true); // State variable for hotel details loading state
+  const [isLoadingRooms, setIsLoadingRooms] = useState(true); 
 // this is  fetch hotel image 
   useEffect(()=>{
     // const token = localStorage.getItem('token'); 
@@ -26,7 +30,7 @@ function HotelviewPage() {
           const response = await axios.get(`http://localhost:8080/user/hotelImages/${hotelId}`);
 
           setImages(response.data);
-         
+          setIsLoadingImages(false); 
         } catch (error) {
           console.error('Error fetching images:', error);
         }
@@ -42,7 +46,7 @@ function HotelviewPage() {
         try{
             const response =await axios.get(`http://localhost:8080/user/hotelSingle/${hotelId}`);
             setHotelDetails(response.data);
-        
+            setIsLoadingHotelDetails(false);
 
         }catch(error){
             console.log('error fetching hotel details:',error);
@@ -58,7 +62,8 @@ function HotelviewPage() {
         try{
             const response =await axios.get(`http://localhost:8080/user/hotelRooms/${hotelId}`)
             setRooms(response.data);
-           console.log(response.data)
+            setIsLoadingRooms(false);
+         
         }catch(error){
             console.error('Error fetching hotel room:',error);
         }
@@ -66,7 +71,9 @@ function HotelviewPage() {
     fetchRooms();
   },[hotelId]);
 
-    
+  if (isLoadingImages || isLoadingHotelDetails || isLoadingRooms) {
+    return <Spinner />;
+  }
 
 
   return (
@@ -154,14 +161,14 @@ function HotelviewPage() {
                     {hotelDetails.description}
                 </div>
                 <div className='flex justify-end'>
-                <button class="rounded-2xl bg-blue-700 text-white w-32 h-7 hover:bg-blue-600 border border-black border-solid">Reserve now</button>
+                <button class="rounded-2xl bg-blue-700 text-white w-32 h-7 hover:bg-blue-600 border border-black border-solid">Reserve</button>
 
                 </div>
              </div>
             </div>
      </div>
  </section>
-<h2 className='ml-28'>Available Room</h2>
+<h2 className='ml-28'>Choose Your Room</h2>
 
  <section className='flex'> 
 
@@ -195,7 +202,7 @@ function HotelviewPage() {
 
             </div>
             <div className='flex justify-end'>
-              <button className='rounded-3xl bg-blue-600 text-white p-2 mb-3 mr-2 hover:bg-blue-700'> Reserve Now</button>
+              <button className='rounded-3xl bg-blue-600 text-white p-2 mb-3 mr-2 hover:bg-blue-700'> Reserve </button>
               </div>
 
 

@@ -7,11 +7,11 @@ import { useAuth } from '../../contextapi/authContext';
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faBook, faGift, faStar, faBookmark, faSignOutAlt,faQuestion } from '@fortawesome/free-solid-svg-icons';
-
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
     const { isAuthenticated } = useAuth();
-
+    const navigate=useNavigate();
     const userName=localStorage.getItem('userName');
     const firstLetter = userName ? userName.charAt(0).toUpperCase() : ''; // Get the first letter of the username
     const [isModalOpen,setIsModalOpen]=useState(false);
@@ -22,8 +22,15 @@ function Navbar() {
     const handleModalClose = () => {
       setIsModalOpen(false);
     };
+   const handleSignout=()=>{
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    console.log("ghfsdfv")
+    navigate('/login');
 
 
+   }
+  
   return (
 <div>
     <div className=" bg-white border-b border-black   ">
@@ -39,7 +46,7 @@ function Navbar() {
                 </div>
                 {/* <div className='ml-3 rounded-2xl border w-4'>
                   <FontAwesomeIcon icon={faQuestion} />
-                </div> */}
+                </div> */}  
            </div>
             
 
@@ -100,10 +107,10 @@ function Navbar() {
                     <FontAwesomeIcon icon={faBookmark} />
                     <button className='ml-2 '>Saved</button>
                 </Link>
-                <Link className='flex items-center w-full   hover:text-black pl-5 no-underline'>
+                <div className='flex items-center w-full  text-blue-600 hover:text-black pl-5 no-underline 'onClick={handleSignout}>
                     <FontAwesomeIcon icon={faSignOutAlt} />
-                    <button className='ml-2'>Sign Out</button>
-                </Link>
+                    <button className='ml-2' >Sign Out</button>
+                </div>
             </div>
         </div>
 

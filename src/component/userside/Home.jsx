@@ -5,7 +5,6 @@ import munnar from '../../images/munnar.png';
 import Navbar from './Navbar';
 import mumbai from '../../images/mumbai.png';
 import delhi from '../../images/delhi.png';
-import logo from '../../images/logo.png'
 import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -13,7 +12,9 @@ import 'slick-carousel/slick/slick-theme.css';
 import '../css/Home.css'
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTag } from '@fortawesome/free-solid-svg-icons';
+import BannerInHomePage from './BannerInHomePage';
 
 
 function Home() {
@@ -68,6 +69,30 @@ function Home() {
       ],
     };
 
+    const settings1 = {
+      infinite: true,
+      speed: 500,
+      slidesToShow: 12, // Adjust the number of slides to show
+      slidesToScroll: 1,
+      autoplay: true,        // Enable automatic sliding
+      autoplaySpeed: 3000,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+          },
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 4, // Update to 1 slide for small devices
+            slidesToScroll: 4,
+          },
+        },
+      ],
+    };
     
   return (
    <div className='overflow-x-hidden'>
@@ -96,27 +121,7 @@ function Home() {
 
 
 
-<section className='mt-4 flex'>
-<div className='w-full md:w-12'></div>
-    <div className="md:w-11/12  h-auto py-3 bg-rose-600 rounded-2xl flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10  ">
-        <div className="w-full md:w-3/12 md:max-w-52 h-auto md:h-38 flex flex-col justify-between md:mr-4">
-            <p className="text-white text-xl font-medium font-['Roboto'] leading-loose text-center md:text-left">Find and book your<br />perfect stay</p> 
-        </div>
-
-        <div className="md:w-full md:max-w-3xl h-auto md:h-32 justify-center items-start gap-3 md:inline-flex">
-            <div className="w-full md:w-4/12 md:max-w-72 h-auto md:h-32 px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4">
-                <p className="h-auto text-white text-base font-normal font-['Roboto'] leading-tight text-center md:text-left">Earn rewards on every<br/>night you stay</p>
-            </div>
-
-            <div className="w-full md:w-4/12 md:max-w-72 h-auto md:h-32 px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4">
-                <p className="w-full h-auto text-white text-base font-normal font-['Roboto'] leading-tight text-center md:text-left">Save more with<br/>Member Prices</p>
-            </div>
-            <div className="w-full md:w-4/12 md:max-w-72 h-auto md:h-32 px-5 py-9 bg-rose-800 rounded-2xl justify-center items-center gap-4">
-                <p className="w-full h-auto text-white text-base font-normal font-['Roboto'] leading-tight text-center md:text-left">Free cancellation<br/>options if plans change</p>
-            </div>
-        </div>
-    </div>
-</section>
+<BannerInHomePage/>
 
 
 {/* in this section add 12 different types */}
@@ -127,20 +132,21 @@ function Home() {
   <div className='w-12'>
 
   </div>
-  <div className='w-11/12 flex'>
-              <div className='w-1/12 flex items-center justify-center'>
-                <div className=" text-blue-500 hover:text-black transition duration-300 ease-in-out">
-                    <div className="w-12 h-6 ">
-                        <svg className="uitk-icon uitk-icon uitk-icon-leading "
-                            aria-hidden="true" viewBox="0 0 24 24">
-                            <path d="M16.5 2.05a3.9 3.9 0 0 0-4.5 1.5 3.9 3.9 0 0 0-4.5-1.5l2.48 2.47A4.46 4.46 0 0 0 5.5 7h4.05a3.9 3.9 0 0 0-1.5 4.5l3.14-3.15-.5 5.65H7a4 4 0 0 0-4 4h1c1.6 0 3.02-.88 4-2 .98 1.12 2.4 2 4 2s3.02-.88 4-2c.98 1.12 2.4 2 4 2h1a4 4 0 0 0-4-4h-3.68l-.52-5.65 3.15 3.15a3.9 3.9 0 0 0-1.5-4.5h4.05a4.46 4.46 0 0 0-4.48-2.48l2.48-2.47zM16 18.68A7.03 7.03 0 0 0 20 20h1v2h-1a8.7 8.7 0 0 1-4-.99 8.75 8.75 0 0 1-8 0A8.83 8.83 0 0 1 4 22H3v-2h1c1.39 0 2.78-.47 4-1.32a6.88 6.88 0 0 0 8 0z"></path>
-                        </svg>
-                    </div>
-                    <div className="mt-6">
-                        Resort
-                    </div>
-                </div>
-            </div>
+ 
+  <Slider {...settings1} className='w-11/12 flex'>
+      <div className='w-1/12 flex items-center justify-center'>
+        <div className=" text-blue-500 hover:text-black transition duration-300 ease-in-out">
+          <div className="w-12 h-6 ">
+            <svg className="uitk-icon uitk-icon uitk-icon-leading "
+              aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M16.5 2.05a3.9 3.9 0 0 0-4.5 1.5 3.9 3.9 0 0 0-4.5-1.5l2.48 2.47A4.46 4.46 0 0 0 5.5 7h4.05a3.9 3.9 0 0 0-1.5 4.5l3.14-3.15-.5 5.65H7a4 4 0 0 0-4 4h1c1.6 0 3.02-.88 4-2 .98 1.12 2.4 2 4 2s3.02-.88 4-2c.98 1.12 2.4 2 4 2h1a4 4 0 0 0-4-4h-3.68l-.52-5.65 3.15 3.15a3.9 3.9 0 0 0-1.5-4.5h4.05a4.46 4.46 0 0 0-4.48-2.48l2.48-2.47zM16 18.68A7.03 7.03 0 0 0 20 20h1v2h-1a8.7 8.7 0 0 1-4-.99 8.75 8.75 0 0 1-8 0A8.83 8.83 0 0 1 4 22H3v-2h1c1.39 0 2.78-.47 4-1.32a6.88 6.88 0 0 0 8 0z"></path>
+            </svg>
+          </div>
+          <div className="mt-6">
+            Resort
+          </div>
+        </div>
+      </div>
 
 
         <div className='w-1/12 flex items-center justify-center'>
@@ -173,7 +179,7 @@ function Home() {
                 16H5v4h2v-4Zm4 0H9v4h2v-4Zm0-11.92A6 6 0 0 0 6 10v4h5V4.08ZM13 14h5v-4a6 6 0 0 0-5-5.92V14Zm2
                 2h-2v4h2v-4Zm4 0h-2v4h2v-4Z"></path></svg>
               </div>
-              <div className='flex justify-center mt-6'>
+              <div className='flex  mt-6'>
                 villa
                 
               </div>
@@ -189,7 +195,7 @@ function Home() {
               4.2-3.74a3.38 3.38 0 1 1-.04 4.74l-1.14-1.01-1.51 1.34 1.27 1.12A5.4 5.4 0 0 0 24 
               11.99a5.38 5.38 0 0 0-5.4-5.37z"></path></svg>
             </div>
-            <div className='flex justify-center mt-6'>
+            <div className='flex ml-3 mt-6'>
               ALL
             </div>
         </div>
@@ -207,7 +213,7 @@ function Home() {
                   0-.66 1.28L3.95 19zM7 6h10a1 1 0 0 1 1 1v2.97L12.62 8.2c-.4-.13-.84-.13-1.25 0L6 9.97V7a1
                    1 0 0 1 1-1z" clip-rule="evenodd"></path></svg>
             </div>
-            <div className='flex justify-center mt-6'>
+            <div className='flex ml-3 mt-6'>
                Boat
             </div>
           </div>
@@ -223,7 +229,7 @@ function Home() {
                 5.39z" clip-rule="evenodd"></path></svg>
 
             </div>
-            <div className=' mt-6 flex justify-center'>
+            <div className=' mt-6 ml-3 flex '>
               Spa
             </div>
           </div>
@@ -243,7 +249,7 @@ function Home() {
                    1.29.78 1.75 1.32l2.48 2.91z" clip-rule="evenodd"></path></svg>
              </div>
              <div className=' mt-6'>
-              Pet friendly
+              Pet 
              </div>
            </div>     
              
@@ -289,12 +295,26 @@ function Home() {
                     <svg className="uitk-icon uitk-icon uitk-icon-leading  " aria-hidden="true" viewBox="0 0 24 24">
                       <path fill-rule="evenodd" d="M14.06 9c.5 0 .93-.39.94-.89a4.34 4.34 0 0 0-1.35-3.25c-.65-.72-.8-1.27-.77-1.91a.93.93 0 0 0-.94-.95c-.5 0-.93.4-.94.9a4.34 4.34 0 0 0 1.35 3.25c.61.59.78 1.27.78 1.89-.01.52.4.96.93.96zm-4 0c.5 0 .93-.39.94-.89a4.34 4.34 0 0 0-1.35-3.25c-.65-.72-.8-1.27-.77-1.91A.93.93 0 0 0 7.94 2c-.5 0-.93.4-.94.9a4.34 4.34 0 0 0 1.35 3.25c.61.59.78 1.27.78 1.89-.01.52.4.96.93.96zM20 20a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2h16zm-.15-9a1 1 0 0 1 .99 1.14l-.6 4.14A2 2 0 0 1 18.28 18H9.73a2 2 0 0 1-1.98-1.72L7.3 13H4a1 1 0 1 1 0-2h15.85zm-3.91-9c.53 0 .96.43.94.95-.03.64.12 1.19.77 1.91A4.34 4.34 0 0 1 19 8.11a.93.93 0 0 1-.94.89.93.93 0 0 1-.93-.96c0-.62-.17-1.3-.78-1.89A4.34 4.34 0 0 1 15 2.9c.01-.5.44-.9.94-.9z" clip-rule="evenodd"></path></svg>
                 </div>
-                <div className='flex justify-center mt-6'>
-                  Apart Hotel
+                <div className='flex  mt-6'>
+                  Apart 
                 </div>
            </div>
         </div>
-  </div>
+        <div className='w-1/12 flex items-center justify-center'>
+          <div className=' text-blue-500 hover:text-black transition duration-300 ease-in-out'>
+              <div className='w-12 h-6'>
+              <svg class="uitk-icon uitk-icon uitk-icon-leading" aria-hidden="true" viewBox="0 0 24 24" >
+              <path d="M18.6 6.62c-1.44 0-2.8.56-3.77 1.53L10.49 12 7.8 14.39a3.38 3.38 0 1 1 .04-4.74l1.13 
+              1 1.51-1.34L9.22 8.2A5.4 5.4 0 0 0 0 12a5.4 5.4 0 0 0 9.17 3.85l2.83-2.5 
+              4.2-3.74a3.38 3.38 0 1 1-.04 4.74l-1.14-1.01-1.51 1.34 1.27 1.12A5.4 5.4 0 0 0 24 
+              11.99a5.38 5.38 0 0 0-5.4-5.37z"></path></svg>
+            </div>
+            <div className='flex  mt-6'>
+              ALL
+            </div>
+        </div>
+        </div>
+  </Slider>
 
 
  </div>
@@ -311,33 +331,33 @@ function Home() {
         <div className=' w-12'>
 
         </div>
-                <div class="md:flex   flex-wrap w-11/12">
-                  <div class="w-full md:w-1/2 lg:w-1/4 p-2">
-                    <div class="w-full h-64 relative rounded-2xl border border-zinc-200">
+                <div className="md:flex   flex-wrap w-11/12">
+                  <div className="w-full md:w-1/2 lg:w-1/4 p-2">
+                    <div className="w-full h-64 relative rounded-2xl border border-zinc-200">
                       <img src={california} alt="" class="w-full h-48 object-cover rounded-t-2xl border border-solid border-gray-500"/>
-                      <h5 class="text-center">Madgoan</h5>
-                      <h6 class="text-center">GOA</h6>
+                      <h5 className="pl-2">Madgoan</h5>
+                      <h6 className="pl-2 font-thin">GOA</h6>
                     </div>
                   </div>
-                  <div class="w-full md:w-1/2 lg:w-1/4 p-2">
-                    <div class="w-full h-64 relative rounded-2xl border border-zinc-200">
+                  <div className="w-full md:w-1/2 lg:w-1/4 p-2">
+                    <div className="w-full h-64 relative rounded-2xl border border-zinc-200">
                       <img src={munnar} alt="" class="w-full h-48 object-cover rounded-t-2xl border border-solid border-gray-500"/>
-                      <h5 class="text-center">Kochi</h5>
-                      <h6 class="text-center">Kerala</h6>
+                      <h5 className="pl-2">Kochi</h5>
+                      <h6 className="pl-2 font-thin">Kerala</h6>
                     </div>
                   </div>
-                  <div class="w-full md:w-1/2 lg:w-1/4 p-2">
-                    <div class="w-full h-64 relative rounded-2xl border border-zinc-200">
+                  <div className="w-full md:w-1/2 lg:w-1/4 p-2">
+                    <div className="w-full h-64 relative rounded-2xl border border-zinc-200">
                       <img src={mumbai} alt="" class="w-full h-48 object-cover rounded-t-2xl border border-solid border-gray-500"/>
-                      <h5 class="text-center">Mumbai</h5>
-                      <h6 class="text-center">Maharashtra</h6>
+                      <h5 className="pl-2">Mumbai</h5>
+                      <h6 className="pl-2 font-thin">Maharashtra</h6>
                     </div>
                   </div>
-                  <div class="w-full md:w-1/2 lg:w-1/4 p-2">
-                    <div class="w-full h-64 relative rounded-2xl border border-zinc-200">
+                  <div className="w-full md:w-1/2 lg:w-1/4 p-2">
+                    <div className="w-full h-64 relative rounded-2xl border border-zinc-200">
                       <img src={delhi} alt="" class="w-full h-48 object-cover rounded-t-2xl border border-solid border-gray-500"/>
-                      <h5 class="text-center">Delhi</h5>
-                      <h6 class="text-center">New Delhi</h6>
+                      <h5 className="pl-2">Delhi</h5>
+                      <h6 className=" pl-2 font-thin">New Delhi</h6>
                     </div>
                   </div>
                 </div>
@@ -362,10 +382,16 @@ function Home() {
             
           />
           <div className='h-8'>
+            <span className='pl-2 text-black mt-2'>8.0/10 <span className='font-thin text-sm'>Very good</span> </span>
           <div className='text-black ml-2 mt-1 font-serif font-semibold'>{hotelItem.hotelName}</div>
           <div className='text-black ml-2 font-semiboldmt-4'>{hotelItem.location}</div>
-          <div className='  text-black mr-4 '>₹ {hotelItem.price}</div> 
-          <p className='font-thin'>per night</p>
+          <div className='  text-black ml-2 text-xl '>₹{hotelItem.price} <sup><del>₹5000</del></sup></div> 
+          <div className='text-black text-xs ml-2'>per night</div>
+          <div className='text-black text-xs ml-2'>including & taxes</div>
+          <div className="bg-purple-500 w-24 h-6 mt-2 ml-2 rounded-md">
+              <FontAwesomeIcon icon={faTag} className='pl-2' style={{ color: 'white' }} />
+              <span className='pl-2 ' style={{color:'white'}}>20 <sup>% off</sup></span>
+          </div>
           </div>
 
         </Link>
