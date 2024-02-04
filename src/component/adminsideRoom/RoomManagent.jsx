@@ -12,6 +12,37 @@ function RoomManagement() {
   const [showSidebar, setShowSidebar] = useState(true); //this is mainly used for show thr side bar 
   const[editRoomModalOpen,setRoomModalOpen]=useState(false);
   const[roomToEdit,setRoomToEdit]=useState(null);
+
+
+
+
+
+  useEffect(() => {
+    fetchAllRooms();
+  }, [searchQuery]);
+
+  const fetchAllRooms = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await axios.get('http://localhost:8080/admin/roomList', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        params: {
+          search: searchQuery,
+        },
+      });
+
+      if (response.status >= 200 && response.status < 300) {
+        setRooms(response.data);
+      } else {
+        console.error('Failed to fetch rooms:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching rooms:', error.message);
+    }
+  };
   
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
@@ -26,35 +57,8 @@ function RoomManagement() {
   setAddRoomModalOpen(false);
  }
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
 
-    const fetchAllRooms = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/admin/roomList', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          params: {
-            search: searchQuery,
-          },
-        });
-
-        if (response.status >= 200 && response.status < 300) {
-          setRooms(response.data);
-          console.log(response.data)
-        } else {
-          console.error('Failed to fetch users:', response.statusText);
-        }
-      } catch (error) {
-        console.error('Error fetching users:', error.message);
-      }
-    };
-
-    fetchAllRooms();
-  }, [searchQuery]);
-      
+    
 const openEditRoomModal=async (roomId)=>{
   const token =localStorage.getItem('token');
   try {
@@ -67,7 +71,7 @@ const openEditRoomModal=async (roomId)=>{
     });
     if (response.status >= 200 && response.status < 300) {
       setRoomToEdit(response.data);
-   
+    
       setRoomModalOpen(true);
     } else {
       console.error('Failed to fetch hotel details:', response.statusText);
@@ -79,10 +83,13 @@ const openEditRoomModal=async (roomId)=>{
 const closeEditRoomModal = () => {
   setRoomToEdit(null);
   setRoomModalOpen(false);
+  fetchAllRooms();
+
 };
   
   return (
     <div>
+      
       <div className={`flex h-screen ${showSidebar ? '' : 'overflow-x-hidden'}`}>
     {showSidebar && (
       <div className="w-1/4 p-6 bg-gray-800 text-white h-full">
@@ -215,6 +222,7 @@ const closeEditRoomModal = () => {
   </div>
   <AddRoomModal isOpen={addRoomModalOpen} onSuccess={() => setAddRoomModalOpen(false)} />
   {editRoomModalOpen && <EditRoomModal isOpen={editRoomModalOpen} roomData={roomToEdit} onClose={closeEditRoomModal}/>}
+
       
     </div>
   )

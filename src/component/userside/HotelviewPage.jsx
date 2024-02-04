@@ -6,6 +6,8 @@ import Navbar from './Navbar';
 import { FaHeart } from 'react-icons/fa';
 import Footer from './Footer';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWifi,faSquareRss,faWater,faBed,faRupeeSign } from '@fortawesome/free-solid-svg-icons';
 
 
 function HotelviewPage() {
@@ -177,20 +179,24 @@ function HotelviewPage() {
             <div  >
               <img src={room.images} alt={`Room ${room.roomNumber}`} className='h-auto'/>
             </div>
-            <div>
-               <span> free wifi</span> <br></br>
-               <span> 34 sqrt</span> <br></br>
-               <span> Bay view</span> <br></br>
-               <span> 1 king bed and 1 Double Sofa bed</span> 
+            <div className='p-2'>
+               <span className='pb-2'>   <FontAwesomeIcon icon={faWifi} className='pr-2'/>Free wifi</span> <br></br>
+               <span className='pb-2'> <FontAwesomeIcon icon={faSquareRss}  className='pr-2'/> 34 sqrt</span> <br></br>
+               <span className='pb-2'> <FontAwesomeIcon icon={faWater} className='pr-2'/>Bay view</span> <br></br>
+               <span className='pb-2'> <FontAwesomeIcon icon={faBed} className='pr-2'/>1 king bed and 1 Double Sofa bed</span> 
                
             </div>
             <hr></hr>
-            <div>
-                <span><p>Room Number:{room.roomNumber}</p></span>
-                <span><p>Room Type:{room.roomType}</p></span> 
-                <span><p>Price:{room.pricePerNight}</p></span> 
+            <div className='pl-3'>
+                <span>Room Number:{room.roomNumber}</span><br></br>
+                <span>Room Type:{room.roomType}</span> <br>
+                </br>
+                <span ><FontAwesomeIcon icon={faRupeeSign} />:{room.pricePerNight}</span> 
 
             </div>
+            <div className='flex justify-end'>
+              <button className='rounded-3xl bg-blue-600 text-white p-2 mb-3 mr-2 hover:bg-blue-700'> Reserve Now</button>
+              </div>
 
 
           </div>

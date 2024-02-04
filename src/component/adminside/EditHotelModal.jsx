@@ -9,7 +9,7 @@ function EditHotelModal({isOpen,hotelData,onSuccess,onClose}) {
     const [msg, setMsg] = useState('');
     const [errors, setErrors] = useState({});
 
-
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setEditedHotel({ ...editedHotel, [name]: value });

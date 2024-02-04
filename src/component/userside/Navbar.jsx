@@ -62,7 +62,7 @@ function Navbar() {
           
           
           ) : (
-            <Link to="/login" className="hover:text-red-300 text-red-500 no-underline mr-4 md:mr-20">Sign In</Link>
+            <Link to="/login" className="hover:text-red-300 text-red-800 no-underline mr-4 md:mr-20">Sign In</Link>
           )}
         </nav>
         <Modal isOpen={isModalOpen} onRequestClose={handleModalClose} style={{
