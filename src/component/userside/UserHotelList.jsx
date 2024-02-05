@@ -50,8 +50,8 @@ const sortedHotel = selectedHotel ? [selectedHotel, ...remainingHotels] : hotel;
       <Navbar/>
 
          <section className='flex'>
-            <div className='w-1/12'>
-
+            <div className='w-1/12 '>
+                    
             </div>
                     
             <div className='w-10/12 mt-2'>
@@ -77,29 +77,33 @@ const sortedHotel = selectedHotel ? [selectedHotel, ...remainingHotels] : hotel;
 
 
 <section className='flex'>
-        <div className='w-3/12'>
+        <div className='w-4/12'>
             
-
-
-
+         <div className='flex justify-center pt-10'>
+             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d984962.9467283923!2d73.34722614574983!3d15.348759664324652!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbfba106336b741%3A0xeaf887ff62f34092!2sGoa!5e0!3m2!1sen!2sin!4v1707106860458!5m2!1sen!2sin" className='rounded-2xl' ></iframe>
+         </div>
         </div>
   
          
-    <div className="max-w-screen-lg flex-col  mt-4">
-    {sortedHotel.map((hotelItem, index) => (
-        <Link to={`/hotelViewPage/${hotelItem.hotelId}`} key={index} style={{ textDecoration: 'none' }}>
-            <div className={`flex w-full md:w-4/6 h-48 relative rounded-2xl border border-black-200 mb-2 ${index === 0 ? 'bg-blue-100' : 'bg-white'}`}>
-                <img src={hotelItem.images} alt={`Hotel ${hotelItem.id}`} className="h-48 rounded-tl-2xl rounded-bl-2xl w-48" />
-                <div className="flex flex-col justify-center ml-2 w-full">
-                   <div> <h5 className='text-blue-600 font-serif'>{hotelItem.hotelName}</h5></div>
+        <div className="max-w-screen-lg flex-col mt-4">
+            {sortedHotel.map((hotelItem, index) => (
+              
+              <Link to={`/hotelViewPage/${hotelItem.hotelId}`} key={index} style={{ textDecoration: 'none' }}>
+                    {index === 0 && <div className='pl-2 text-white bg-blue-800 w-5/6 rounded-tl-2xl'>You were interested in this property.</div>}
+                <div className={`flex w-full md:w-5/6 h-48 relative border border-black-200 mb-2 ${index === 0 ? 'bg-blue-100 rounded-br-2xl rounded-bl-2xl' : 'bg-white  rounded-2xl'}`}>
+                  <img src={hotelItem.images} alt={`Hotel ${hotelItem.id}`} className={`h-48   w-48  ${index === 0 ?' rounded-bl-2xl':'rounded-bl-2xl rounded-tl-2xl'}`} />
+                  <div className="flex flex-col justify-center ml-2 w-full">
+                    <div> <h5 className='text-blue-600 font-serif'>{hotelItem.hotelName}</h5></div>
                     <div>{hotelItem.location}</div>
                     <div className='text-black'>{hotelItem.address}</div>
                     <div className='flex justify-end'>{hotelItem.price}</div>
+                
+                  </div>
                 </div>
-            </div>
-        </Link>
-    ))}
-   </div>
+              </Link>
+            ))}
+          </div>
+
  </section>
 <Footer/>
     </div>

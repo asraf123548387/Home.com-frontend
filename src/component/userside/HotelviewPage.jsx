@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import axios from 'axios';
 
 import Navbar from './Navbar';
@@ -21,6 +21,9 @@ function HotelviewPage() {
   const [isLoadingImages, setIsLoadingImages] = useState(true); // State variable for images loading state
   const [isLoadingHotelDetails, setIsLoadingHotelDetails] = useState(true); // State variable for hotel details loading state
   const [isLoadingRooms, setIsLoadingRooms] = useState(true); 
+
+
+ 
 // this is  fetch hotel image 
   useEffect(()=>{
     // const token = localStorage.getItem('token'); 
@@ -202,7 +205,7 @@ function HotelviewPage() {
 
             </div>
             <div className='flex justify-end'>
-              <button className='rounded-3xl bg-blue-600 text-white p-2 mb-3 mr-2 hover:bg-blue-700'> Reserve </button>
+            <Link to={`/checkOut/${room.roomId}`}> <button className='rounded-3xl bg-blue-600 text-white p-2 mb-3 mr-2 hover:bg-blue-700' > Reserve </button></Link> 
               </div>
 
 

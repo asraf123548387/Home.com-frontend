@@ -25,7 +25,7 @@ function Navbar() {
    const handleSignout=()=>{
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
-    console.log("ghfsdfv")
+   
     navigate('/login');
 
 
@@ -36,17 +36,15 @@ function Navbar() {
     <div className=" bg-white border-b border-black   ">
         <nav className="container mx-auto p-4 flex items-center justify-between ml-4">
             <div className="flex items-center space-x-2">
-                <img src={logo} alt="Logo" className="h-8 w-8 ml-2" />
-                <div className="text-xl font-bold hidden md:block">home<sub>.com</sub></div>
+                <img src={logo} alt="Logo" className="h-10 w-10 ml-2" />
+                <div className="text-2xl font-bold hidden md:block">home<sub>.com</sub></div>
             </div>
            <div className='flex'>
 
                 <div className=''>
                   INR
                 </div>
-                {/* <div className='ml-3 rounded-2xl border w-4'>
-                  <FontAwesomeIcon icon={faQuestion} />
-                </div> */}  
+        
            </div>
             
 

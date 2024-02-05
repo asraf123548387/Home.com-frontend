@@ -18,6 +18,9 @@ import UserHotelList from './component/userside/UserHotelList';
 import UserProfilePage from './component/userProfile/UserProfilePage';
 import HotelviewPage from './component/userside/HotelviewPage';
 import RoomManagent from './component/adminsideRoom/RoomManagent';
+import CheckOut from './component/userside/checkOut';
+
+
 
 
 function App() {
@@ -39,6 +42,7 @@ function App() {
     <Route path='/userProfilePage' element={<UserProfilePage/>}/>
     <Route path='/hotelViewPage/:hotelId' element={<HotelviewPage />} />
     <Route path='/roomManagement' element={<RoomManagent/>}/>
+    <Route path='/checkOut/:roomId' element={<CheckOut/>}/>
 
    </Routes>
    
