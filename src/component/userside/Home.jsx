@@ -99,14 +99,9 @@ function Home() {
    <div className='overflow-x-hidden'>
       
            <Navbar/>
-       
            <div className="w-full md:w-1/4 h-10 text-slate-800 text-4xl font-medium font-['Roboto'] leading-10  md:ml-5 mt-4">Where to?</div>
-
-                 <SearchDate/> 
-
-
-
-       <BannerInHomePage/>
+           <SearchDate/> 
+           <BannerInHomePage/>
 
 
 {/* in this section add 12 different types */}
@@ -392,4 +387,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Home;
