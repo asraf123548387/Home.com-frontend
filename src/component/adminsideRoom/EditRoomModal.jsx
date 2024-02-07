@@ -96,9 +96,9 @@ function EditRoomModal({ isOpen, roomData, onSuccess, onClose }) {
                   </label>
                   <select className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500' name='roomType' onChange={(e) => handleChange(e)} value={editedRoom.roomType}>
                     <option value=''>Select Room Type</option>
-                    <option value='single'>Single</option>
-                    <option value='double'>Double</option>
-                    <option value='deluxe'>Deluxe</option>
+                    <option value='single'>Single Bed</option>
+                    <option value='double'>Double Bed</option>
+                    <option value='deluxe'>Deluxe </option>
                   </select>
                   {errors.roomType && <p className='text-danger'>{errors.roomType}</p>}
                 </div>
