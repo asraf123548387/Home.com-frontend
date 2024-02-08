@@ -4,12 +4,20 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import Swal from 'sweetalert2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon,faUser,faBed,faCar,faPersonSwimming ,faBanSmoking,faDumbbell, faLock} from '@fortawesome/free-solid-svg-icons';
 function CheckOut() {
     const {roomId} =useParams();
     const [roomDetails,setRoomDetails]=useState([]);
     const [hotelDetails,setHotelDetails]=useState([]);
+    const today =new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const formattedToday = today.toISOString().substr(0, 10);
+    const formattedTomorrow = tomorrow.toISOString().substr(0, 10);
+
     const userName=localStorage.getItem('userName');
    const Navigate=useNavigate();
     useEffect(()=>{
@@ -17,7 +25,8 @@ function CheckOut() {
 
         if(!token){
             Navigate('/login')
-        }
+            Swal.fire("please sign In !");
+        }else{
         axios.get(`http://localhost:8080/userCheckOut/getRoom/${roomId}`,
         {
             headers: {
@@ -38,7 +47,7 @@ function CheckOut() {
             .catch(error => console.error('Error fetching hotel details:', error));
         })
         .catch(error => console.error('Error fetching room details:', error));
-    }, [roomId]);
+}}, [roomId]);
 
 
   return (
@@ -79,20 +88,11 @@ function CheckOut() {
                     <div className='pt-3'>
                         <form>
                           <div className='pl-5'>
-                            <label className='font-bold text-lg'>First name *</label>
+                            <label className='font-bold text-lg'>Your name *</label>
                             <p className='text-lg font-thin'>Please give us the name of one of the people staying in this room.</p>
                             <input type='text' className='border border-black w-3/6 h-10'></input>
                           </div>
-                          <div className='pl-5 mt-4'>
-                            <div>
-                               <label className='font-bold text-lg'>Last name *</label>
-                            </div>
-                            
-                            <div className='mt-2'>
-                              <input type='text' className='border border-black w-3/6 h-10'></input>
-                            </div>
-                            
-                          </div>
+                        
                           <div className='pl-5 mt-4'>
                             <label className='font-bold text-lg'>Email * :</label>
                             <p className='text-lg font-thin'>Your confirmation email goes here.</p>
@@ -204,15 +204,25 @@ function CheckOut() {
                         <div>
                             reviews  space
                         </div>
-                        <div className='bg-white p-3 rounded-lg'>
-                          <div>
-                            Check In date:
-                           
+                         <div className='bg-white p-3 rounded-lg'>
+                         <div className='text-lg font-bold flex justify-between'>
+                              <div className='w-1/2'>
+                                  <label className='w-full'>Check In date:</label>
+                              </div>
+                              <div className='w-1/2'>
+                                <span>  <input className='w-full' defaultValue={formattedToday} readOnly />12 pm</span>
+                              </div>
                           </div>
-                          <div>
-                            check Out Date
+                          <div className='text-lg font-bold flex justify-between'>
+                              <div className='w-1/2'>
+                                  <label className='w-full'> Check Out Date:</label>
+                              </div>
+                              <div className='w-1/2'>
+                                 <span> <input type="date" defaultValue={formattedTomorrow} />12 pm</span>
+                              </div>
                           </div>
-                        </div>
+                          
+                      </div>
 
                       </div>
                    </div>
