@@ -1,7 +1,8 @@
 import React, { useEffect,useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import Navbar from './Navbar';
 import { FaHeart } from 'react-icons/fa';
 import Footer from './Footer';
@@ -10,20 +11,63 @@ import Spinner from './Spinner';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWifi,faSquareRss,faWater,faBed,faRupeeSign } from '@fortawesome/free-solid-svg-icons';
+import AddReviewModal from './AddReviewModal';
 
 
 function HotelviewPage() {
+  const navigate=useNavigate();
   const {hotelId}=useParams();
-  console.log(hotelId)
   const [images,setImages]=useState([]);
   const [hotelDetails,setHotelDetails]=useState([]);
   const [rooms,setRooms]=useState([]);
   const [isLoadingImages, setIsLoadingImages] = useState(true); // State variable for images loading state
   const [isLoadingHotelDetails, setIsLoadingHotelDetails] = useState(true); // State variable for hotel details loading state
   const [isLoadingRooms, setIsLoadingRooms] = useState(true); 
+  const [isModalOpen,setIsModalOpen]=useState();
+  const userId = localStorage.getItem('userId');
+  // for reviews adding
+  const openModal = () => {
+    setIsModalOpen(true);
 
+  };
 
- 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleReviewSubmit = (review) => {
+    const token =localStorage.getItem('token');
+    if(!token){
+      navigate('/login')
+      return;
+    }
+    // Add userId and hotelId to the review data
+    const reviewData = {
+      ...review,
+      userId: userId,
+      hotelId: hotelId
+    };
+
+    const headers = {
+      Authorization: `Bearer ${token}`
+    };
+    axios.post('http://localhost:8080/userReviews', reviewData, { headers })
+    .then(response => {
+      console.log('Review submitted successfully:', response.data);
+      Swal.fire("Review is added");
+      closeModal();
+    })
+    .catch(error => {
+      console.error('Error submitting review:', error);
+      // Handle error
+    });
+
+    // Send reviewData to backend here
+    console.log('Submitted review:', reviewData);
+    closeModal();
+  };
+  
+
 // this is  fetch hotel image 
   useEffect(()=>{
     // const token = localStorage.getItem('token'); 
@@ -218,6 +262,31 @@ function HotelviewPage() {
       
      {/* this is the end */}
     </div>
+ </section>
+        <div className='ml-28 my-4 font-bold text-xl'>
+            {/* Your existing code */}
+            <button onClick={openModal} className=' rounded-3xl bg-blue-600 text-white p-2 mb-3 mr-2 hover:bg-blue-700'>Add Review</button>
+            <AddReviewModal
+                isOpen={isModalOpen}
+                onRequestClose={closeModal}
+                onSubmit={handleReviewSubmit}
+                
+              />
+
+          </div>
+          
+ <section>
+    <div className='flex'>
+      <div className='w-1/12'>
+
+      </div>
+      <div className='w-12 '>
+           
+      </div>
+
+    </div>
+
+
  </section>
 <Footer/>
     </div>
