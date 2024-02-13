@@ -24,6 +24,11 @@ function HotelviewPage() {
   const [isLoadingHotelDetails, setIsLoadingHotelDetails] = useState(true); // State variable for hotel details loading state
   const [isLoadingRooms, setIsLoadingRooms] = useState(true); 
   const [isModalOpen,setIsModalOpen]=useState();
+  const [reviews,setReviews]=useState([]);
+  const [averageRating,setAverageRating]=useState(0);
+  const [totalReviews, setTotalReviews] = useState(0);
+  const [showAllReviews, setShowAllReviews] = useState(false);
+
   const userId = localStorage.getItem('userId');
   // for reviews adding
   const openModal = () => {
@@ -53,7 +58,21 @@ function HotelviewPage() {
     };
     axios.post('http://localhost:8080/userReviews', reviewData, { headers })
     .then(response => {
-      console.log('Review submitted successfully:', response.data);
+
+            axios.get(`http://localhost:8080/user/reviewsListByHotel?hotelId=${hotelId}`)
+                    .then(response => {
+                        setReviews(response.data);
+                        const totalRating = response.data.reduce((acc, curr) => acc + curr.rating, 0);
+                        const avgRating = totalRating / response.data.length;
+                        setAverageRating(avgRating);
+                        setTotalReviews(response.data.length);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching reviews:', error);
+                    });
+
+
+
       Swal.fire("Review is added");
       closeModal();
     })
@@ -117,6 +136,21 @@ function HotelviewPage() {
     };
     fetchRooms();
   },[hotelId]);
+
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/user/reviewsListByHotel?hotelId=${hotelId}`)
+      .then(response => {
+        setReviews(response.data);
+        const totalRating = response.data.reduce((acc, curr) => acc + curr.rating, 0);
+        const avgRating = totalRating / response.data.length;
+        setAverageRating(avgRating);
+        setTotalReviews(response.data.length);
+      })
+      .catch(error => {
+        console.error('Error fetching reviews:', error);
+      });
+  }, [hotelId]);
 
   if (isLoadingImages || isLoadingHotelDetails || isLoadingRooms) {
     return <Spinner />;
@@ -273,6 +307,7 @@ function HotelviewPage() {
                 
               />
 
+
           </div>
           
  <section>
@@ -280,8 +315,52 @@ function HotelviewPage() {
       <div className='w-1/12'>
 
       </div>
-      <div className='w-12 '>
-           
+      <div className='w-10/12 bg-white rounded-2xl flex'>
+           <div className='w-3/6 flex justify-center pt-20'>
+            <div className='font-bold text-4xl'>
+              
+              {averageRating}/10
+            
+            </div> 
+            <div>
+            <div className='font-bold pl-3 text-xl'>
+               {averageRating > 8 ? <span>Excellent</span> : averageRating> 5 ? <span>Good</span> : null}
+           </div>
+
+              <div className='text-blue-600 pl-3 '>
+              {totalReviews} reviews
+              </div>
+         
+            </div>
+           </div>
+           <div className='w-full rounded-br-2xl rounded-tr-2xl p-3'>
+                {showAllReviews ? (
+                    reviews.map(review => (
+                        <div key={review.reviewId}>
+                            <h3>{review.title}</h3>
+                            <p>{review.reviewDate}</p>
+                            <p>{review.description}</p>
+                            <p className='text-blue-500'>Rating: {review.rating}/10</p>
+                            <p>By: {review.userName}</p>
+                            <hr />
+                        </div>
+                    ))
+                ) : (
+                    <>
+                        {reviews.slice(0, 2).map(review => (
+                            <div key={review.reviewId}>
+                                <h3>{review.title}</h3>
+                                <p>{review.reviewDate}</p>
+                                <p>{review.description}</p>
+                                <p className='text-blue-500'>Rating: {review.rating}/10</p>
+                                <p>By: {review.userName}</p>
+                                <hr />
+                            </div>
+                        ))}
+                        <button onClick={() => setShowAllReviews(true)} className=' text-blue-600 border rounded-2xl w-36 h-12 border-black hover:text-blue-300'>See All Reviews</button>
+                    </>
+                )}
+            </div>
       </div>
 
     </div>
