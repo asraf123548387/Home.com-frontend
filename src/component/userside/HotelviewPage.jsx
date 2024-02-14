@@ -7,7 +7,7 @@ import Navbar from './Navbar';
 import { FaHeart } from 'react-icons/fa';
 import Footer from './Footer';
 import Spinner from './Spinner';
-
+import { useAverageRating } from '../../contextapi/averageRatingContext';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWifi,faSquareRss,faWater,faBed,faRupeeSign } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +15,8 @@ import AddReviewModal from './AddReviewModal';
 
 
 function HotelviewPage() {
+  const { averageRating, setAverageRating } = useAverageRating();
+
   const navigate=useNavigate();
   const {hotelId}=useParams();
   const [images,setImages]=useState([]);
@@ -25,7 +27,7 @@ function HotelviewPage() {
   const [isLoadingRooms, setIsLoadingRooms] = useState(true); 
   const [isModalOpen,setIsModalOpen]=useState();
   const [reviews,setReviews]=useState([]);
-  const [averageRating,setAverageRating]=useState(0);
+  
   const [totalReviews, setTotalReviews] = useState(0);
   const [showAllReviews, setShowAllReviews] = useState(false);
 
@@ -129,6 +131,7 @@ function HotelviewPage() {
             const response =await axios.get(`http://localhost:8080/user/hotelRooms/${hotelId}`)
             setRooms(response.data);
             setIsLoadingRooms(false);
+            console.log(response.data)
          
         }catch(error){
             console.error('Error fetching hotel room:',error);
@@ -279,6 +282,7 @@ function HotelviewPage() {
                 <span>Room Number:{room.roomNumber}</span><br></br>
                 <span>Room Type:{room.roomType}</span> <br>
                 </br>
+                <p>Availability: {room.availability ? 'Available' : 'Not Available'}</p>
                 <span ><FontAwesomeIcon icon={faRupeeSign} />:{room.pricePerNight}</span> 
 
             </div>
@@ -291,10 +295,7 @@ function HotelviewPage() {
         
       </div>
        ))}
-      {/* this is same image */}
-     
-      
-     {/* this is the end */}
+    
     </div>
  </section>
         <div className='ml-28 my-4 font-bold text-xl'>

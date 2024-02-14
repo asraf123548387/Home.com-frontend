@@ -19,6 +19,7 @@ import UserProfilePage from './component/userProfile/UserProfilePage';
 import HotelviewPage from './component/userside/HotelviewPage';
 import RoomManagent from './component/adminsideRoom/RoomManagent';
 import CheckOut from './component/userside/checkOut';
+import { AverageRatingProvider } from './contextapi/averageRatingContext';
 
 
 
@@ -26,7 +27,9 @@ import CheckOut from './component/userside/checkOut';
 function App() {
   return (
     
+    
    <BrowserRouter>
+   <AverageRatingProvider>
    <Routes>
     <Route path='/' element={<Home/>}/>
     <Route path='/signUp' element={<RegisterForm/>}/>
@@ -45,8 +48,9 @@ function App() {
     <Route path='/checkOut/:roomId' element={<CheckOut/>}/>
 
    </Routes>
-   
+   </AverageRatingProvider>
    </BrowserRouter>
+  
   );
 }
 

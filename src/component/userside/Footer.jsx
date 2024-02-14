@@ -5,7 +5,7 @@ function Footer() {
   return (
     <div>
       
-      <footer className=" dark:bg-gray-900 mt-20">
+      <footer className=" dark:bg-gray-900 mt-5">
     <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
