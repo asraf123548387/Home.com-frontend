@@ -5,10 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Swal from 'sweetalert2';
+
 import { useAverageRating } from '../../contextapi/averageRatingContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMoon,faUser,faBed,faCar,faPersonSwimming ,faBanSmoking,faDumbbell, faLock,faBook,faTimes} from '@fortawesome/free-solid-svg-icons';
+import { faMoon,faUser,faBed,faCar,faPersonSwimming ,faBanSmoking,faDumbbell, faLock,faBook} from '@fortawesome/free-solid-svg-icons';
+import { loadStripe } from '@stripe/stripe-js';
+const stripePromise = loadStripe('pk_test_51Ok3CgSAIRBLhMStVbXJTBobaktYYPnRcqV3eErOIFeYRAdP0D0ng6jvHfPz80cVwG8Xtr6G3kzVR7hJ029uvhIW00GIeV3x1j');
 function CheckOut() {
+     const navigate = useNavigate();
     const {roomId} =useParams();
     const userId = localStorage.getItem('userId');
     const [roomDetails,setRoomDetails]=useState([]);
@@ -47,6 +51,7 @@ function CheckOut() {
       .then(response => {
         // Handle successful response
         console.log('Payment successful:', response.data);
+        Swal.fire("Room is booked!");
         closeModal();
       })
       .catch(error => {
@@ -54,12 +59,96 @@ function CheckOut() {
         console.error('Error making payment:', error);
       });
     };
-  
-    const handlePayment = () => {
-      // Logic for online payment
-      console.log('Online payment selected');
-      closeModal();
+    const token = localStorage.getItem('token');
+    const handlePayment = async () => {
+      try {
+        const stripe = await stripePromise;
+        
+        const amount = formData.totalPrice; // Assuming formData is defined elsewhere
+    
+        const response = await axios.post('http://localhost:8080/api/payments/create-checkout-session', {
+          amount: amount
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+    
+        const { sessionId } = response.data; // Assuming sessionId is returned from the backend
+        
+        // Redirect to Stripe Checkout page with sessionId
+        const { error } = await stripe.redirectToCheckout({
+          sessionId: sessionId
+        });
+    
+        if (error) {
+          console.error('Error initiating payment:', error);
+          // Handle error gracefully, show user feedback or retry payment
+        } else{
+          navigate('/', { state: { formData: formData } }); 
+        
+        }
+      } catch (error) {
+        console.error('Error initiating payment:', error);
+        // Handle error gracefully, show user feedback or retry payment
+      }
     };
+    useEffect(() => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const sessionId = urlParams.get('session_id');
+      console.log('Session ID from URL:', sessionId);
+      if (sessionId) {
+          // Verify the payment using the sessionId
+          verifyPayment(sessionId).then(response => {
+              if (response.status === 'success') {
+                  // If payment is successful, store the booking data
+                  storeBookingData(token, formData); // Pass the token here
+              } else {
+                  // Handle payment verification failure
+                  console.error('Payment verification failed:', response.message);
+              }
+          });
+      }
+    }, []);
+
+    const verifyPayment = async (sessionId) => {
+      try {
+          const response = await axios.get(`http://localhost:8080/verify-payment?session_id=${sessionId}`, {
+              headers: {
+                  'Authorization': `Bearer ${token}`
+              }
+          });
+          return response.data; // Return the entire response data
+      } catch (error) {
+          console.error('Error verifying payment:', error);
+          return { status: 'error', message: error.message };
+      }
+    };
+
+    
+    const storeBookingData = async  (token, formData) => {
+      try {
+        // Assuming formData contains the booking data to be stored
+        const response = await axios.post('http://localhost:8080/onlineBooking', formData, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        console.log('Booking data stored successfully:', response.data);
+      } catch (error) {
+        console.error('Error storing booking data:', error);
+        // Handle error gracefully, show user feedback or retry storing data
+      }
+    };
+    
+
+    
+
+
+
+
     const today =new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -67,19 +156,20 @@ function CheckOut() {
     const formattedToday = today.toISOString().substr(0, 10);
     const formattedTomorrow = tomorrow.toISOString().substr(0, 10);
     // this use state is used to handle the data of User
-    const [formData,setFormData]=useState({
-      guestName:'',
-      email:'',
-      mobileNumber:'',
-      checkInDate:formattedToday,
-      checkOutDate:formattedTomorrow,
-      totalPrice:0,
-      roomId:roomId,
-      userId:userId,
+      const [formData,setFormData]=useState({
+        guestName:'',
+        email:'',
+        mobileNumber:'',
+        checkInDate:formattedToday,
+        checkOutDate:formattedTomorrow,
+        totalPrice:0,
+        roomId:roomId,
+        userId:userId,
 
 
 
-    });
+      });
+
 
     useEffect(() => {
       const checkInDate = new Date(formData.checkInDate);

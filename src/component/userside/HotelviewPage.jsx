@@ -260,43 +260,46 @@ function HotelviewPage() {
 
     </div>
     <div className='w-10/12 mt-2 flex '>
-    {rooms.map(room => (
-      <div className='w-4/12 bg-white h-auto mr-4  rounded-2xl' >
-        <div className=' bg-blue-800 rounded-tr-2xl rounded-tl-2xl'>
-            <span className='ml-3 text-white'>popular among travellers</span>
-        </div>
-
-          <div key={room.roomId}>
-            <div  >
-              <img src={room.images} alt={`Room ${room.roomNumber}`} className='h-auto'/>
-            </div>
-            <div className='p-2'>
-               <span className='pb-2'>   <FontAwesomeIcon icon={faWifi} className='pr-2'/>Free wifi</span> <br></br>
-               <span className='pb-2'> <FontAwesomeIcon icon={faSquareRss}  className='pr-2'/> 34 sqrt</span> <br></br>
-               <span className='pb-2'> <FontAwesomeIcon icon={faWater} className='pr-2'/>Bay view</span> <br></br>
-               <span className='pb-2'> <FontAwesomeIcon icon={faBed} className='pr-2'/>1 king bed and 1 Double Sofa bed</span> 
-               
-            </div>
-            <hr></hr>
-            <div className='pl-3'>
-                <span>Room Number:{room.roomNumber}</span><br></br>
-                <span>Room Type:{room.roomType}</span> <br>
-                </br>
-                <p>Availability: {room.availability ? 'Available' : 'Not Available'}</p>
-                <span ><FontAwesomeIcon icon={faRupeeSign} />:{room.pricePerNight}</span> 
-
-            </div>
-            <div className='flex justify-end'>
-            <Link to={`/checkOut/${room.roomId}`}> <button className='rounded-3xl bg-blue-600 text-white p-2 mb-3 mr-2 hover:bg-blue-700' > Reserve </button></Link> 
-              </div>
-
-
-          </div>
-        
+  {rooms.map(room => (
+    <div className='w-4/12 bg-white h-auto mr-4 rounded-2xl'>
+      <div className='bg-blue-800 rounded-tr-2xl rounded-tl-2xl'>
+        <span className='ml-3 text-white'>popular among travellers</span>
       </div>
-       ))}
-    
+
+      <div key={room.roomId}>
+        <div>
+          <img src={room.images} alt={`Room ${room.roomNumber}`} className='h-auto' />
+        </div>
+        <div className='p-2'>
+          <span className='pb-2'><FontAwesomeIcon icon={faWifi} className='pr-2' />Free wifi</span> <br />
+          <span className='pb-2'><FontAwesomeIcon icon={faSquareRss} className='pr-2' />34 sqrt</span> <br />
+          <span className='pb-2'><FontAwesomeIcon icon={faWater} className='pr-2' />Bay view</span> <br />
+          <span className='pb-2'><FontAwesomeIcon icon={faBed} className='pr-2' />1 king bed and 1 Double Sofa bed</span>
+
+        </div>
+        <hr />
+        <div className='pl-3'>
+          <span>Room Number: {room.roomNumber}</span><br />
+          <span>Room Type: {room.roomType}</span> <br />
+          {/* <p>Availability: {room.availability ? 'Available' : 'Not Available'}</p> */}
+          <span><FontAwesomeIcon icon={faRupeeSign} />: {room.pricePerNight}</span>
+
+        </div>
+        <div className='flex justify-end'>
+          {room.availability ? (
+            <Link to={`/checkOut/${room.roomId}`}>
+              <button className='rounded-3xl bg-blue-600 text-white p-2 mb-3 mr-2 hover:bg-blue-700'> Reserve </button>
+            </Link>
+          ) : (
+            <button disabled className='rounded-3xl bg-gray-400 text-white p-2 mb-3 mr-2 cursor-not-allowed'> Not Available </button>
+          )}
+        </div>
+      </div>
+
     </div>
+  ))}
+</div>
+
  </section>
         <div className='ml-28 my-4 font-bold text-xl'>
             {/* Your existing code */}
