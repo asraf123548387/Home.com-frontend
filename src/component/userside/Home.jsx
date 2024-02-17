@@ -22,63 +22,38 @@ import { useLocation } from 'react-router-dom';
 function Home() {
 
     const[hotel,setHotel]=useState([]);
-    const [sessionId, setSessionId] = useState(null);
+
     const location = useLocation();
-    const formData = location.state?.formData; // Access formData passed from checkout component
-    const token = localStorage.getItem('token');
-    useEffect(() => {
+
+ 
       // Fetch hotel data
-      const fetchAllHotel = async () => {
-        try {
-          const response = await axios.get('http://localhost:8080/user/hotelList');
-          if (response.status >=   200 && response.status <   300) {
-            setHotel(response.data);
+      useEffect(() => {
+        // Fetch hotel data
+        const fetchAllHotel = async () => {
+          try {
+            const response = await axios.get('http://localhost:8080/user/hotelList');
+            if (response.status >= 200 && response.status < 300) {
+              setHotel(response.data);
+            }
+          } catch (error) {
+            console.error('Error fetching hotel data:', error);
           }
-        } catch (error) {
-          console.error('Error fetching hotel data:', error);
-        }
-      };
-  
-      fetchAllHotel();
-  
-      // Handle session ID from URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const sessionIdFromUrl = urlParams.get('session_id');
-      if (sessionIdFromUrl) {
-        setSessionId(sessionIdFromUrl);
-        // Verify the payment using the sessionId
-        verifyPayment(sessionIdFromUrl).then(response => {
-          if (response.status === 'success') {
-            // If payment is successful, store the booking data
-            storeBookingData(token, formData); // Pass the token here
-          } else {
-            // Handle payment verification failure
-            console.error('Payment verification failed:', response.message);
-          }
-        });
-      }
-    }, [formData]); // Add formData as a dependency to the useEffect hook
-  
-    // Define verifyPayment and storeBookingData functions here
-    const verifyPayment = async (sessionId) => {
-      try {
-        const response = await axios.post('http://localhost:8080/verify', {
-          sessionId: sessionId
-        }, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        });
-        return response.data; // Return the entire response data
-      } catch (error) {
-        console.error('Error verifying payment:', error);
-        return { status: 'error', message: error.message };
-      }
-    };
+        };
+      
+        fetchAllHotel();
+      
+        const urlParams = new URLSearchParams(window.location.search);
+    const sessionIdFromUrl = urlParams.get('session_id');
+    if (sessionIdFromUrl) {
+     
+    }
+  }, []);
+   
   
     const storeBookingData = async (token, formData) => {
       try {
+        console.log("hello"+token);
+        console.log(formData)
         // Assuming formData contains the booking data to be stored
         const response = await axios.post('http://localhost:8080/onlineBooking', formData, {
           headers: {

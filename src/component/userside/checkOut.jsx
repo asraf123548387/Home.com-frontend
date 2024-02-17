@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState ,useContext} from 'react'
 import { useParams} from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +12,8 @@ import { faMoon,faUser,faBed,faCar,faPersonSwimming ,faBanSmoking,faDumbbell, fa
 import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe('pk_test_51Ok3CgSAIRBLhMStVbXJTBobaktYYPnRcqV3eErOIFeYRAdP0D0ng6jvHfPz80cVwG8Xtr6G3kzVR7hJ029uvhIW00GIeV3x1j');
 function CheckOut() {
-     const navigate = useNavigate();
+
+    
     const {roomId} =useParams();
     const userId = localStorage.getItem('userId');
     const [roomDetails,setRoomDetails]=useState([]);
@@ -59,92 +60,6 @@ function CheckOut() {
         console.error('Error making payment:', error);
       });
     };
-    const token = localStorage.getItem('token');
-    const handlePayment = async () => {
-      try {
-        const stripe = await stripePromise;
-        
-        const amount = formData.totalPrice; // Assuming formData is defined elsewhere
-    
-        const response = await axios.post('http://localhost:8080/api/payments/create-checkout-session', {
-          amount: amount
-        }, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        });
-    
-        const { sessionId } = response.data; // Assuming sessionId is returned from the backend
-        
-        // Redirect to Stripe Checkout page with sessionId
-        const { error } = await stripe.redirectToCheckout({
-          sessionId: sessionId
-        });
-    
-        if (error) {
-          console.error('Error initiating payment:', error);
-          // Handle error gracefully, show user feedback or retry payment
-        } else{
-          navigate('/', { state: { formData: formData } }); 
-        
-        }
-      } catch (error) {
-        console.error('Error initiating payment:', error);
-        // Handle error gracefully, show user feedback or retry payment
-      }
-    };
-    useEffect(() => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const sessionId = urlParams.get('session_id');
-      console.log('Session ID from URL:', sessionId);
-      if (sessionId) {
-          // Verify the payment using the sessionId
-          verifyPayment(sessionId).then(response => {
-              if (response.status === 'success') {
-                  // If payment is successful, store the booking data
-                  storeBookingData(token, formData); // Pass the token here
-              } else {
-                  // Handle payment verification failure
-                  console.error('Payment verification failed:', response.message);
-              }
-          });
-      }
-    }, []);
-
-    const verifyPayment = async (sessionId) => {
-      try {
-          const response = await axios.get(`http://localhost:8080/verify-payment?session_id=${sessionId}`, {
-              headers: {
-                  'Authorization': `Bearer ${token}`
-              }
-          });
-          return response.data; // Return the entire response data
-      } catch (error) {
-          console.error('Error verifying payment:', error);
-          return { status: 'error', message: error.message };
-      }
-    };
-
-    
-    const storeBookingData = async  (token, formData) => {
-      try {
-        // Assuming formData contains the booking data to be stored
-        const response = await axios.post('http://localhost:8080/onlineBooking', formData, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        console.log('Booking data stored successfully:', response.data);
-      } catch (error) {
-        console.error('Error storing booking data:', error);
-        // Handle error gracefully, show user feedback or retry storing data
-      }
-    };
-    
-
-    
 
 
 
@@ -170,6 +85,63 @@ function CheckOut() {
 
       });
 
+      const token = localStorage.getItem('token');
+
+      const storeBookingData = async () => {
+        try {
+          // Assuming formData contains the booking data to be stored
+          const response = await axios.post('http://localhost:8080/onlineBooking', formData, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          console.log('Booking data stored successfully:', response.data);
+        } catch (error) {
+          console.error('Error storing booking data:', error);
+          // Handle error gracefully, show user feedback or retry storing data
+        }
+      };
+      
+      const handlePayment = async () => {
+        try {
+          const stripe = await stripePromise;
+          const amount = formData.totalPrice; // Assuming formData is defined elsewhere
+      
+          const response = await axios.post('http://localhost:8080/api/payments/create-checkout-session', {
+            amount: amount
+          }, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          storeBookingData();
+          const { sessionId } = response.data; // Assuming sessionId is returned from the backend
+      
+          // Redirect to Stripe Checkout page with sessionId
+          const { error } = await stripe.redirectToCheckout({
+            sessionId: sessionId
+          });
+      
+            // Call storeBookingData after successful payment and redirection
+          
+          
+        } catch (error) {
+          console.error('Error initiating payment:', error);
+          // Handle error gracefully, show user feedback or retry payment
+        }
+      };
+ 
+
+    
+
+    
+
+
+
+
+  
 
     useEffect(() => {
       const checkInDate = new Date(formData.checkInDate);

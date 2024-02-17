@@ -6,8 +6,9 @@ import { useState } from 'react';
 import { useAuth } from '../../contextapi/authContext';
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faBook, faGift, faStar, faBookmark, faSignOutAlt,faQuestion } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faBook, faGift, faStar, faBookmark, faSignOutAlt,faQuestion,faBell } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+
 
 function Navbar() {
     const { isAuthenticated } = useAuth();
@@ -33,43 +34,36 @@ function Navbar() {
   
   return (
 <div>
-    <div className=" bg-white border-b border-black   ">
-        <nav className="container mx-auto p-4 flex items-center justify-between ml-4">
+    <div className=" bg-white border-b-2 border-red-700   ">
+              <nav className="container mx-auto p-4 flex items-center justify-between">
             <div className="flex items-center space-x-2">
-                <img src={logo} alt="Logo" className="h-10 w-10 ml-2" />
-                <div className="text-2xl font-bold hidden md:block">home<sub>.com</sub></div>
+              <img src={logo} alt="Logo" className="h-10 w-10 ml-2" />
+              <div className="text-2xl font-bold hidden md:block">home<sub>.com</sub></div>
             </div>
-           <div className='flex'>
-
-                <div className=''>
-                  INR
-                </div>
-        
-           </div>
-            
-
-           
-         
-
-            {isAuthenticated ? (
-        <button
-        className="group hover:text-blue-500 transition-colors duration-300"
-        onMouseEnter={handleHover}
-        
-      >
-            <div className="flex items-center space-x-3 no-u">
-              <div className="inline-block w-8 h-8 rounded-full bg-red-500 text-white text-center group-hover:bg-yellow-500">
-                <span>{firstLetter}</span>
+            <div className="flex items-center space-x-5">
+              <div className="hidden md:block">
+                INR
               </div>
-              <span className="text-lg font-medium md:text-xl">{userName}</span>
+              <div>
+                <FontAwesomeIcon icon={faBell} />
+              </div>
+              {isAuthenticated ? (
+                <button
+                  className="group hover:text-blue-500 transition-colors duration-300"
+                  onMouseEnter={handleHover}
+                >
+                  <div className="flex items-center space-x-3 no-u">
+                    <div className="inline-block w-8 h-8 rounded-full bg-red-500 text-white text-center group-hover:bg-yellow-500">
+                      <span>{firstLetter}</span>
+                    </div>
+                    <span className="text-lg font-medium md:text-xl">{userName}</span>
+                  </div>
+                </button>
+              ) : (
+                <Link to="/login" className="hover:text-red-300 text-red-800 no-underline mr-4 md:mr-20">Sign In</Link>
+              )}
             </div>
-          </button>
-          
-          
-          ) : (
-            <Link to="/login" className="hover:text-red-300 text-red-800 no-underline mr-4 md:mr-20">Sign In</Link>
-          )}
-        </nav>
+          </nav>
         <Modal isOpen={isModalOpen} onRequestClose={handleModalClose} style={{
           overlay: {
           background:'transparent'
@@ -89,7 +83,7 @@ function Navbar() {
                     <FontAwesomeIcon icon={faUser} />
                     <button  className='ml-2 '>Manage Account</button>
                 </Link>
-                <Link className='flex items-center w-full  hover:text-black pl-5 no-underline' >
+                <Link to={'/bookingHistory'}className='flex items-center w-full  hover:text-black pl-5 no-underline' >
                     <FontAwesomeIcon icon={faBook} />
                     <button className='ml-2 '>Bookings</button>
                 </Link>
@@ -97,7 +91,7 @@ function Navbar() {
                     <FontAwesomeIcon icon={faGift} />
                     <button className='ml-2 '>Rewards</button>
                 </Link>
-                <Link className='flex items-center w-full   hover:text-black pl-5 no-underline'>
+                <Link to={'/userReview'} className='flex items-center w-full   hover:text-black pl-5 no-underline'>
                     <FontAwesomeIcon icon={faStar} />
                     <button className='ml-2 '>Reviews</button>
                 </Link>
