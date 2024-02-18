@@ -30,6 +30,7 @@ function HotelviewPage() {
   
   const [totalReviews, setTotalReviews] = useState(0);
   const [showAllReviews, setShowAllReviews] = useState(false);
+  const [isInWishlist, setIsInWishlist] = useState(false);
 
   const userId = localStorage.getItem('userId');
   // for reviews adding
@@ -160,6 +161,45 @@ function HotelviewPage() {
   }
 
 
+
+  const handleWishlistClick = async () => {
+    // Toggle the state
+    setIsInWishlist(!isInWishlist);
+
+    // Retrieve userId and token from local storage
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+
+    // Send a request to the backend to add the hotel to the wishlist
+    try {
+        const response = await axios.post('http://localhost:8080/wishlist/add', {
+            userId: userId,
+            hotelId: hotelId,
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Include the token for authentication
+            },
+        });
+
+        // Handle the response
+        if (response.status ===  200) {
+            console.log('Successfully added to wishlist');
+            Swal.fire(" Added in  wishlist!");
+        } else {
+            console.error('Failed to add to wishlist');
+        }
+    } catch (error) {
+        // Handle the error
+        if (error.response && error.response.status ===  400) {
+          Swal.fire("Already added in  wishlist!");
+            console.error('Bad Request:', error.response.data);
+        } else {
+            console.error('Failed to add to wishlist', error);
+        }
+    }
+};
+
   return (
     <div className='bg-slate-100'>
       <Navbar/>
@@ -175,15 +215,15 @@ function HotelviewPage() {
                                         <>
                                             <img src={images[0]} alt="Image 1" className='w-full h-full rounded-2xl' />
                                             {/* Wishlist button */}
-                                            <button className="absolute top-2 right-2 bg-white rounded-full p-2 shadow-md">
-                                                {/* Add wishlist icon or text here */}
-                                                
-                                                <FaHeart style={{ color: 'red' }}  className=''/>
-
+                                            <button
+                                                onClick={handleWishlistClick}
+                                                className={`absolute top-2 right-2 bg-white rounded-full p-2 shadow-md ${isInWishlist ? 'text-red-500' : 'text-black'}`}
+                                            >
+                                                <FaHeart />
                                             </button>
                                         </>
                                     )}
-                                </div>
+                      </div>
 
                             <div className='grid grid-cols-2 w-full h-full gap-1'>
                                 {images.slice(1, 5).map((image, index) => (

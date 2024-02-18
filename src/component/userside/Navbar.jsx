@@ -95,7 +95,7 @@ function Navbar() {
                     <FontAwesomeIcon icon={faStar} />
                     <button className='ml-2 '>Reviews</button>
                 </Link>
-                <Link className='flex items-center w-full  hover:text-black pl-5 no-underline'>
+                <Link to={'/wishlist'} className='flex items-center w-full  hover:text-black pl-5 no-underline'>
                     <FontAwesomeIcon icon={faBookmark} />
                     <button className='ml-2 '>Saved</button>
                 </Link>

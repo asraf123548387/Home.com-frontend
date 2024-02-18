@@ -56,24 +56,24 @@ function SearchDate() {
       };
   return (
  
-      <section className='flex flex-wrap mt-2'>
+               <section className='flex flex-col md:flex-row mt-2'>
                       <div className='w-full md:w-12'></div>
 
                       <div className='w-full md:w-11/12'>
-                          <form className="h-16 p-1 bg-yellow-500 rounded-lg shadow flex justify-center items-start gap-1">
-                          <div className="flex-grow flex-shrink flex-basis-0 self-stretch  py-1 bg-white rounded justify-center items-center w-4/12 h-14  relative">
+                      <form className="h-16 p-1 bg-yellow-500 rounded-lg shadow flex flex-col md:flex-row justify-center items-start gap-1">
+                      <div className="flex-grow flex-shrink flex-basis-0 self-stretch py-1 bg-white rounded justify-center items-center w-full md:w-4/12 h-14 relative">
                      
-                          <Dropdown
-                                options={options}
-                                placeholder="Going to"
-                                menuPlacement="bottom"
-                                className='text-lg font-sans font-semibold ' // Adjust font size
-                                 
-                            />
+                                <Dropdown
+                                      options={options}
+                                      placeholder="Going to"
+                                      menuPlacement="bottom"
+                                      className='text-lg font-sans font-semibold ' // Adjust font size
+                                      
+                                  />
 
                            </div>
 
-                             <div onClick={() => setDatePickerOpen(!datePickerOpen)}   className="flex-grow flex-shrink flex-basis-0 self-stretch px-2 py-2 bg-white rounded justify-center items-center w-4/12 h-14 border border-gray-300">
+                             <div onClick={() => setDatePickerOpen(!datePickerOpen)}    className="flex-grow flex-shrink flex-basis-0 self-stretch px-2 py-2 bg-white rounded justify-center items-center w-full md:w-4/12 h-14 border border-gray-300">
                                             <FontAwesomeIcon icon={faCalendarDays}  />
                                             <input
                                                 className='h-10  text-lg pl-3 outline-none' // Adjust height and width as needed
@@ -93,7 +93,7 @@ function SearchDate() {
 
                            
                                         <input
-                                            className="flex-grow flex-shrink flex-basis-0 self-stretch px-2 py-2 outline-none bg-white rounded justify-center items-center w-3/12 h-14 border border-gray-300"
+                                            className="flex-grow flex-shrink flex-basis-0 self-stretch px-2 py-2 outline-none bg-white rounded justify-center items-center w-full md:w-3/12 h-14 border border-gray-300"
                                             onClick={() => setModalIsOpen(true)}
                                             value={`Travellers: ${adults}, Children: ${children}`}
                                             readOnly

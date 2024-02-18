@@ -3,7 +3,7 @@ import React from 'react'
 function BannerInHomePage() {
   return (
     <div>
-      <section className='mt-4 flex'>
+      <section className='mt-4  hidden md:flex'>
 <div className='w-full md:w-12'></div>
     <div className="md:w-11/12  h-auto py-3 bg-rose-600 rounded-2xl flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10  ">
         <div className="w-full md:w-3/12 md:max-w-52 h-auto md:h-38 flex flex-col justify-between md:mr-4">

@@ -123,7 +123,7 @@ function Home() {
     };
     
   return (
-   <div className='overflow-x-hidden'>
+   <div className=' overflow-x-hidden'>
       
            <Navbar/>
            <div className="w-full md:w-1/4 h-10 text-slate-800 text-4xl font-medium font-['Roboto'] leading-10  md:ml-5 mt-4">Where to?</div>
@@ -132,7 +132,7 @@ function Home() {
 
 
 {/* in this section add 12 different types */}
-<section className='mt-6'>
+<section className='mt-28 md:mt-6'>
 <div className='flex'>
 
 
