@@ -107,132 +107,122 @@ const options = [
 
 
 
-<section className='flex'>
-        <div className='w-4/12'>
-            
-          <div className='flex justify-center pt-10'>
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d984962.9467283923!2d73.34722614574983!3d15.348759664324652!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbfba106336b741%3A0xeaf887ff62f34092!2sGoa!5e0!3m2!1sen!2sin!4v1707106860458!5m2!1sen!2sin" className='rounded-3xl w-80 ' ></iframe>
-          </div>
+      <section className='flex flex-wrap'>
+  <div className='w-full md:w-4/12 p-4 md:p-8'>
+    {/* Map iframe */}
+    <div className='flex justify-center pt-14 md:pt-10'>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d984962.9467283923!2d73.34722614574983!3d15.348759664324652!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbfba106336b741%3A0xeaf887ff62f34092!2sGoa!5e0!3m2!1sen!2sin!4v1707106860458!5m2!1sen!2sin" className='rounded-3xl w-full md:w-80'></iframe>
+    </div>
 
-          {/* the below code is for sort the hotel  */}
-          <div className='flex justify-center  '>
-                        <div className='bg-white  h-auto w-80  mt-10 '>
-                            <Dropdown
-                                options={options}
-                                value={options.find(option => option.value === sortOption)}
-                                onChange={(selectedOption) => handleSortChange(selectedOption)}
-                                placeholder="Sort by"
-                                menuPlacement="bottom"
-                                className='text-lg font-mono  ' // Adjust font size
-                            />
-                      </div>
-               </div>
-          <hr></hr>
-         
-          <div className='flex justify-center text-2xl font-bold mt-4'>
-             Search By Property Name
-           </div>
-           <div className='flex justify-center mt-4'>
-              <div className='w-80 bg-white h-12 rounded-2xl flex '>
-               <FontAwesomeIcon icon={faMagnifyingGlass} className='p-3' />
-                 <input
-                                className='pt-1 pl-3 outline-none font-bold'
-                                placeholder='e.g MARRIOT'
-                                value={searchQuery}
-                                onChange={handleSearchChange}
-                            />
-             
-              </div>
-
-           </div>
-           <hr></hr>
-           <div className='font-medium pl-9 text-lg'>
-               Price per night
-           </div>
-           <div class="flex justify-center mt-4">
-              <div class="w-80">
-                  <div class="flex justify-between mb-2">
-                      <label class="text-lg">₹ 2000</label>
-                      <label class="text-lg">{maxPrice}</label>
-                      <label class="text-lg">₹ 5000</label>
-                  </div>
-                  <input
-                  type="range"
-                  class="w-full bg-gray-300 rounded-lg appearance-none cursor-pointer"
-                  min="2000"
-                  max="5000"
-                  value={maxPrice}
-                  onChange={(e) => setMaxPrice(e.target.value)}
+    {/* Sort dropdown */}
+    <div className='flex justify-center mt-10'>
+      <div className='bg-white h-auto w-full md:w-80 mt-10'>
+        <Dropdown
+          options={options}
+          value={options.find(option => option.value === sortOption)}
+          onChange={(selectedOption) => handleSortChange(selectedOption)}
+          placeholder="Sort by"
+          menuPlacement="bottom"
+          className='text-lg font-mono'
         />
-              </div>
-          </div>
+      </div>
+    </div>
 
-          <hr></hr>
-          <div className='font-medium pl-9 text-lg'>
-            Guest rating
-          </div>
-          <div class="flex justify-center mt-2">
-                <div class="w-80 text-lg">
-                    <label class="flex items-center mb-2">
-                        <input type="radio" name="rating" value="any" class="mr-2 form-radio"/>
-                        Any
-                    </label>
-                    
-                    <label class="flex items-center mb-2">
-                        <input type="radio" name="rating" value="9" class="mr-2 form-radio"/>
-                        Wonderful 9+
-                    </label>
-                    
-                    <label class="flex items-center mb-2">
-                        <input type="radio" name="rating" value="8" class="mr-2 form-radio"/>
-                        Very good 8+
-                    </label>
-                    
-                    <label class="flex items-center mb-2">
-                        <input type="radio" name="rating" value="7" class="mr-2 form-radio"/>
-                        Good 7+
-                    </label>
-                </div>
-            </div>
-            <hr></hr>
+    {/* Search by property name */}
+    <div className='flex justify-center text-2xl font-bold mt-4'>
+      Search By Property Name
+    </div>
+    <div className='flex justify-center mt-4'>
+      <div className='w-full md:w-80 bg-white h-12 rounded-2xl flex'>
+        <FontAwesomeIcon icon={faMagnifyingGlass} className='p-3' />
+        <input
+          className='pt-1 pl-3 outline-none font-bold'
+          placeholder='e.g MARRIOT'
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+      </div>
+    </div>
 
-
-
-
-         
+    {/* Price per night */}
+    <div className='font-medium pl-9 text-lg'>
+      Price per night
+    </div>
+    <div className="flex justify-center mt-4">
+      <div className="w-full md:w-80">
+        <div className="flex justify-between mb-2">
+          <label className="text-lg">₹  2000</label>
+          <label className="text-lg">{maxPrice}</label>
+          <label className="text-lg">₹  5000</label>
         </div>
-  
-         
-        <div className="w-8/12 flex-col mt-4 pr-14">
-        {filteredHotels.map((hotelItem, index) => (
-                  <Link to={`/hotelViewPage/${hotelItem.hotelId}`} key={index} style={{ textDecoration: 'none' }}>
-                      {index === 0 && <div className='pl-2 text-white bg-blue-800  rounded-tl-2xl'>You were interested in this property.</div>}
-                      <div className={`flex w-full  h-52 relative border border-black-200 mb-2 ${index === 0 ? 'bg-blue-100 rounded-br-2xl rounded-bl-2xl' : 'bg-white  rounded-2xl'}`}>
-                          <img src={hotelItem.images} alt={`Hotel ${hotelItem.id}`} className={`h-52   w-52  ${index === 0 ? ' rounded-bl-2xl' : 'rounded-bl-2xl rounded-tl-2xl'}`} />
-                          <div className="flex flex-col justify-center ml-2 w-full">
-                              <div><h5 className='text-black font-serif'>{hotelItem.hotelName}</h5></div>
-                              <div className='text-black'>{hotelItem.location}</div>
-                              <div className='text-black'>{hotelItem.address}</div>
-                              <div className='flex justify-end text-black'>₹{hotelItem.price}</div>
-                          </div>
-                      </div>
-                  </Link>
-              ))}
+        <input
+          type="range"
+          className="w-full bg-gray-300 rounded-lg appearance-none cursor-pointer"
+          min="2000"
+          max="5000"
+          value={maxPrice}
+          onChange={(e) => setMaxPrice(e.target.value)}
+        />
+      </div>
+    </div>
 
-                    <div className="flex justify-center mt-4">
-                        {Array.from({ length: totalPages }).map((_, index) => (
-                            <button
-                                key={index}
-                                onClick={() => handlePageChange(index + 1)}
-                                className={`mx-1 px-3 py-1 rounded ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-                            >
-                                {index + 1}
-                            </button>
-                        ))}
-                    </div>
-                </div>
+    {/* Guest rating */}
+    <div className='font-medium pl-9 text-lg'>
+      Guest rating
+    </div>
+    <div className="flex justify-center mt-2">
+      <div className="w-full md:w-80 text-lg">
+        <label className="flex items-center mb-2">
+          <input type="radio" name="rating" value="any" className="mr-2 form-radio" />
+          Any
+        </label>
+        <label className="flex items-center mb-2">
+          <input type="radio" name="rating" value="9" className="mr-2 form-radio" />
+          Wonderful  9+
+        </label>
+        <label className="flex items-center mb-2">
+          <input type="radio" name="rating" value="8" className="mr-2 form-radio" />
+          Very good  8+
+        </label>
+        <label className="flex items-center mb-2">
+          <input type="radio" name="rating" value="7" className="mr-2 form-radio" />
+          Good  7+
+        </label>
+      </div>
+    </div>
+  </div>
 
- </section>
+  <div className="w-full md:w-8/12 flex-col mt-4 pr-14">
+    {/* Filtered hotels */}
+    {filteredHotels.map((hotelItem, index) => (
+      <Link to={`/hotelViewPage/${hotelItem.hotelId}`} key={index} style={{ textDecoration: 'none' }}>
+        {index ===  0 && <div className='pl-2 text-white bg-blue-800 rounded-tl-2xl'>You were interested in this property.</div>}
+        <div className={`flex w-full h-52 relative border border-black-200 mb-2 ${index ===  0 ? 'bg-blue-100 rounded-br-2xl rounded-bl-2xl' : 'bg-white rounded-2xl'}`}>
+          <img src={hotelItem.images} alt={`Hotel ${hotelItem.id}`} className={`h-52 w-52 ${index ===  0 ? ' rounded-bl-2xl' : 'rounded-bl-2xl rounded-tl-2xl'}`} />
+          <div className="flex flex-col justify-center ml-2 w-full">
+            <div><h5 className='text-black font-serif'>{hotelItem.hotelName}</h5></div>
+            <div className='text-black'>{hotelItem.location}</div>
+            <div className='text-black'>{hotelItem.address}</div>
+            <div className='flex justify-end text-black'>₹{hotelItem.price}</div>
+          </div>
+        </div>
+      </Link>
+    ))}
+
+    {/* Pagination */}
+    <div className="flex justify-center mt-4">
+      {Array.from({ length: totalPages }).map((_, index) => (
+        <button
+          key={index}
+          onClick={() => handlePageChange(index +  1)}
+          className={`mx-1 px-3 py-1 rounded ${currentPage === index +  1 ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+        >
+          {index +  1}
+        </button>
+      ))}
+    </div>
+  </div>
+</section>
 <Footer/>
     </div>
   )

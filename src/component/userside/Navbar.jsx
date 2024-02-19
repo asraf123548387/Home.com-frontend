@@ -10,7 +10,7 @@ import { faUser, faBook, faGift, faStar, faBookmark, faSignOutAlt,faQuestion,faB
 import { useNavigate } from 'react-router-dom';
 
 
-function Navbar() {
+function Navbar({ notifications=[] }) {
     const { isAuthenticated } = useAuth();
     const navigate=useNavigate();
     const userName=localStorage.getItem('userName');
@@ -46,6 +46,9 @@ function Navbar() {
               </div>
               <div>
                 <FontAwesomeIcon icon={faBell} />
+                {notifications.length >  0 && (
+          <span className="notification-badge">{notifications.length}</span>
+        )}
               </div>
               {isAuthenticated ? (
                 <button

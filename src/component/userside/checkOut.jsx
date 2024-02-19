@@ -87,27 +87,13 @@ function CheckOut() {
 
       const token = localStorage.getItem('token');
 
-      const storeBookingData = async () => {
-        try {
-          // Assuming formData contains the booking data to be stored
-          const response = await axios.post('http://localhost:8080/onlineBooking', formData, {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            }
-          });
-          console.log('Booking data stored successfully:', response.data);
-        } catch (error) {
-          console.error('Error storing booking data:', error);
-          // Handle error gracefully, show user feedback or retry storing data
-        }
-      };
+     
       
       const handlePayment = async () => {
         try {
           const stripe = await stripePromise;
           const amount = formData.totalPrice; // Assuming formData is defined elsewhere
-      
+          localStorage.setItem('formData', JSON.stringify(formData));
           const response = await axios.post('http://localhost:8080/api/payments/create-checkout-session', {
             amount: amount
           }, {
@@ -116,7 +102,7 @@ function CheckOut() {
               'Authorization': `Bearer ${token}`
             }
           });
-          storeBookingData();
+          // storeBookingData();
           const { sessionId } = response.data; // Assuming sessionId is returned from the backend
       
           // Redirect to Stripe Checkout page with sessionId
@@ -124,7 +110,7 @@ function CheckOut() {
             sessionId: sessionId
           });
       
-            // Call storeBookingData after successful payment and redirection
+            
           
           
         } catch (error) {

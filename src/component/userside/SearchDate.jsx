@@ -56,11 +56,11 @@ function SearchDate() {
       };
   return (
  
-               <section className='flex flex-col md:flex-row mt-2'>
+               <section className='flex flex-col md:flex-row  mt-20 md:mt-2'>
                       <div className='w-full md:w-12'></div>
 
                       <div className='w-full md:w-11/12'>
-                      <form className="h-16 p-1 bg-yellow-500 rounded-lg shadow flex flex-col md:flex-row justify-center items-start gap-1">
+                      <form className="h-16 p-1 md:bg-yellow-500 rounded-lg shadow flex flex-col md:flex-row justify-center items-start gap-1 ">
                       <div className="flex-grow flex-shrink flex-basis-0 self-stretch py-1 bg-white rounded justify-center items-center w-full md:w-4/12 h-14 relative">
                      
                                 <Dropdown
