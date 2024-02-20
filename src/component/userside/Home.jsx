@@ -33,7 +33,7 @@ function Home() {
           }
         };
         fetchAllHotel();
-        const urlParams = new URLSearchParams(window.location.search);
+      const urlParams = new URLSearchParams(window.location.search);
     const sessionIdFromUrl = urlParams.get('session_id');
     if (sessionIdFromUrl) {
       const formData = JSON.parse(localStorage.getItem('formData'));

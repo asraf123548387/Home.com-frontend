@@ -90,9 +90,9 @@ function Navbar({ notifications=[] }) {
                     <FontAwesomeIcon icon={faBook} />
                     <button className='ml-2 '>Bookings</button>
                 </Link>
-                <Link className='flex items-center w-full   hover:text-black pl-5 no-underline'>
+                <Link to={'/chat'} className='flex items-center w-full   hover:text-black pl-5 no-underline'>
                     <FontAwesomeIcon icon={faGift} />
-                    <button className='ml-2 '>Rewards</button>
+                    <button className='ml-2 '>Chatpot</button>
                 </Link>
                 <Link to={'/userReview'} className='flex items-center w-full   hover:text-black pl-5 no-underline'>
                     <FontAwesomeIcon icon={faStar} />

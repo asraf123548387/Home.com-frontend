@@ -28,6 +28,7 @@ import Wishlist from './component/userside/Wishlist';
 
 
 
+
 function App() {
   return (
     
@@ -54,6 +55,7 @@ function App() {
     <Route path='/bookingHistory' element={<BookingHistory/>}></Route>
     <Route path='/userReview' element={<UserReview/>}></Route>
     <Route path='/wishlist' element={<Wishlist/>}></Route>
+
 
    </Routes>
    </AverageRatingProvider>
