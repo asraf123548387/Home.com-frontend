@@ -23,6 +23,7 @@ import { AverageRatingProvider } from './contextapi/averageRatingContext';
 import BookingHistory from './component/userside/BookingHistory';
 import UserReview from './component/userside/UserReview';
 import Wishlist from './component/userside/Wishlist';
+import UserSerchHotelList from './component/userside/userSerchHotelList';
 
 
 
@@ -55,7 +56,7 @@ function App() {
     <Route path='/bookingHistory' element={<BookingHistory/>}></Route>
     <Route path='/userReview' element={<UserReview/>}></Route>
     <Route path='/wishlist' element={<Wishlist/>}></Route>
-
+  <Route path='/userSearchHotelList' element={<UserSerchHotelList/>}></Route>
 
    </Routes>
    </AverageRatingProvider>

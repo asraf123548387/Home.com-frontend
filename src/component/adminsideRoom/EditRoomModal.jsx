@@ -44,13 +44,20 @@ function EditRoomModal({ isOpen, roomData, onSuccess, onClose }) {
           onSuccess();
         }
         onClose();
-      } else {
+      }
+      else if (response.status ===  400) {
+        // Handle the case where the room number is not unique
+        Swal.fire("Room Number Want unique");
+        onClose();
+    } else {
         console.error('Failed to update room details:', response.statusText);
         setMsg('Failed to update room. Please try again.');
       }
     } catch (error) {
       console.error('Error updating room details:', error.message);
       setMsg('Error updating room details. Please try again.');
+      Swal.fire("Room Number Make unique");
+        onClose();
     }
   };
 

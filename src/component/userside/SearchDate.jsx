@@ -8,8 +8,10 @@ import {faCalendarDays} from '@fortawesome/free-solid-svg-icons';
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'; 
 import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom';
 function SearchDate() {
 //below code is for selecting date picking
+  const navigate=useNavigate();
 
     const [datePickerOpen, setDatePickerOpen] = useState(false);
     const [selectionRange, setSelectionRange] = useState({
@@ -20,6 +22,21 @@ function SearchDate() {
   
     const handleSelect = (ranges) => {
       setSelectionRange(ranges.selection);
+    };
+      // State for managing the selected destination
+  const [selectedDestination, setSelectedDestination] = useState(null);
+  const handleDestinationChange = (selectedOption) => {
+    setSelectedDestination(selectedOption.value);
+  };
+    const handleSearch = () => {
+      // Assuming you want to navigate to UserSearchHotelList with some state
+      navigate('/userSearchHotelList', {
+        state: {
+          
+          destination: selectedDestination, // Assuming you have a state for selectedDestination
+          
+        },
+      });
     };
 
 
@@ -60,16 +77,16 @@ function SearchDate() {
                       <div className='w-full md:w-12'></div>
 
                       <div className='w-full md:w-11/12'>
-                      <form className="h-16 p-1 md:bg-yellow-500 rounded-lg shadow flex flex-col md:flex-row justify-center items-start gap-1 ">
+                      <div className="h-16 p-1 md:bg-yellow-500 rounded-lg shadow flex flex-col md:flex-row justify-center items-start gap-1 ">
                       <div className="flex-grow flex-shrink flex-basis-0 self-stretch py-1 bg-white rounded justify-center items-center w-full md:w-4/12 h-14 relative">
                      
-                                <Dropdown
-                                      options={options}
-                                      placeholder="Going to"
-                                      menuPlacement="bottom"
-                                      className='text-lg font-sans font-semibold ' // Adjust font size
-                                      
-                                  />
+                      <Dropdown
+                            options={options}
+                            placeholder="Going to"
+                            menuPlacement="bottom"
+                            className="text-lg font-sans font-semibold"
+                            onChange={handleDestinationChange}
+                          />
 
                            </div>
 
@@ -137,10 +154,10 @@ function SearchDate() {
                                             </div>
                                         </Modal>
                                     
-                              <button className="pt-3 px-2 pb-3 bg-blue-700 text-white rounded md:mt-0 w-full md:w-1/12">
+                              <button onClick={handleSearch} className="pt-3 px-2 pb-3 bg-blue-700 text-white rounded no-underline md:mt-0 w-full md:w-1/12">
                                   Search
                               </button>
-                          </form>
+                          </div>
                       </div>
                   </section>
     

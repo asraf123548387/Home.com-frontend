@@ -347,12 +347,7 @@ function CheckOut() {
 
         </div>
             </div>
-          
-
-
-
-
-            <div className='w-2/6'>
+            <div className='w-2/6 hidden md:block'>      
                <div>
                    <div className='h-auto bg-white mx-3 p-2 rounded-lg'>
                       <div className='p-2 bg-slate-200 rounded-lg'>

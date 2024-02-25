@@ -34,15 +34,16 @@ function Home() {
         };
         fetchAllHotel();
       const urlParams = new URLSearchParams(window.location.search);
-    const sessionIdFromUrl = urlParams.get('session_id');
+      const sessionIdFromUrl = urlParams.get('session_id');
     if (sessionIdFromUrl) {
       const formData = JSON.parse(localStorage.getItem('formData'));
       if (formData) {
        
         const bookingStored = localStorage.getItem('bookingStored');
+        storeBookingData(formData);
         if (!bookingStored || bookingStored !== 'true') {
           Swal.fire("Room is booked!");
-          storeBookingData(formData);
+         
         } else {
           console.log('Booking already stored.');
         }
