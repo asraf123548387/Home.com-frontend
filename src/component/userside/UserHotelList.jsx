@@ -29,6 +29,7 @@ function UserHotelList() {
     
           if (response.status >= 200 && response.status < 300) {
             setHotel(response.data);
+            console.log(response.data)
             setIsLoadingHotelDetails(false);
           } else {
             console.error('Failed to fetch hotels:', response.statusText);
@@ -65,10 +66,14 @@ const sortedHotelByOption = sortedHotel.slice().sort((a, b) => {
 });
 
 // Apply filtering after sorting
-const filteredHotels = sortedHotelByOption.filter(hotelItem =>
-  hotelItem.hotelName.toLowerCase().includes(searchQuery.toLowerCase()) &&
-  hotelItem.price >= minPrice && hotelItem.price <= maxPrice
-);
+const filteredHotels = sortedHotelByOption.filter(hotelItem => {
+  console.log("Checking hotel:", hotelItem.hotelName, "with price:", hotelItem.price);
+  return hotelItem.hotelName.toLowerCase().includes(searchQuery.toLowerCase()) &&
+    hotelItem.price >= minPrice && hotelItem.price <= maxPrice;
+});
+console.log("hello")
+console.log(filteredHotels)
+console.log("hello")
 
 // Pagination logic remains the same
 const indexOfLastItem = currentPage * itemsPerPage;

@@ -7,6 +7,7 @@ import Navbar from './Navbar';
 import { FaHeart } from 'react-icons/fa';
 import Footer from './Footer';
 import Spinner from './Spinner';
+
 import { useAverageRating } from '../../contextapi/averageRatingContext';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,7 +36,13 @@ function HotelviewPage() {
   const userId = localStorage.getItem('userId');
   // for reviews adding
   const openModal = () => {
-    setIsModalOpen(true);
+    if (localStorage.getItem('token')) {
+      // If a token is present, open the modal
+      setIsModalOpen(true);
+  } else {
+    navigate('/login')
+      Swal.fire("please sign In !");
+  }
 
   };
 
@@ -285,53 +292,49 @@ function HotelviewPage() {
 
 <h2 className='md:ml-28'>Choose Your Room</h2>
 
- <section className='flex'> 
+<section className='flex'> 
 
-    <div className='w-1/12 hidden sm:block'>
+<div className='w-1/12 hidden sm:block'>
 
-    </div>
-  <div className='w-full md:w-10/12 mt-2 flex flex-col md:flex-row flex-wrap md:pl-7'>
-    {rooms.map(room => (
-      <div className='w-96 md:w-72 bg-white h-auto mr-4 rounded-2xl ml-3 md:ml-0'>
-        <div className='bg-blue-800 rounded-tr-2xl rounded-tl-2xl'>
-          <span className='ml-3 text-white'>popular among travellers</span>
-        </div>
-
-        <div key={room.roomId}>
-          <div>
-            <img src={room.images} alt={`Room ${room.roomNumber}`} className='h-auto' />
-          </div>
-          <div className='p-2'>
-            <span className='pb-2'><FontAwesomeIcon icon={faWifi} className='pr-2' />Free wifi</span> <br />
-            <span className='pb-2'><FontAwesomeIcon icon={faSquareRss} className='pr-2' />34 sqrt</span> <br />
-            <span className='pb-2'><FontAwesomeIcon icon={faWater} className='pr-2' />Bay view</span> <br />
-            <span className='pb-2'><FontAwesomeIcon icon={faBed} className='pr-2' />1 king bed and 1 Double Sofa bed</span>
-
-          </div>
-          <hr />
-          <div className='pl-3'>
-            <span>Room Number: {room.roomNumber}</span><br />
-            <span>Room Type: {room.roomType}</span> <br />
-            {/* <p>Availability: {room.availability ? 'Available' : 'Not Available'}</p> */}
-            <span><FontAwesomeIcon icon={faRupeeSign} />: {room.pricePerNight}</span>
-
-          </div>
-          <div className='flex justify-end'>
-            {room.availability ? (
-              <Link to={`/checkOut/${room.roomId}`}>
-                <button className='rounded-3xl bg-blue-600 text-white p-2 mb-3 mr-2 hover:bg-blue-700'> Reserve </button>
-              </Link>
-            ) : (
-              <button disabled className='rounded-3xl bg-gray-400 text-white p-2 mb-3 mr-2 cursor-not-allowed'> Not Available </button>
-            )}
-        </div>
-      </div>
-
-    </div>
-  ))}
 </div>
+<div className='w-full md:w-10/12 mt-2 flex flex-col md:flex-row flex-wrap md:pl-7'>
+    {rooms.map(room => (
+        <div className='w-96 md:w-80 bg-white h-auto mr-4 rounded-2xl ml-3 md:ml-0'>
+            <div className='bg-blue-800 rounded-tr-2xl rounded-tl-2xl'>
+                <span className='ml-3 text-white'>popular among travellers</span>
+            </div>
 
- </section>
+            <div key={room.roomId}>
+                <div>
+                    <img src={room.images} alt={`Room ${room.roomNumber}`} className='h-auto' />
+                </div>
+                <div className='p-2'>
+                    <span className='pb-2'><FontAwesomeIcon icon={faWifi} className='pr-2' />Free wifi</span> <br />
+                    <span className='pb-2'><FontAwesomeIcon icon={faSquareRss} className='pr-2' />34 sqrt</span> <br />
+                    <span className='pb-2'><FontAwesomeIcon icon={faWater} className='pr-2' />Bay view</span> <br />
+                    <span className='pb-2'><FontAwesomeIcon icon={faBed} className='pr-2' />1 king bed and 1 Double Sofa bed</span>
+                </div>
+                <hr />
+                <div className='pl-3'>
+                    <span>Room Number: {room.roomNumber}</span><br />
+                    <span>Room Type: {room.roomType}</span> <br />
+                    {/* <p>Availability: {room.availability ? 'Available' : 'Not Available'}</p> */}
+                    <span><FontAwesomeIcon icon={faRupeeSign} />: {room.pricePerNight}</span>
+                </div>
+                <div className='flex justify-end'>
+                    {room.availability ? (
+                        <Link to={`/checkOut/${room.roomId}`}>
+                            <button className='rounded-3xl bg-blue-600 text-white p-2 mb-3 mr-2 hover:bg-blue-700'> Reserve </button>
+                        </Link>
+                    ) : (
+                        <button disabled className='rounded-3xl bg-gray-400 text-white p-2 mb-3 mr-2 cursor-not-allowed'> Not Available </button>
+                    )}
+                </div>
+            </div>
+        </div>
+    ))}
+</div>
+</section>
         <div className='ml-28 my-4 font-bold text-xl'>
             {/* Your existing code */}
             <button onClick={openModal} className=' rounded-3xl bg-blue-600 text-white p-2 mb-3 mr-2 hover:bg-blue-700'>Add Review</button>

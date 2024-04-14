@@ -2,10 +2,53 @@ import React from 'react'
 import Navbar from './Navbar'
 import { useState,useEffect } from 'react'
 import axios from 'axios';
+import Swal from 'sweetalert2';
 function BookingHistory() {
     const [bookings, setBookings] = useState([]);
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    const cancelBooking = (bookingId) => {
+        Swal.fire({
+            text: "Are you sure you want to cancel?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Yes, cancel it!",
+            cancelButtonText: "No, keep it"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // User confirmed the action, proceed with cancellation
+                const userId = localStorage.getItem('userId');
+                const token = localStorage.getItem('token');
+    
+                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                axios.delete(`http://localhost:8080/booking/cancel/${bookingId}`)
+                    .then(response => {
+                        console.log('Booking cancelled successfully');
+                        // Handle success, e.g., update the UI to reflect the cancellation
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Cancelled',
+                            text: 'Your booking has been cancelled successfully.',
+                        });
+                        setRefreshKey(prevKey => prevKey + 1);
+
+                    })
+                    
+                    .catch(error => {
+                        console.error('Error cancelling booking:', error);
+                        // Handle error, e.g., show an error message to the user
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                        });
+                    });
+            }
+        });
+    };
+    
     
     useEffect(() => {
         const postBooking = async () => {
@@ -31,7 +74,7 @@ function BookingHistory() {
         };
 
         postBooking();
-    }, []);
+    }, [refreshKey]);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -89,11 +132,11 @@ function BookingHistory() {
                                 <p className="text-gray-600">{booking.paymentStatus}</p>
                             </div> */}
                             <div className="flex flex-col mt-2">
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            <button
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                onClick={() => cancelBooking(booking.booking_id)}
+                                >
                                 Cancel
-                                </button>
-                                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2">
-                                Delete
                                 </button>
                             </div>
                             </div>
